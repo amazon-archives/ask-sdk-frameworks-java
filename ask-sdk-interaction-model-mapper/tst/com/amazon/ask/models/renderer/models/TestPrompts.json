@@ -1,0 +1,35 @@
+{
+  "samples": ["test_en_US"],
+  "prompts" : {
+    "confirmation" : "testIntentConfirmation"
+  },
+  "confirmationRequired": true,
+  "confirmations": [
+    {
+      "type" : "PlainText",
+      "value" : "test_en_US confirmation"
+    }
+  ],
+  "slots": {
+    "customSlot" : {
+      "prompts" : {
+        "confirmation" : "customSlot.confirmation",
+        "elicitation" : "customSlot.elicitation"
+      },
+      "confirmationRequired" : true,
+      "confirmations" : [
+        {
+          "type" : "PlainText",
+          "value" : "test_en_US customSlot confirmation"
+        }
+      ],
+      "elicitationRequired" : true,
+      "elicitations" : [
+        {
+          "type" : "PlainText",
+          "value" : "test_en_US customSlot elicitation"
+        }
+      ]
+    }
+  }
+}

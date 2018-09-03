@@ -1,0 +1,8 @@
+{
+  "values" : {
+    "test" : {
+      "value" : "en_US file",
+      "synonyms" : [ "en_US file synonym" ]
+    }
+  }
+}

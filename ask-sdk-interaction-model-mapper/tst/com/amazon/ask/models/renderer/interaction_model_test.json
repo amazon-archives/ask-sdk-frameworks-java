@@ -1,0 +1,120 @@
+{
+  "interactionModel": {
+    "languageModel" : {
+      "invocationName" : "withjavamodel",
+      "intents" : [
+        {
+          "name": "empty_intent"
+        },
+        {
+          "name": "intent_samples",
+          "samples" : ["sample"]
+        },
+        {
+          "name": "intent_dialogs"
+        },
+        {
+          "name": "intent_slot_confirmations",
+          "slots": [
+            {
+              "name" : "slot",
+              "type" : "AMAZON.DATE"
+            }
+          ]
+        },
+        {
+          "name": "intent_slot_elicitations",
+          "slots": [
+            {
+              "name" : "slot",
+              "type" : "AMAZON.DATE"
+            }
+          ]
+        }
+      ],
+      "types" : [
+        {
+          "name": "test_no_synonyms",
+          "values": [
+            {
+              "id": "A",
+              "name": {
+                "value": "a"
+              }
+            }
+          ]
+        },
+        {
+          "name": "test_synonyms",
+          "values": [
+            {
+              "id": "A",
+              "name": {
+                "value": "a",
+                "synonyms": [
+                  "b"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dialog" : {
+      "intents" : [
+        {
+          "name": "intent_confirmations",
+          "confirmationRequired": false,
+          "prompts": {
+            "confirmation": "Confirm.Intent-intent_confirmations"
+          }
+        },
+        {
+          "name" : "intent_slot_confirmations",
+          "slots" : [
+            {
+              "name" : "slot",
+              "type" : "AMAZON.DATE",
+              "confirmationRequired": true,
+              "prompts" : {
+                "confirmation" : "Confirm.Intent-intent_slot_confirmations.IntentSlot-date"
+              }
+            }
+          ]
+        },
+        {
+          "name" : "intent_slot_elicitations",
+          "slots" : [
+            {
+              "name" : "slot",
+              "type" : "AMAZON.DATE",
+              "elicitationRequired": true,
+              "prompts" : {
+                "elicitation" : "Elicit.Intent-intent_slot_confirmations.IntentSlot-date"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "prompts" : [ {
+      "id" : "Confirm.Intent-intent_confirmations",
+      "variations" : [ {
+        "type" : "PlainText",
+        "value" : "confirmation"
+      } ]
+    }, {
+      "id" : "Confirm.Intent-intent_slot_confirmations.IntentSlot-date",
+      "variations" : [ {
+        "type" : "PlainText",
+        "value" : "confirmation"
+      } ]
+    }, {
+      "id" : "Elicit.Intent-intent_slot_confirmations.IntentSlot-date",
+      "variations" : [ {
+        "type" : "PlainText",
+        "value" : "elicitation"
+      } ]
+    } ]
+  }
+}

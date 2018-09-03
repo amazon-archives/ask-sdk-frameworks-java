@@ -1,0 +1,12 @@
+{
+  "values" : {
+    "A" : {
+      "value" : "A",
+      "synonyms" : ["test_A_fr_FR"]
+    },
+    "B" : {
+      "value" : "B",
+      "synonyms" : ["test_B_fr_FR"]
+    }
+  }
+}

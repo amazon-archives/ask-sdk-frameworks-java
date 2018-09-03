@@ -1,0 +1,8 @@
+{
+  "values" : {
+    "test" : {
+      "value" : "global file",
+      "synonyms" : [ "global file synonym" ]
+    }
+  }
+}

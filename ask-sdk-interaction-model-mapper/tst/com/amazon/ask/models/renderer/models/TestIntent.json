@@ -1,0 +1,28 @@
+{
+  "samples": ["test_en_US"],
+  "confirmationRequired": true,
+  "confirmations": [
+    {
+      "type" : "PlainText",
+      "value" : "test_en_US confirmation"
+    }
+  ],
+  "slots": {
+    "customSlot" : {
+      "confirmationRequired" : true,
+      "confirmations" : [
+        {
+          "type" : "PlainText",
+          "value" : "test_en_US customSlot confirmation"
+        }
+      ],
+      "elicitationRequired" : true,
+      "elicitations" : [
+        {
+          "type" : "PlainText",
+          "value" : "test_en_US customSlot elicitation"
+        }
+      ]
+    }
+  }
+}
