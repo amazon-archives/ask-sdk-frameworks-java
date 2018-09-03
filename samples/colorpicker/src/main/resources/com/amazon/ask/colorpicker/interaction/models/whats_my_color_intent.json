@@ -1,0 +1,15 @@
+{
+  "confirmations" : [ ],
+  "slots" : { },
+  "samples" : [
+    "what's my color",
+    "what is my color",
+    "say my color",
+    "tell me my color",
+    "what's my favorite color",
+    "what is my favorite color",
+    "say my favorite color",
+    "tell me my favorite color",
+    "tell me what my favorite color is"
+  ]
+}

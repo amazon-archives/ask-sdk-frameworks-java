@@ -1,0 +1,28 @@
+{
+  "values" : {
+    "red" : {
+      "value" : "red",
+      "synonyms" : [ ]
+    },
+    "orange" : {
+      "value" : "orange",
+      "synonyms" : [ ]
+    },
+    "green" : {
+      "value" : "green",
+      "synonyms" : [ ]
+    },
+    "blue" : {
+      "value" : "blue",
+      "synonyms" : [ ]
+    },
+    "yellow" : {
+      "value" : "yellow",
+      "synonyms" : [ ]
+    },
+    "purple" : {
+      "value" : "purple",
+      "synonyms" : [ ]
+    }
+  }
+}
