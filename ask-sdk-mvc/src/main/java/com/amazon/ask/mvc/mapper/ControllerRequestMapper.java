@@ -105,8 +105,8 @@ public class ControllerRequestMapper implements RequestMapper {
      *
      * Applies method discovery logic consistently for all mapping types:
      * <ul>
-     *     <li>resolve a {@link Predicate <HandlerInput>} from the method</li>
-     *     <li>delegate responsibility to the underlying handler, but guard it with the {@link Predicate<HandlerInput>}</li>
+     *     <li>resolve a {@link Predicate} of {@link HandlerInput} from the method</li>
+     *     <li>delegate responsibility to the underlying handler, but guard it with the predicate</li>
      *     <li>look for the {@link Priority} annotation on each method</li>
      *     <li>order each handler in the controller by its priority</li>
      *     <li>methods not annotated with {@link Priority} are considered to have priority '0'</li>

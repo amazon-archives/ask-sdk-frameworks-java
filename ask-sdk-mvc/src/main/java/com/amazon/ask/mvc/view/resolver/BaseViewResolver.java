@@ -91,6 +91,9 @@ public abstract class BaseViewResolver implements ViewResolver {
 
     /**
      * Check if this view resolver supports this view
+     *
+     * @param modelAndView model and view name
+     * @return true if this resolver supports the view
      */
     protected boolean supports(ModelAndView modelAndView) {
         return viewNamePatterns.isEmpty() || viewNamePatterns.stream().anyMatch(pattern -> pattern.matcher(modelAndView.getViewName()).matches());

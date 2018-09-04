@@ -11,7 +11,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * If added to a controller parameter of type {@link java.util.Map}, a Map<String, Object>
+ * If added to a controller parameter of type {@link java.util.Map}, the Map
  * containing the session attributes and their values will be passed in.
  */
 @Target(value = {PARAMETER})

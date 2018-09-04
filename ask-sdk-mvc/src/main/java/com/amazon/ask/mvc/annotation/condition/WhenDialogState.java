@@ -27,12 +27,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @AutoPredicate(WhenDialogState.Plugin.class)
 public @interface WhenDialogState {
     /**
-     * Allowed dialog state values.
+     * @return allowed dialog state values.
      */
     DialogState[] value() default {};
 
     /**
-     * Allowed dialog state values.
+     * @return allowed dialog state values.
      */
     DialogState[] states() default {};
 

@@ -28,15 +28,15 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @AutoRequestHandler(IntentMapping.Plugin.class)
 public @interface IntentMapping {
     /**
-     * Map an Intent Request to a method by intent value.
+     * @return name of intent
      */
     String name() default "";
 
     /**
-     * Map an Intent Request to a method by the type of the intent
+     * @return type of intent
+     * @see Intent
      */
     Class<?> type() default Object.class;
-
 
     /**
      * Resolve a {@link RequestHandler} from a method annotated with {@link IntentMapping}.
@@ -62,9 +62,6 @@ public @interface IntentMapping {
             return new Handler(context, intentName);
         }
 
-        /**
-         * Builds an intent value for a type.
-         */
         protected String buildIntentNameByType(Class<?> intentType) {
             Class<?> currentType = intentType;
             while(currentType != Object.class) {

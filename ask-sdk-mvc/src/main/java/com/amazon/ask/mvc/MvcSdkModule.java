@@ -58,8 +58,9 @@ public class MvcSdkModule implements SdkModule {
     }
 
     /**
-     * Scans all controller
-     * @param moduleContext
+     * Scans all controllers for methods, set up handlers and interceptors, and append user agent.
+     *
+     * @param moduleContext sdk module context
      */
     @Override
     public void setupModule(SdkModuleContext moduleContext) {
@@ -109,12 +110,6 @@ public class MvcSdkModule implements SdkModule {
         protected Model model;
         protected ObjectMapper objectMapper;
 
-        /**
-         * TODO
-         *
-         * @param controllers
-         * @return
-         */
         public Builder withControllers(Set<Object> controllers) {
             this.controllers = controllers;
             return this;
@@ -137,12 +132,6 @@ public class MvcSdkModule implements SdkModule {
             return this;
         }
 
-        /**
-         * TODO
-         *
-         * @param viewResolvers
-         * @return
-         */
         public Builder withViewResolvers(List<ViewResolver> viewResolvers) {
             this.viewResolvers = new LinkedHashSet<>(viewResolvers);
             return this;
@@ -165,12 +154,6 @@ public class MvcSdkModule implements SdkModule {
             return this;
         }
 
-        /**
-         * TODO
-         *
-         * @param argumentResolvers
-         * @return
-         */
         public Builder withArgumentResolvers(Set<ArgumentResolver> argumentResolvers) {
             this.argumentResolvers = new LinkedHashSet<>(argumentResolvers);
             return this;
@@ -193,12 +176,6 @@ public class MvcSdkModule implements SdkModule {
             return this;
         }
 
-        /**
-         * TODO
-         *
-         * @param resolvers
-         * @return
-         */
         public Builder withRequestHandlerResolvers(Collection<RequestHandlerResolver> resolvers) {
             this.requestHandlerResolvers = new LinkedHashSet<>(resolvers);
             return this;
@@ -215,12 +192,6 @@ public class MvcSdkModule implements SdkModule {
             return this;
         }
 
-        /**
-         * TODO
-         *
-         * @param resolvers
-         * @return
-         */
         public Builder withPredicateResolvers(Collection<PredicateResolver> resolvers) {
             this.predicateResolvers = new LinkedHashSet<>(resolvers);
             return this;
@@ -239,12 +210,6 @@ public class MvcSdkModule implements SdkModule {
             return this;
         }
 
-        /**
-         * TODO
-         *
-         * @param resolvers
-         * @return
-         */
         public Builder withRequestInterceptorResolvers(Collection<RequestInterceptorResolver> resolvers) {
             this.requestInterceptorResolvers = new LinkedHashSet<>(resolvers);
             return this;
@@ -263,12 +228,6 @@ public class MvcSdkModule implements SdkModule {
             return this;
         }
         
-        /**
-         * TODO
-         *
-         * @param resolvers
-         * @return
-         */
         public Builder withResponseInterceptorResolvers(Collection<ResponseInterceptorResolver> resolvers) {
             this.responseInterceptorResolvers = new LinkedHashSet<>(resolvers);
             return this;
@@ -287,12 +246,6 @@ public class MvcSdkModule implements SdkModule {
             return this;
         }
         
-        /**
-         * TODO
-         *
-         * @param resolvers
-         * @return
-         */
         public Builder withExceptionHandlerResolvers(Collection<ExceptionHandlerResolver> resolvers) {
             this.exceptionHandlerResolvers = new LinkedHashSet<>(resolvers);
             return this;
@@ -311,21 +264,11 @@ public class MvcSdkModule implements SdkModule {
             return this;
         }
 
-        /**
-         *
-         * @param objectMapper
-         * @return
-         */
         public Builder withObjectMapper(ObjectMapper objectMapper) {
             this.objectMapper = objectMapper;
             return this;
         }
 
-        /**
-         *
-         * @param model
-         * @return
-         */
         public Builder withModel(Model model) {
             this.model = model;
             return this;

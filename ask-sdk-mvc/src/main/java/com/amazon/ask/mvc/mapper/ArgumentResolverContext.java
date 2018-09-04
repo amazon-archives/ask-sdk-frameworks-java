@@ -50,6 +50,7 @@ public class ArgumentResolverContext {
     }
 
     /**
+     * @param type request type
      * @return true if the request contained inside the {@link RequestEnvelope} is an instance of the specified type
      */
     public boolean requestTypeEquals(Class<? extends Request> type) {
@@ -57,12 +58,17 @@ public class ArgumentResolverContext {
     }
 
     /**
-     * @return  true if the  type of the parameter inside {@link MethodParameter} matches the specified type
+     * @param type parameter type
+     * @return true if the type of the parameter inside {@link MethodParameter} matches the specified type
      */
     public boolean parameterTypeEquals(Class type) {
         return type.equals(methodParameter.getType());
     }
 
+    /**
+     * @param type parameter type
+     * @return true if the type of the parameter inside {@link MethodParameter} is assignable from the specified type
+     */
     public boolean parameterTypeIsAssignableFrom(Class type) {
         return methodParameter.getType().isAssignableFrom(type);
     }

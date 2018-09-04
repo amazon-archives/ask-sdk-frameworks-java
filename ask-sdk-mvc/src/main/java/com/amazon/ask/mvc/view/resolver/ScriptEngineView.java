@@ -58,6 +58,10 @@ public class ScriptEngineView extends BaseView {
 
     /**
      * By default we assume the result is a json string, but we may want to override that.
+     *
+     * @param result rendered by the view
+     * @return JSON string of view output
+     * @throws Exception if the response is invalid
      */
     protected String toJson(Object result) throws Exception {
         return (String) result;

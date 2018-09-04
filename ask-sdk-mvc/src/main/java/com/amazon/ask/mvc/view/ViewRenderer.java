@@ -30,11 +30,11 @@ public class ViewRenderer {
      *
      * If a view is found, the response is rendered and returned. Otherwise empty is returned.
      *
-     * @param context
+     * @param context controller method context
      * @param output object returned from the handler
      * @param requestEnvelope envelope for the current request
      * @return final output of the rendering operation
-     * @throws Exception if there was an error resolving or rendering the view
+     * @throws RuntimeException if no views are found or if the view threw an exception
      */
     @SuppressWarnings("unchecked")
     public Optional<Response> render(ControllerMethodContext context, Object output, RequestEnvelope requestEnvelope) {

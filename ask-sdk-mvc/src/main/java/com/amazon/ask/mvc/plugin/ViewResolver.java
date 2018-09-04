@@ -17,6 +17,7 @@ public interface ViewResolver {
      * @param handlerOutput object returned by the request handler
      * @param requestEnvelope the envelope for the current request
      * @return the response to be sent back
+     * @throws Exception if there was an error loading/resolving the view
      */
     Optional<View> resolve(Object handlerOutput, RequestEnvelope requestEnvelope) throws Exception;
 }

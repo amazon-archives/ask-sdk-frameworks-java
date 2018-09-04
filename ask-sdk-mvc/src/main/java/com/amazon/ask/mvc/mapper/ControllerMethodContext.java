@@ -60,8 +60,8 @@ public class ControllerMethodContext implements AnnotationContext {
     }
 
     /**
-     * Information about the parameters to the method, so reflection doesn't need to be used
-     * on each invocation to resolve them.
+     * @return Information about the parameters to the method, so reflection doesn't need to be used
+     *         on each invocation to resolve them.
      */
     public List<MethodParameter> getParameters() {
         return parameters;

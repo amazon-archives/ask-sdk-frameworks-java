@@ -39,7 +39,7 @@ public class SingleThreadedViewCache implements ViewCache {
     }
 
     /**
-     * Constructs a single threaded view cache with default capacity
+     * @return a single threaded view cache with default capacity
      */
     public static SingleThreadedViewCache defaultCache() {
         return SingleThreadedViewCache.builder().build();

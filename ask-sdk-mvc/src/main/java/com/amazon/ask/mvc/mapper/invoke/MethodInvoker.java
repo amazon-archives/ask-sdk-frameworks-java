@@ -35,8 +35,8 @@ public class MethodInvoker {
     /**
      * Resolve a method's arguments using {@link ArgumentResolver}s and invoke it, returning the result.
      *
-     * @param input
-     * @param context
+     * @param input handler input
+     * @param context controller method context
      * @param extraResolvers extra argument resolvers to consider
      * @return result object
      * @see MethodInvoker#invoke(HandlerInput, ControllerMethodContext, List)
@@ -48,8 +48,8 @@ public class MethodInvoker {
     /**
      * Resolve a method's arguments using {@link ArgumentResolver}s and invoke it, returning the result.
      *
-     * @param input
-     * @param context
+     * @param input handler input
+     * @param context controller method context
      * @param extraResolvers extra argument resolvers to consider
      * @return result object
      */

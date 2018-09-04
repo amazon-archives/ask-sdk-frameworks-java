@@ -12,15 +12,12 @@ import java.util.regex.Pattern;
 
 /**
  * Reads view candidates from a resource file.
+ *
+ * Resource class defaults to the resolver's class if none specified.
  */
 public abstract class ClassPathViewResolver extends BaseViewResolver {
     protected final Class<?> resourceClass;
 
-    /**
-     * Constructs a new url view resolver.
-     *
-     * Resource class defaults to the resolver's class if none specified.
-     */
     protected ClassPathViewResolver(ObjectMapper mapper, ViewCache cache, List<ViewCandidateEnumerator> viewCandidateEnumerators,
                                     Collection<Pattern> viewNamePatterns, String prefix, String suffix, Class<?> resourceClass) {
         super(mapper, cache, viewCandidateEnumerators, viewNamePatterns, prefix, suffix);
@@ -43,7 +40,8 @@ public abstract class ClassPathViewResolver extends BaseViewResolver {
         protected Class<?> resourceClass;
 
         /**
-         * Specify the class to load resource files from
+         * @param resourceClass the class to load resource files from
+         * @return this
          */
         public Self withResourceClass(Class<?> resourceClass) {
             this.resourceClass = resourceClass;

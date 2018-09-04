@@ -17,7 +17,6 @@ public interface SkillModule {
      * Install this module's runtime handlers into the {@link MvcSdkModule.Builder}
      *
      * @param mvcBuilder mvc sdk module builder
-     * @return updated builder
      */
     void buildMvc(MvcSdkModule.Builder mvcBuilder);
 

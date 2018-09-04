@@ -22,9 +22,9 @@ public class MethodParameter {
     /**
      * Builds a MethodParameter for a specific parameter in a method
      *
-     * @param method      the method where the parameter is defined
-     * @param index       index of the parameter
-     * @param type        type of the parameter
+     * @param method the method where the parameter is defined
+     * @param index index of the parameter
+     * @param type type of the parameter
      * @param annotations the annotations of the parameter
      */
     public MethodParameter(Method method, int index, Class<?> type, Annotation[] annotations) {
@@ -39,7 +39,9 @@ public class MethodParameter {
     }
 
     /**
-     * Returns an annotation of the indicated type, if present
+     * @param type annotation class
+     * @param <T> type of annotation
+     * @return returns an annotation of the indicated type, if present
      */
     public <T> Optional<T> findAnnotation(Class<T> type) {
         for (Annotation annotation : annotations) {
@@ -52,28 +54,28 @@ public class MethodParameter {
     }
 
     /**
-     * The method where the parameter is defined
+     * @return the method where the parameter is defined
      */
     public Method getMethod() {
         return method;
     }
 
     /**
-     * Index of the parameter
+     * @return index of the parameter
      */
     public int getIndex() {
         return index;
     }
 
     /**
-     * Type of the parameter
+     * @return type of the parameter
      */
     public Class<?> getType() {
         return type;
     }
 
     /**
-     * Annotations of the parameter
+     * @return annotations of the parameter
      */
     public Annotation[] getAnnotations() {
         return annotations;

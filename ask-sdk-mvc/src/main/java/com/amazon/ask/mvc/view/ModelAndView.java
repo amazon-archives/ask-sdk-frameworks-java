@@ -13,8 +13,6 @@ import java.util.function.Function;
 /**
  * Holds a view name used to render the response for the current request,
  * as well as the model used to render it.
- *
- * @author musachyb@
  */
 public class ModelAndView {
     protected final String viewName;
@@ -22,6 +20,8 @@ public class ModelAndView {
 
     /**
      * Builds a new model and view with an empty model and the specified view name
+     *
+     * @param viewName name of the view
      */
     public ModelAndView(String viewName) {
         this(viewName, new HashMap<>());
@@ -29,6 +29,9 @@ public class ModelAndView {
 
     /**
      * Builds a new model and view with the specified view name and a model
+     *
+     * @param viewName name of the view
+     * @param model of key value pairs
      */
     public ModelAndView(String viewName, Map<String, ?> model) {
         this.viewName = ValidationUtils.assertStringNotEmpty(viewName, "viewName");

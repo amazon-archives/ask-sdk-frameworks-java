@@ -8,7 +8,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * If added to a controller parameter of type {@link java.util.Map}, a Map<String, String>
+ * If added to a controller parameter of type {@link java.util.Map}, the Map
  * containing the slot names and their values will be passed in.
  */
 @Target(value = {PARAMETER})

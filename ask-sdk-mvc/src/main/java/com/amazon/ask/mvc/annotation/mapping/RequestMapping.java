@@ -35,12 +35,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @AutoRequestHandler(RequestMapping.Plugin.class)
 public @interface RequestMapping {
     /**
-     * Request types to match
+     * @return request types to match
      */
     Class<? extends Request>[] value() default {};
 
     /**
-     * Request types to match. Same as value()
+     * @return request types to match. Same as value()
      */
     Class<? extends Request>[] types() default {};
 

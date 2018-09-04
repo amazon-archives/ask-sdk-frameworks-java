@@ -12,15 +12,15 @@ import java.lang.annotation.Target;
  *
  * For example, given controller with two methods annotated with {@link IntentMapping} for intent, "A":
  *
- * <code>
- * @IntentMapping("A")
+ * <pre>
+ * &#64;IntentMapping("A")
  * public Response handle1(..) {}
  *
  *
- * @IntentMapping("A")
- * @WhenSessionAttribute(..)
+ * &#64;IntentMapping("A")
+ * &#64;WhenSessionAttribute(..)
  * public Response handle2(..) {}
- * </code>
+ * </pre>
  *
  * `handle1` and `handle2` both accept intent "A", but `handle2` has a condition. If `handle1` is
  * checked before `handle2`, then `handle2` will never be invoked. Adding `@Priority(1)` to `handle2`
@@ -29,9 +29,9 @@ import java.lang.annotation.Target;
  * Methods who are not annotated with {@link Priority} are considered to have `0` priority.
  *
  * Methods run in descending order (largest number first). So:
- * - priority > 0: it runs before default
+ * - priority {@literal >} 0: it runs before default
  * - priority = 0: it runs at the same time as default
- * - priority < 0: it runs after default methods
+ * - priority {@literal <} 0: it runs after default methods
  *
  * Use of {@link Priority} is discouraged as it could be difficult to maintain. Predicates should
  * attempt to be mutually exclusive.

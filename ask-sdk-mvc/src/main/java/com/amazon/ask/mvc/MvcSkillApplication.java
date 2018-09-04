@@ -17,7 +17,7 @@ import java.util.Map;
 public abstract class MvcSkillApplication implements SkillApplication {
 
     /**
-     * Lazily initializes the {@link Skill} from {@link SkillModule}.
+     * @return builds the {@link Skill} from its modules {@link SkillModule}.
      */
     @Override
     public Skill getSkill() {
@@ -39,6 +39,8 @@ public abstract class MvcSkillApplication implements SkillApplication {
 
     /**
      * Override this to customize your Skill configuration.
+     *
+     * @return the skill builder
      */
     protected SkillBuilder getSkillBuilder() {
         return Skills.standard();

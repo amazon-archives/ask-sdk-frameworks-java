@@ -32,22 +32,22 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface WhenSessionAttribute {
 
     /**
-     * The attribute name
+     * @return the attribute name
      */
     String[] path();
 
     /**
-     * Possible attribute values
+     * @return possible attribute values
      */
     String[] hasValues() default {};
 
     /**
+     * @return if the condition should match a null or missing value
      */
     boolean matchNull() default false;
 
-
     /**
-     *
+     * Adds support for the {@link WhenSessionAttribute} predicate.
      */
     class Plugin implements AutoPredicate.Plugin<WhenSessionAttribute> {
         @Override
