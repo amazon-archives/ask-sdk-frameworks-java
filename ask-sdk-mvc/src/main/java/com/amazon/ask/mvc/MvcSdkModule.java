@@ -1,8 +1,8 @@
 package com.amazon.ask.mvc;
 
 import com.amazon.ask.dispatcher.request.handler.impl.DefaultHandlerAdapter;
-import com.amazon.ask.models.definition.Model;
-import com.amazon.ask.models.mapper.IntentMapper;
+import com.amazon.ask.interaction.definition.Model;
+import com.amazon.ask.interaction.mapper.IntentMapper;
 import com.amazon.ask.module.SdkModule;
 import com.amazon.ask.module.SdkModuleContext;
 import com.amazon.ask.mvc.annotation.plugin.*;

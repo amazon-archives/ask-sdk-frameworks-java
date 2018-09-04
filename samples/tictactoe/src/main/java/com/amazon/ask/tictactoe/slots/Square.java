@@ -1,7 +1,7 @@
 package com.amazon.ask.tictactoe.slots;
 
-import com.amazon.ask.models.annotation.data.SlotTypeResource;
-import com.amazon.ask.models.annotation.type.SlotType;
+import com.amazon.ask.interaction.annotation.data.SlotTypeResource;
+import com.amazon.ask.interaction.annotation.type.SlotType;
 
 /**
  * 0 1 2

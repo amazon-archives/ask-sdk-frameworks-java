@@ -1,7 +1,7 @@
 package com.amazon.ask.colorpicker;
 
 import com.amazon.ask.SkillStreamHandler;
-import com.amazon.ask.models.SkillApplication;
+import com.amazon.ask.interaction.SkillApplication;
 
 /**
  * Adapts the {@link ColorPickerSkill} for running within a Lambad environment.

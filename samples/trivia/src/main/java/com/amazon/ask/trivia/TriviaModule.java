@@ -1,8 +1,8 @@
 package com.amazon.ask.trivia;
 
-import com.amazon.ask.models.data.model.IntentData;
-import com.amazon.ask.models.definition.Model;
-import com.amazon.ask.models.types.intent.*;
+import com.amazon.ask.interaction.data.model.IntentData;
+import com.amazon.ask.interaction.definition.Model;
+import com.amazon.ask.interaction.types.intent.*;
 import com.amazon.ask.mvc.MvcSdkModule;
 import com.amazon.ask.mvc.SkillModule;
 import com.amazon.ask.mvc.view.FreeMarkerViewResolver;

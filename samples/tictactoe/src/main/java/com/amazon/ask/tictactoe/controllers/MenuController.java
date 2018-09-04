@@ -6,7 +6,7 @@ import com.amazon.ask.model.LaunchRequest;
 import com.amazon.ask.model.RequestEnvelope;
 import com.amazon.ask.model.Response;
 import com.amazon.ask.model.ui.PlainTextOutputSpeech;
-import com.amazon.ask.models.types.intent.YesIntent;
+import com.amazon.ask.interaction.types.intent.YesIntent;
 import com.amazon.ask.mvc.annotation.condition.WhenSessionAttribute;
 import com.amazon.ask.mvc.annotation.mapping.IntentMapping;
 import com.amazon.ask.mvc.annotation.mapping.RequestInterceptor;

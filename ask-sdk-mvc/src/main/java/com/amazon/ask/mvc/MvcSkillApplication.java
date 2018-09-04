@@ -3,9 +3,9 @@ package com.amazon.ask.mvc;
 import com.amazon.ask.Skill;
 import com.amazon.ask.Skills;
 import com.amazon.ask.builder.SkillBuilder;
-import com.amazon.ask.models.SkillApplication;
-import com.amazon.ask.models.definition.Model;
-import com.amazon.ask.models.definition.SkillModel;
+import com.amazon.ask.interaction.SkillApplication;
+import com.amazon.ask.interaction.definition.Model;
+import com.amazon.ask.interaction.definition.SkillModel;
 
 import java.util.List;
 import java.util.Locale;

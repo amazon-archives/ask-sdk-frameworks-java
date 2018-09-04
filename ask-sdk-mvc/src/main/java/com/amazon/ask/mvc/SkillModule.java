@@ -1,6 +1,6 @@
 package com.amazon.ask.mvc;
 
-import com.amazon.ask.models.definition.Model;
+import com.amazon.ask.interaction.definition.Model;
 
 /**
  * Interface for a skill module, containing both an interaction model and runtime logic.

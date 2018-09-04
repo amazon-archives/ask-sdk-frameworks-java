@@ -1,8 +1,8 @@
 package com.amazon.ask.tictactoe.intents;
 
-import com.amazon.ask.models.annotation.data.IntentResource;
-import com.amazon.ask.models.annotation.data.SlotProperty;
-import com.amazon.ask.models.annotation.type.Intent;
+import com.amazon.ask.interaction.annotation.data.IntentResource;
+import com.amazon.ask.interaction.annotation.data.SlotProperty;
+import com.amazon.ask.interaction.annotation.type.Intent;
 import com.amazon.ask.tictactoe.slots.Square;
 
 /**

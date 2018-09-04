@@ -2,7 +2,7 @@ package com.amazon.ask.mvc.argument;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.model.RequestEnvelope;
-import com.amazon.ask.models.mapper.IntentMapper;
+import com.amazon.ask.interaction.mapper.IntentMapper;
 import com.amazon.ask.mvc.SkillContext;
 import com.amazon.ask.mvc.Utils;
 import com.amazon.ask.mvc.mapper.ArgumentResolverContext;

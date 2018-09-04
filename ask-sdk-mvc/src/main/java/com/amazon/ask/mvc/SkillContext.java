@@ -1,6 +1,6 @@
 package com.amazon.ask.mvc;
 
-import com.amazon.ask.models.definition.Model;
+import com.amazon.ask.interaction.definition.Model;
 import com.amazon.ask.mvc.mapper.ControllerMethodContext;
 import com.amazon.ask.mvc.plugin.*;
 import com.fasterxml.jackson.databind.ObjectMapper;

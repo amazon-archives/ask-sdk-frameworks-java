@@ -1,8 +1,8 @@
 package com.amazon.ask.trivia.intents;
 
-import com.amazon.ask.models.annotation.data.IntentResource;
-import com.amazon.ask.models.annotation.type.Intent;
-import com.amazon.ask.models.types.slot.AmazonNumber;
+import com.amazon.ask.interaction.annotation.data.IntentResource;
+import com.amazon.ask.interaction.annotation.type.Intent;
+import com.amazon.ask.interaction.types.slot.AmazonNumber;
 
 @Intent("AnswerIntent")
 @IntentResource("answer_intent")

@@ -1,6 +1,6 @@
 package com.amazon.ask.mvc;
 
-import com.amazon.ask.models.definition.Model;
+import com.amazon.ask.interaction.definition.Model;
 
 import java.util.Collections;
 import java.util.List;

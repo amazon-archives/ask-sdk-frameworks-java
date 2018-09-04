@@ -3,7 +3,7 @@ package com.amazon.ask.trivia.controllers;
 import com.amazon.ask.attributes.AttributesManager;
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.model.LaunchRequest;
-import com.amazon.ask.models.types.intent.*;
+import com.amazon.ask.interaction.types.intent.*;
 import com.amazon.ask.model.Response;
 import com.amazon.ask.model.SessionEndedRequest;
 import com.amazon.ask.mvc.annotation.mapping.ExceptionHandler;

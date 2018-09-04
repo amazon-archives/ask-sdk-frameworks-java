@@ -1,7 +1,7 @@
 package com.amazon.ask.mvc.annotation.plugin;
 
 import com.amazon.ask.dispatcher.exception.ExceptionHandler;
-import com.amazon.ask.models.Utils;
+import com.amazon.ask.interaction.Utils;
 import com.amazon.ask.mvc.mapper.ControllerMethodContext;
 import com.amazon.ask.mvc.plugin.ExceptionHandlerResolver;
 

@@ -1,9 +1,9 @@
 package com.amazon.ask.maven.models;
 
-import com.amazon.ask.models.SkillApplication;
-import com.amazon.ask.models.Utils;
-import com.amazon.ask.models.build.Generator;
-import com.amazon.ask.models.build.GeneratorException;
+import com.amazon.ask.interaction.SkillApplication;
+import com.amazon.ask.interaction.Utils;
+import com.amazon.ask.interaction.build.Generator;
+import com.amazon.ask.interaction.build.GeneratorException;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;

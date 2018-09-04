@@ -1,7 +1,7 @@
 package com.amazon.ask.decisiontree.intents;
 
-import com.amazon.ask.models.annotation.data.IntentResource;
-import com.amazon.ask.models.annotation.type.Intent;
+import com.amazon.ask.interaction.annotation.data.IntentResource;
+import com.amazon.ask.interaction.annotation.type.Intent;
 
 @Intent("CouchPotatoIntent")
 @IntentResource("couch_potato_intent")

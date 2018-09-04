@@ -3,7 +3,7 @@ package com.amazon.ask.colorpicker;
 import com.amazon.ask.builder.SkillBuilder;
 import com.amazon.ask.colorpicker.handlers.exception.CatchAllExceptionHandler;
 import com.amazon.ask.colorpicker.handlers.exception.UnhandledSkillExceptionHandler;
-import com.amazon.ask.models.definition.SkillModel;
+import com.amazon.ask.interaction.definition.SkillModel;
 import com.amazon.ask.mvc.MvcSkillApplication;
 import com.amazon.ask.mvc.SkillModule;
 

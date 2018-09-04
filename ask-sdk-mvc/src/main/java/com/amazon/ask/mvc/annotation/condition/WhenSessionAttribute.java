@@ -1,7 +1,7 @@
 package com.amazon.ask.mvc.annotation.condition;
 
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
-import com.amazon.ask.models.Utils;
+import com.amazon.ask.interaction.Utils;
 import com.amazon.ask.mvc.annotation.plugin.AutoPredicate;
 import com.amazon.ask.mvc.mapper.AnnotationContext;
 

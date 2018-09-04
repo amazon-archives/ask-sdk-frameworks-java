@@ -4,7 +4,7 @@ import com.amazon.ask.dispatcher.request.handler.HandlerInput;
 import com.amazon.ask.dispatcher.request.handler.RequestHandler;
 import com.amazon.ask.model.IntentRequest;
 import com.amazon.ask.model.Request;
-import com.amazon.ask.models.annotation.type.Intent;
+import com.amazon.ask.interaction.annotation.type.Intent;
 import com.amazon.ask.mvc.annotation.plugin.AutoRequestHandler;
 import com.amazon.ask.mvc.mapper.ControllerMethodContext;
 import com.amazon.ask.mvc.mapper.invoke.MethodInvoker;

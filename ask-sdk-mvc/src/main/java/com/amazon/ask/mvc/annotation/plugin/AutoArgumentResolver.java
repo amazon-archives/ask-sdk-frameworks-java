@@ -1,6 +1,6 @@
 package com.amazon.ask.mvc.annotation.plugin;
 
-import com.amazon.ask.models.Utils;
+import com.amazon.ask.interaction.Utils;
 import com.amazon.ask.mvc.annotation.condition.WhenDialogState;
 import com.amazon.ask.mvc.annotation.condition.WhenSessionAttribute;
 import com.amazon.ask.mvc.mapper.ArgumentResolverContext;

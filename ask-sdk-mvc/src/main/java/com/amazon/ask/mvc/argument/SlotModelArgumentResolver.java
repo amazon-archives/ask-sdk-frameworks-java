@@ -1,8 +1,8 @@
 package com.amazon.ask.mvc.argument;
 
 import com.amazon.ask.model.IntentRequest;
-import com.amazon.ask.models.mapper.IntentMapper;
-import com.amazon.ask.models.mapper.IntentParseException;
+import com.amazon.ask.interaction.mapper.IntentMapper;
+import com.amazon.ask.interaction.mapper.IntentParseException;
 import com.amazon.ask.mvc.annotation.argument.Slot;
 import com.amazon.ask.mvc.mapper.ArgumentResolverContext;
 import com.amazon.ask.mvc.plugin.ArgumentResolver;

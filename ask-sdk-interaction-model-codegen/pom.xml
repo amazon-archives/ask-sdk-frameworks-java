@@ -92,7 +92,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.amazon.ask.models.codegen.Application</mainClass>
+                            <mainClass>com.amazon.ask.interaction.codegen.Application</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

@@ -1,6 +1,6 @@
 package com.amazon.ask.mvc.mapper;
 
-import com.amazon.ask.models.Utils;
+import com.amazon.ask.interaction.Utils;
 import com.amazon.ask.mvc.SkillContext;
 
 import java.lang.annotation.Annotation;

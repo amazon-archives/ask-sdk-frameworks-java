@@ -1,8 +1,8 @@
 package com.amazon.ask.tictactoe;
 
-import com.amazon.ask.models.definition.Model;
-import com.amazon.ask.models.types.intent.NoIntent;
-import com.amazon.ask.models.types.intent.YesIntent;
+import com.amazon.ask.interaction.definition.Model;
+import com.amazon.ask.interaction.types.intent.NoIntent;
+import com.amazon.ask.interaction.types.intent.YesIntent;
 import com.amazon.ask.mvc.MvcSdkModule;
 import com.amazon.ask.mvc.SkillModule;
 import com.amazon.ask.mvc.view.nashorn.NashornViewResolver;

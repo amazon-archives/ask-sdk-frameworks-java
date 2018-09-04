@@ -7,7 +7,7 @@ import com.amazon.ask.model.RequestEnvelope;
 import com.amazon.ask.model.ResponseEnvelope;
 import com.amazon.ask.model.events.skillevents.AccountLinkedRequest;
 import com.amazon.ask.model.events.skillevents.PermissionAcceptedRequest;
-import com.amazon.ask.models.definition.Model;
+import com.amazon.ask.interaction.definition.Model;
 import com.amazon.ask.mvc.annotation.condition.WhenSessionAttribute;
 import com.amazon.ask.mvc.controller.MappingsController;
 import org.junit.Test;
