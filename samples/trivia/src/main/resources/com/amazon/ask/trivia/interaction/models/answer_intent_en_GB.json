@@ -1,0 +1,9 @@
+{
+  "samples" : [
+    "the answer is {answer}",
+    "my answer is {answer}",
+    "is it {answer}",
+    "{answer} is my answer",
+    "{answer}"
+  ]
+}
