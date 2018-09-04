@@ -71,7 +71,7 @@ public class SkillModel {
         /**
          * Specify an invocation name for a locale
          *
-         * @param locale
+         * @param locale of invocation name
          * @param name invocation name for this locale
          * @return this
          */
@@ -79,6 +79,13 @@ public class SkillModel {
             return withInvocationName(Locale.forLanguageTag(locale), name);
         }
 
+        /**
+         * Specify an invocation name for a locale
+         *
+         * @param locale of invocation name
+         * @param name invocation name for this locale
+         * @return this
+         */
         public Builder withInvocationName(Locale locale, String name) {
             if (this.invocationNames == null) {
                 this.invocationNames = new HashMap<>();
@@ -87,6 +94,9 @@ public class SkillModel {
             return this;
         }
 
+        /**
+         * @return the built skill model
+         */
         public SkillModel build() {
             if (models != null) {
                 models.forEach(modelBuilder::merge); // TODO: isolate associated global ... merge is technically a leak

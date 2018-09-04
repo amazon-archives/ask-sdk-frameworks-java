@@ -12,7 +12,7 @@ import com.amazon.ask.interaction.types.slot.BaseSlotValue;
  * @see RelativeTime
  * @see AbsoluteTime
  *
- * @see <a href="https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#time">AMAZON.TIME docs</a>
+ * @see <a href="https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#time">Slot Type Reference</a>
  */
 @BuiltIn
 @SlotType(value = "AMAZON.TIME")

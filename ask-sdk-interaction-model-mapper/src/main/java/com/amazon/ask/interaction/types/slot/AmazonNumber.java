@@ -10,7 +10,7 @@ import java.util.Objects;
 import static com.amazon.ask.util.ValidationUtils.assertNotNull;
 
 /**
- *
+ * @see <a href="https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#number">Slot Type Reference</a>
  */
 @BuiltIn
 @SlotType(value = "AMAZON.NUMBER")

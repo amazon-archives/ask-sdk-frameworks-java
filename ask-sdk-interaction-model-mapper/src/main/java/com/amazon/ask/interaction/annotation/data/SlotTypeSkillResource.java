@@ -1,16 +1,17 @@
 package com.amazon.ask.interaction.annotation.data;
 
-import com.amazon.ask.interaction.model.InteractionModel;
-import com.amazon.ask.interaction.model.SkillModel;
-import com.amazon.ask.interaction.model.SlotTypeValue;
-import com.amazon.ask.interaction.model.SlotValue;
 import com.amazon.ask.interaction.Utils;
 import com.amazon.ask.interaction.annotation.plugin.AutoSlotTypeData;
-import com.amazon.ask.interaction.renderer.RenderContext;
+import com.amazon.ask.interaction.annotation.type.SlotType;
 import com.amazon.ask.interaction.data.model.SlotTypeData;
 import com.amazon.ask.interaction.data.source.Codec;
 import com.amazon.ask.interaction.data.source.JsonCodec;
 import com.amazon.ask.interaction.definition.SlotTypeDefinition;
+import com.amazon.ask.interaction.model.InteractionModel;
+import com.amazon.ask.interaction.model.SkillModel;
+import com.amazon.ask.interaction.model.SlotTypeValue;
+import com.amazon.ask.interaction.model.SlotValue;
+import com.amazon.ask.interaction.renderer.RenderContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -23,7 +24,9 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
+ * Associates a resource file containing {@link SkillModel} with a type annotated with {@link SlotType}.
  *
+ * Using the slot type's name, its {@link SlotTypeData} is cherry-picked from the skill model file.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
@@ -31,20 +34,23 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Repeatable(SlotTypeSkillResource.Container.class)
 public @interface SlotTypeSkillResource {
     /**
-     * Resource name containing data.
+     * @return resource name containing data.
      */
     String value();
 
     /**
-     * Suffix of resource file - defaults to .json.
+     * @return suffix of resource file - defaults to .json.
      */
     String suffix() default ".json";
 
     /**
-     * Class to load resources from, defaults to the annotated class.
+     * @return class to load resources from, defaults to the annotated class.
      */
     Class<?> resourceClass() default Object.class;
 
+    /**
+     * @return class of {@link Codec} to read {@link SkillModel} data
+     */
     Class<? extends Codec<SkillModel>> codec() default DefaultCodec.class;
 
     /**

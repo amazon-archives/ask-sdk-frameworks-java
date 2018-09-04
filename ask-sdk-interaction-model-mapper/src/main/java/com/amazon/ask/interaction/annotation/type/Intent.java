@@ -15,12 +15,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface Intent {
     /**
-     * Name of the intent - defaults to the annotated type's {@link Class#getSimpleName()}
+     * @return name of the intent - defaults to the annotated type's {@link Class#getSimpleName()}
      */
     String value() default "";
 
     /**
-     * Id of the intent.
+     * @return id of the intent.
      */
     String id() default "";
 }

@@ -98,6 +98,7 @@ public class Utils {
      * Quietly try to instantiate a class
      *
      * @param clazz to instantiate
+     * @param <T> type of class to instantiate
      * @return instance
      * @throws IllegalStateException if there is an error instantiating the class
      */
@@ -114,7 +115,7 @@ public class Utils {
      *
      * @param condition that must be true
      * @param msg of error to throw
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException if condition is false
      */
     public static void checkArgument(boolean condition, String msg) {
         if (!condition) {

@@ -19,8 +19,8 @@ public class SlotTypeRenderer {
     /**
      * Render the slot type interaction model
      *
-     * @param slotType
-     * @param slotData
+     * @param slotType slot type definition
+     * @param slotData slot type data
      * @return custom slot type interaction model
      */
     public com.amazon.ask.interaction.model.SlotType renderSlotType(SlotTypeDefinition slotType, SlotTypeData slotData) {

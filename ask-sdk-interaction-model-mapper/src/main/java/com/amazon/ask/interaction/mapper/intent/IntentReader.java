@@ -7,9 +7,9 @@ public interface IntentReader<T> {
     /**
      * Parse an IntentRequest to a concrete instance
      *
-     * @param intentRequest
+     * @param intentRequest intent request
      * @return instance representation of this request
-     * @throws IntentParseException
+     * @throws IntentParseException if a {@link T} instance could not be read from the request
      */
     T read(IntentRequest intentRequest) throws IntentParseException;
 }

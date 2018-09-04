@@ -34,10 +34,9 @@ public class ModelRenderer {
     /**
      * Renders the localized {@link SubModel} for a {@link Model}
      *
-     * @param model
-     * @param locale
+     * @param model containing classes and data sources
+     * @param locale alexa locale to render model for
      * @return rendered model
-     * @throws IOException if fetching and compiling metadata fails
      */
     public SubModel render(Model model, Locale locale) {
         List<Intent> intents = new ArrayList<>();

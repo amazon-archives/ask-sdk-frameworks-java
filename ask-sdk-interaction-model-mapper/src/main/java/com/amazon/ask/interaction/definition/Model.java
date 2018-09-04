@@ -135,11 +135,6 @@ public class Model {
             return this;
         }
 
-        /**
-         *
-         * @param resolvers
-         * @return
-         */
         public Builder withIntentDataResolvers(Collection<IntentDataResolver> resolvers) {
             this.intentDataResolvers = new LinkedHashSet<>(resolvers);
             return this;
@@ -158,11 +153,6 @@ public class Model {
             return this;
         }
 
-        /**
-         *
-         * @param resolvers
-         * @return
-         */
         public Builder withSlotTypeDataResolvers(Collection<SlotTypeDataResolver> resolvers) {
             this.slotTypeDataResolvers = new LinkedHashSet<>(resolvers);
             return this;
@@ -195,9 +185,9 @@ public class Model {
         /**
          * Add an intent and a data supplier
          *
-         * @param intentClass
-         * @param data
-         * @return
+         * @param intentClass intent class
+         * @param data source of intent data
+         * @return this
          */
         public Builder intent(Class<?> intentClass, IntentDataSource data) {
             return addIntent(toJavaType(intentClass), data);
@@ -205,9 +195,9 @@ public class Model {
 
         /**
          * Add an intent along add a
-         * @param intentClass
-         * @param data
-         * @return
+         * @param intentClass intent class
+         * @param data collection of intent data sources
+         * @return this
          */
         public Builder intent(Class<?> intentClass, Collection<IntentDataSource> data) {
             JavaType javaType = toJavaType(intentClass);
@@ -229,6 +219,11 @@ public class Model {
 
         /**
          * Associate data with a generic intent.
+         *
+         * @param intentClass intent class
+         * @param slotTypes concrete types of intent parameters - the slot types
+         * @param data source of intent data
+         * @return this
          */
         public Builder genericIntent(Class<?> intentClass, Collection<Class<?>> slotTypes, IntentDataSource data) {
             return addIntent(toJavaType(intentClass, slotTypes), data);
@@ -237,6 +232,9 @@ public class Model {
         /**
          * Register an intent with this module. The Class must adhere to the java bean standard and its properties
          * must be valid {@link SlotTypeDefinition} types.
+         *
+         * @param javaType intent java type
+         * @return this
          */
         protected Builder addIntent(JavaType javaType) {
             return addIntent(getIntentDefinition(javaType));
@@ -244,6 +242,10 @@ public class Model {
 
         /**
          * Associate data with an addIntent.
+         *
+         * @param javaType intent java type
+         * @param data source of intent data
+         * @return this
          */
         protected Builder addIntent(JavaType javaType, IntentDataSource data) {
             IntentDefinition intent = getIntentDefinition(javaType);
@@ -256,7 +258,7 @@ public class Model {
          *
          * TODO: Check for overwrite?
          *
-         * @param intentDefinition
+         * @param intentDefinition intent definition
          * @return this
          */
         protected Builder addIntent(IntentDefinition intentDefinition) {

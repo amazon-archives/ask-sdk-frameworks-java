@@ -67,9 +67,9 @@ public class IntentMapper {
     /**
      * Parse an intent request into an instance of the class it was registered with in the {@link Model}
      *
-     * @param intentRequest
-     * @return instance
-     * @throws IntentParseException
+     * @param intentRequest intent request
+     * @return parsed intent instance
+     * @throws IntentParseException if the intent request could not be parsed
      */
     public Object parseIntent(IntentRequest intentRequest) throws IntentParseException {
         return intentReaderFor(getIntentDefinition(intentRequest).getIntentType()).read(intentRequest);
@@ -78,10 +78,10 @@ public class IntentMapper {
     /**
      * Parse a slot value into an instance of the class it was registered with in the {@link Model}
      *
-     * @param intentRequest
-     * @param slotName name of the slpt
-     * @return slot instance
-     * @throws IntentParseException
+     * @param intentRequest intent request
+     * @param slotName name of the slot
+     * @return parsed slot instance
+     * @throws IntentParseException if the intent request's slot could not be parsed
      */
     public Object parseIntentSlot(IntentRequest intentRequest, String slotName) throws IntentParseException {
         SlotTypeDefinition slotTypeDefinition = getIntentDefinition(intentRequest).getSlots().get(slotName);
@@ -106,12 +106,12 @@ public class IntentMapper {
      * - It does not need to match the class registered with {@link Model.Builder#intent(Class)} or {@link Model.Builder#slotType(Class)}
      * - It does not need a {@link SlotType} annotation
      *
-     * @param intentRequest
+     * @param intentRequest intent request
      * @param slotName  name of the slot to read from intent
      * @param slotClass class to parse from the slot
      * @param <T> type of the slot
      * @return parsed slot instance
-     * @throws IntentParseException
+     * @throws IntentParseException if a {@link T} could not be parsed from the intent request's slot
      */
     public <T> T parseIntentSlot(IntentRequest intentRequest, String slotName, Class<T> slotClass) throws IntentParseException {
         try {
@@ -135,11 +135,11 @@ public class IntentMapper {
      * - It does not need to match the class registered with {@link Model.Builder#intent(Class)}
      * - It does not need an {@link Intent} annotation
      *
-     * @param intentRequest
+     * @param intentRequest intent request
      * @param intentClass type of class to parse intent request into
      * @param <T> type of intent
      * @return instance
-     * @throws IntentParseException
+     * @throws IntentParseException if a {@link T} could not be parsed from the request
      */
     public <T> T parseIntent(IntentRequest intentRequest, Class<T> intentClass) throws IntentParseException {
         return intentReaderFor(intentClass).read(intentRequest);

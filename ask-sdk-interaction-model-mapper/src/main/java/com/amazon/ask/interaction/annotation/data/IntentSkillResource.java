@@ -1,5 +1,6 @@
 package com.amazon.ask.interaction.annotation.data;
 
+import com.amazon.ask.interaction.annotation.type.Intent;
 import com.amazon.ask.interaction.model.*;
 import com.amazon.ask.interaction.Utils;
 import com.amazon.ask.interaction.annotation.plugin.AutoIntentData;
@@ -22,7 +23,9 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
+ * Associates a resource file containing {@link SkillModel} with a type annotated with {@link Intent}.
  *
+ * Using the intent's name, its {@link IntentData} is cherry-picked from the skill model file.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
@@ -30,20 +33,23 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Repeatable(IntentSkillResource.Container.class)
 public @interface IntentSkillResource {
     /**
-     * Resource name containing data.
+     * @return resource name containing data.
      */
     String value();
 
     /**
-     * Suffix of resource file - defaults to .json.
+     * @return suffix of resource file - defaults to .json.
      */
     String suffix() default ".json";
 
     /**
-     * Class to load resources from, defaults to the annotated class.
+     * @return class to load resources from, defaults to the annotated class.
      */
     Class<?> resourceClass() default Object.class;
 
+    /**
+     * @return class of {@link Codec} to read {@link SkillModel} data
+     */
     Class<? extends Codec<SkillModel>> codec() default DefaultCodec.class;
 
     /**

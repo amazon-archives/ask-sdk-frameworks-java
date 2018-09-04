@@ -11,11 +11,7 @@ import java.util.Objects;
 import static com.amazon.ask.util.ValidationUtils.assertNotNull;
 
 /**
- * Provides recognition for special ways four-digit numbers are often spoken. This is useful for input such as PIN
- * codes, validation codes or years that are often said as single or groups of digits. The user can speak the number in
- * a variety of ways. The Alexa service sends your service the recognized digits.
- *
- * @see <a href="https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#four_digit_number">AMAZON.FOUR_DIGIT_NUMBER docs</a>
+ * @see <a href="https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#four_digit_number">Slot Type Reference</a>
  */
 @BuiltIn
 @SlotType(value = "AMAZON.FOUR_DIGIT_NUMBER")

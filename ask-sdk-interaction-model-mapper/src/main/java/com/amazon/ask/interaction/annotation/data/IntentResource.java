@@ -2,6 +2,7 @@ package com.amazon.ask.interaction.annotation.data;
 
 import com.amazon.ask.interaction.Utils;
 import com.amazon.ask.interaction.annotation.plugin.AutoIntentData;
+import com.amazon.ask.interaction.annotation.type.Intent;
 import com.amazon.ask.interaction.renderer.RenderContext;
 import com.amazon.ask.interaction.data.model.IntentData;
 import com.amazon.ask.interaction.data.source.Codec;
@@ -17,7 +18,7 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- *
+ * Associates a resource file containing {@link IntentData} with a type annotated with {@link Intent}.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
@@ -25,22 +26,22 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @AutoIntentData(IntentResource.Plugin.class)
 public @interface IntentResource {
     /**
-     * Resource name containing data.
+     * @return resource name containing data.
      */
     String value();
 
     /**
-     * Suffix of resource file - defaults to .json.
+     * @return suffix of resource file - defaults to .json.
      */
     String suffix() default ".json";
 
     /**
-     * Class to load resources from, defaults to the annotated class.
+     * @return class to load resources from, defaults to the annotated class.
      */
     Class<?> resourceClass() default Object.class;
 
     /**
-     * Class of {@link Codec} which can read {@link IntentData} from a file.
+     * @return class of {@link Codec} which can read {@link IntentData} from a file.
      */
     Class<? extends Codec<IntentData>> codec() default DefaultCodec.class;
 

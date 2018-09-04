@@ -32,7 +32,7 @@ public class ResourceSource<T, D> {
      * @param codec to apply file add
      * @param name of resource
      * @param suffix of resource
-     * @param resourceCandidateEnumerators
+     * @param resourceCandidateEnumerators non-empty set of resource enumerators/scanners
      * @see Class#getResource(String)
      */
     public ResourceSource(Class resourceClass, Codec<D> codec, String name, String suffix, Set<ResourceCandidateEnumerator> resourceCandidateEnumerators) {

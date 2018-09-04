@@ -13,12 +13,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface SlotType {
     /**
-     * Slot type name - defaults to the annotated type's {@link Class#getSimpleName()}
+     * @return slot type name - defaults to the annotated type's {@link Class#getSimpleName()}
      */
     String value() default "";
 
     /**
-     * Id of the slot type.
+     * @return id of the slot type.
      */
     String id() default "";
 }

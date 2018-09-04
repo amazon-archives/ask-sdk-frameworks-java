@@ -26,10 +26,9 @@ public class InteractionModelRenderer {
     /**
      * Render localized {@link InteractionModel} for this skill
      *
-     * @param skillModel
-     * @param locale
+     * @param skillModel skill model containing invocation names and models
+     * @param locale alexa locale to render a model for
      * @return localized skill model
-     * @throws IOException if fetching and compiling metadata fails
      */
     public InteractionModel render(SkillModel skillModel, Locale locale) {
         assertNotNull(skillModel, "skillDefinition");

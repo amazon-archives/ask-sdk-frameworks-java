@@ -11,9 +11,6 @@ import static com.amazon.ask.util.ValidationUtils.assertNotNull;
 /**
  * Converts words that represent dates into a date format.
  *
- * The date is provided to your service in ISO-8601 date format. Note that the date your service receives in the slot
- * can vary depending on the specific phrase uttered by the user.
- *
  * @see PresentRef
  * @see DecadeDate
  * @see MonthDate
@@ -24,7 +21,7 @@ import static com.amazon.ask.util.ValidationUtils.assertNotNull;
  * @see YearDate
  * @see AmazonDateParser
  *
- * @see <a href="https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#date">AMAZON.DATE docs</a>
+ * @see <a href="https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#date">Slot Type Reference</a>
  */
 @BuiltIn
 @SlotType(value = "AMAZON.DATE")

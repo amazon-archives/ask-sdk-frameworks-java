@@ -26,7 +26,7 @@ public class IntentSlotRenderer {
      * Renders a slot
      *
      * @param slotName name of the slot on the intent
-     * @param slotType type definition
+     * @param slotType slot type definition
      * @param intentData data of owning intent
      * @return renderer slot
      */
@@ -46,10 +46,11 @@ public class IntentSlotRenderer {
     /**
      * Renders a slot's dialog interaction model
      *
-     * @param intentDefinition
-     * @param slotType
-     * @param slotData
-     * @return teh slot's dialog model
+     * @param intentDefinition definition of intent to render
+     * @param slotName name of the slot on the intent
+     * @param slotType slot type definition
+     * @param slotData slot type data
+     * @return the slot's dialog model
      */
     public DialogSlot renderDialogSlot(IntentDefinition intentDefinition, String slotName, SlotTypeDefinition slotType, IntentSlotData slotData) {
         assertNotNull(intentDefinition, "intentDefinition");
@@ -72,9 +73,9 @@ public class IntentSlotRenderer {
     /**
      * Renders a slot's dialog prompts.
      *
-     * @param intentDefinition
-     * @param slotName
-     * @param slotData
+     * @param intentDefinition definition of intent to render
+     * @param slotName name of the slot (on the intent)
+     * @param slotData slot type data
      * @return list of the slot's prompts
      */
     public List<Prompt> renderSlotPrompts(IntentDefinition intentDefinition, String slotName, IntentSlotData slotData) {
