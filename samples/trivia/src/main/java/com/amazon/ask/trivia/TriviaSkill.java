@@ -2,16 +2,17 @@ package com.amazon.ask.trivia;
 
 import com.amazon.ask.builder.SkillBuilder;
 import com.amazon.ask.models.data.model.IntentData;
-import com.amazon.ask.models.data.source.ResourceSource;
-import com.amazon.ask.models.definition.IntentDefinition;
 import com.amazon.ask.models.definition.Model;
 import com.amazon.ask.models.types.intent.*;
 import com.amazon.ask.mvc.MvcSdkModule;
 import com.amazon.ask.mvc.MvcSkillApplication;
 import com.amazon.ask.mvc.SkillModule;
 import com.amazon.ask.mvc.view.FreeMarkerViewResolver;
-import com.amazon.ask.trivia.interaction.AnswerIntent;
-import com.amazon.ask.trivia.interaction.DontKnowIntent;
+import com.amazon.ask.trivia.controllers.TriviaController;
+import com.amazon.ask.trivia.handlers.exception.UnhandledRequestHandler;
+import com.amazon.ask.trivia.intents.AnswerIntent;
+import com.amazon.ask.trivia.intents.DontKnowIntent;
+import com.amazon.ask.trivia.service.TriviaDataProvider;
 
 import java.util.*;
 
@@ -46,7 +47,7 @@ public class TriviaSkill extends MvcSkillApplication {
                     .intent(StopIntent.class)
                     .intent(StartOverIntent.class, IntentData.resource() // extend built-in intent samples
                         .withResourceClass(getClass())
-                        .withName("interaction/models/start_over_intent")
+                        .withName("intents/start_over_intent")
                         .build())
                     .intent(RepeatIntent.class)
                     .intent(YesIntent.class)

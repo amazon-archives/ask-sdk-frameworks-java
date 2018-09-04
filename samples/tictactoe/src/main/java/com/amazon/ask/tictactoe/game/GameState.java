@@ -1,7 +1,7 @@
 package com.amazon.ask.tictactoe.game;
 
-import com.amazon.ask.tictactoe.interaction.PlayMove;
-import com.amazon.ask.tictactoe.interaction.Square;
+import com.amazon.ask.tictactoe.intents.PlayMove;
+import com.amazon.ask.tictactoe.slots.Square;
 
 import java.util.*;
 

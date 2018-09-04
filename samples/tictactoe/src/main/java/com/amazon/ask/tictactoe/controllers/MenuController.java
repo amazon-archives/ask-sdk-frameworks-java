@@ -15,7 +15,7 @@ import com.amazon.ask.mvc.annotation.mapping.ResponseInterceptor;
 import com.amazon.ask.mvc.mapper.Priority;
 import com.amazon.ask.tictactoe.game.GameService;
 import com.amazon.ask.tictactoe.game.GameState;
-import com.amazon.ask.tictactoe.interaction.NewGame;
+import com.amazon.ask.tictactoe.intents.NewGame;
 
 import static com.amazon.ask.mvc.mapper.Priority.MINIMUM;
 import static com.amazon.ask.util.ValidationUtils.assertNotNull;

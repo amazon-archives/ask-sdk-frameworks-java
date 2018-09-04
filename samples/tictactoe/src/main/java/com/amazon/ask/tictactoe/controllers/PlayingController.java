@@ -1,7 +1,6 @@
 package com.amazon.ask.tictactoe.controllers;
 
 import com.amazon.ask.attributes.AttributesManager;
-import com.amazon.ask.exception.UnhandledSkillException;
 import com.amazon.ask.model.IntentRequest;
 import com.amazon.ask.model.Response;
 import com.amazon.ask.model.ui.PlainTextOutputSpeech;
@@ -9,7 +8,6 @@ import com.amazon.ask.models.types.intent.NoIntent;
 import com.amazon.ask.models.types.intent.YesIntent;
 import com.amazon.ask.mvc.annotation.argument.SessionAttributes;
 import com.amazon.ask.mvc.annotation.condition.WhenSessionAttribute;
-import com.amazon.ask.mvc.annotation.mapping.ExceptionHandler;
 import com.amazon.ask.mvc.annotation.mapping.IntentMapping;
 import com.amazon.ask.mvc.annotation.mapping.RequestMapping;
 import com.amazon.ask.mvc.mapper.Priority;
@@ -18,8 +16,8 @@ import com.amazon.ask.tictactoe.game.GameService;
 import com.amazon.ask.tictactoe.game.GameState;
 import com.amazon.ask.tictactoe.game.MoveResult;
 import com.amazon.ask.tictactoe.game.Player;
-import com.amazon.ask.tictactoe.interaction.NewGame;
-import com.amazon.ask.tictactoe.interaction.PlayMove;
+import com.amazon.ask.tictactoe.intents.NewGame;
+import com.amazon.ask.tictactoe.intents.PlayMove;
 
 import java.util.HashMap;
 import java.util.Map;

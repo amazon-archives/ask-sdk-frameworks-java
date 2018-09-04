@@ -16,10 +16,10 @@ import com.amazon.ask.mvc.annotation.mapping.IntentMapping;
 import com.amazon.ask.mvc.annotation.mapping.RequestMapping;
 import com.amazon.ask.mvc.annotation.condition.WhenDialogState;
 import com.amazon.ask.mvc.view.ModelAndView;
-import com.amazon.ask.decisiontree.interaction.CouchPotatoIntent;
-import com.amazon.ask.decisiontree.interaction.RecommendationIntent;
+import com.amazon.ask.decisiontree.intents.CouchPotatoIntent;
+import com.amazon.ask.decisiontree.intents.RecommendationIntent;
 
-import com.amazon.ask.decisiontree.interaction.SalaryImportanceTypeSlot;
+import com.amazon.ask.decisiontree.slots.SalaryImportanceTypeSlot;
 import java.util.*;
 import java.util.stream.Collectors;
 

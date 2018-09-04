@@ -9,8 +9,8 @@ import com.amazon.ask.mvc.view.nashorn.NashornViewResolver;
 import com.amazon.ask.tictactoe.controllers.MenuController;
 import com.amazon.ask.tictactoe.controllers.PlayingController;
 import com.amazon.ask.tictactoe.game.GameService;
-import com.amazon.ask.tictactoe.interaction.NewGame;
-import com.amazon.ask.tictactoe.interaction.PlayMove;
+import com.amazon.ask.tictactoe.intents.NewGame;
+import com.amazon.ask.tictactoe.intents.PlayMove;
 
 public class TicTacToeModule implements SkillModule {
 
