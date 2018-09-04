@@ -1,0 +1,23 @@
+{
+  "values": {
+    "true": {
+      "value": "positive",
+      "synonyms": [
+        "I want",
+        "I prefer",
+        "I really like",
+        "I love",
+        "I like"
+      ]
+    },
+    "false": {
+      "value": "negative",
+      "synonyms": [
+        "I don't want",
+        "I really don't like",
+        "I don't like",
+        "I hate"
+      ]
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "values": {
+    "extrovert": {
+      "value": "extrovert",
+      "synonyms": [
+        "social butterfly",
+        "love to party"
+      ]
+    },
+    "introvert": {
+      "value": "introvert",
+      "synonyms": [
+        "to be alone",
+        "misunderstood"
+      ]
+    }
+  }
+}

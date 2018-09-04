@@ -1,0 +1,25 @@
+{
+  "values": {
+    "low": {
+      "value": "low",
+      "synonyms": [
+        "yuck",
+        "no way",
+        "gross",
+        "I can't stand it",
+        "can't stand it",
+        "throw up when I see it",
+        "scream"
+      ]
+    },
+    "high": {
+      "value": "high",
+      "synonyms": [
+        "I like blood",
+        "doesn't bother me",
+        "blood is natural",
+        "shrug"
+      ]
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "values": {
+    "unimportant": {
+      "value": "unimportant",
+      "synonyms": [
+        "money is evil",
+        "money is not important",
+        "not a sell out",
+        "nope",
+        "don't care about money"
+      ]
+    },
+    "somewhat": {
+      "value": "somewhat",
+      "synonyms": [
+        "just enough",
+        "somewhat important",
+        "not top priority",
+        "support my family"
+      ]
+    },
+    "very": {
+      "value": "very",
+      "synonyms": [
+        "high salary",
+        "filthy rich",
+        "billionaire",
+        "important",
+        "nothing more important"
+      ]
+    }
+  }
+}

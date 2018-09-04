@@ -1,0 +1,25 @@
+{
+  "values": {
+    "animals": {
+      "value": "animals",
+      "synonyms": [
+        "dogs",
+        "cats",
+        "birds",
+        "turtles",
+        "puppies",
+        "kittens",
+        "elephants"
+      ]
+    },
+    "people": {
+      "value": "people",
+      "synonyms": [
+        "men",
+        "women",
+        "kids",
+        "humans"
+      ]
+    }
+  }
+}
