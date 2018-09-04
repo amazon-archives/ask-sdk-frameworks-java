@@ -1,5 +1,6 @@
-package com.amazon.ask.decisiontree;
+package com.amazon.ask.decisiontree.controllers;
 
+import com.amazon.ask.decisiontree.service.RecommendationService;
 import com.amazon.ask.model.DialogState;
 import com.amazon.ask.model.Intent;
 import com.amazon.ask.model.LaunchRequest;

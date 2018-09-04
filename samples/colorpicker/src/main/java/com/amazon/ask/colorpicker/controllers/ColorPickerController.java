@@ -1,4 +1,4 @@
-package com.amazon.ask.colorpicker;
+package com.amazon.ask.colorpicker.controllers;
 
 import com.amazon.ask.colorpicker.intents.MyColorIsIntent;
 import com.amazon.ask.colorpicker.intents.WhatsMyColorIntent;

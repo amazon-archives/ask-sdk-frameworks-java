@@ -1,4 +1,4 @@
-package com.amazon.ask.decisiontree;
+package com.amazon.ask.decisiontree.handlers.exception;
 
 import com.amazon.ask.dispatcher.exception.ExceptionHandler;
 import com.amazon.ask.dispatcher.request.handler.HandlerInput;
@@ -6,7 +6,7 @@ import com.amazon.ask.exception.UnhandledSkillException;
 import com.amazon.ask.model.Response;
 import java.util.Optional;
 
-public class UnhandledRequestHandler implements ExceptionHandler {
+public class UnhandledSkillExceptionHandler implements ExceptionHandler {
     @Override
     public boolean canHandle(HandlerInput handlerInput, Throwable throwable) {
         return throwable instanceof UnhandledSkillException;

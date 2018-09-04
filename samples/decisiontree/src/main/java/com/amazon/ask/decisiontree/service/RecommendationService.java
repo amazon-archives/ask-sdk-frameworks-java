@@ -1,4 +1,4 @@
-package com.amazon.ask.decisiontree;
+package com.amazon.ask.decisiontree.service;
 
 
 import java.util.HashMap;

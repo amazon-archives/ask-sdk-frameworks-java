@@ -1,13 +1,11 @@
 package com.amazon.ask.tictactoe;
 
-import com.amazon.ask.model.RequestEnvelope;
 import com.amazon.ask.builder.SkillBuilder;
 import com.amazon.ask.mvc.MvcSkillApplication;
 import com.amazon.ask.mvc.SkillModule;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.amazon.ask.tictactoe.handlers.exception.CatchAllExceptionHandler;
+import com.amazon.ask.tictactoe.handlers.exception.UnhandledSkillExceptionHandler;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -28,7 +26,8 @@ public class TicTacToe extends MvcSkillApplication {
     @Override
     protected SkillBuilder getSkillBuilder() {
         return super.getSkillBuilder()
-                .addExceptionHandler(new ExceptionRequestHandler());
+            .addExceptionHandler(new UnhandledSkillExceptionHandler())
+            .addExceptionHandler(new CatchAllExceptionHandler());
     }
 
 }
