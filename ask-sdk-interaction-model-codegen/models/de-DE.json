@@ -1,0 +1,103 @@
+{
+  "interactionModel" : {
+    "languageModel" : {
+      "invocationName" : "de_DE",
+      "intents" : [ {
+        "name" : "AMAZON.HelpIntent"
+      }, {
+        "name" : "AMAZON.StopIntent",
+        "samples" : [ "AMAZON.StopIntent.extended.de_DE" ]
+      }, {
+        "name" : "PetTypeIntent",
+        "slots" : [ {
+          "name" : "city",
+          "type" : "AMAZON.US_CITY",
+          "samples" : [ "PetTypeIntent.city.sample.de_DE" ]
+        }, {
+          "name" : "date",
+          "type" : "AMAZON.DATE",
+          "samples" : [ "PetTypeIntent.date.sample.de_DE" ]
+        }, {
+          "name" : "pet",
+          "type" : "PetType",
+          "samples" : [ "PetTypeIntent.pet.sample.de_DE" ]
+        } ],
+        "samples" : [ "PetTypeIntent.sample.de_DE.1", "PetTypeIntent.sample.de_DE.2" ]
+      } ],
+      "types" : [ {
+        "name" : "PetType",
+        "values" : [ {
+          "id" : "CAT",
+          "name" : {
+            "value" : "cat",
+            "synonyms" : [ "PetType.cat.synonym.de_DE" ]
+          }
+        }, {
+          "id" : "DRAGON",
+          "name" : {
+            "value" : "dragon",
+            "synonyms" : [ "PetType.dragon.synonym.de_DE" ]
+          }
+        }, {
+          "id" : "DOG",
+          "name" : {
+            "value" : "dog",
+            "synonyms" : [ "PetType.dog.synonym.de_DE" ]
+          }
+        } ]
+      } ]
+    },
+    "dialog" : {
+      "intents" : [ {
+        "name" : "PetTypeIntent",
+        "confirmationRequired" : true,
+        "prompts" : {
+          "confirmation" : "Confirm.Intent-PetTypeIntent"
+        },
+        "slots" : [ {
+          "name" : "date",
+          "type" : "AMAZON.DATE",
+          "confirmationRequired" : true,
+          "elicitationRequired" : true,
+          "prompts" : {
+            "elicitation" : "Elicit.Intent-PetTypeIntent.IntentSlot-date",
+            "confirmation" : "Confirm.Intent-PetTypeIntent.IntentSlot-date"
+          }
+        }, {
+          "name" : "pet",
+          "type" : "PetType",
+          "elicitationRequired" : true,
+          "prompts" : { }
+        } ]
+      } ]
+    },
+    "prompts" : [ {
+      "id" : "Confirm.Intent-PetTypeIntent",
+      "variations" : [ {
+        "type" : "PlainText",
+        "value" : "PetTypeIntent.confirm.de_DE.1"
+      }, {
+        "type" : "PlainText",
+        "value" : "PetTypeIntent.confirm.de_DE.2"
+      } ]
+    }, {
+      "id" : "Confirm.Intent-PetTypeIntent.IntentSlot-date",
+      "variations" : [ {
+        "type" : "PlainText",
+        "value" : "PetTypeIntent.confirm.date.de_DE.1"
+      }, {
+        "type" : "PlainText",
+        "value" : "PetTypeIntent.confirm.date.de_DE.2"
+      } ]
+    }, {
+      "id" : "Elicit.Intent-PetTypeIntent.IntentSlot-date",
+      "variations" : [ {
+        "type" : "PlainText",
+        "value" : "PetTypeIntent.elicit.date.de_DE.1"
+      }, {
+        "type" : "PlainText",
+        "value" : "PetTypeIntent.elicit.date.de_DE.2"
+      } ]
+    } ]
+  }
+}
