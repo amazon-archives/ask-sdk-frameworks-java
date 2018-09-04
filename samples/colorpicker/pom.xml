@@ -64,7 +64,7 @@
         <artifactId>ask-sdk-maven-plugins</artifactId>
         <version>0.1.0-SNAPSHOT</version>
         <configuration>
-          <destinationDir>${basedir}/target/ask</destinationDir>
+          <destinationDir>${project.build.directory}/ask</destinationDir>
           <className>com.amazon.ask.colorpicker.ColorPickerSkill</className>
           <locales>
             <param>en_US</param>
