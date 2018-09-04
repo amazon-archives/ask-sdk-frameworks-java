@@ -44,7 +44,7 @@ public class ScriptEngineView extends BaseView {
         if (renderFunction == null && renderObject == null) {
             // result of script is the response, no method is invoked and the model attributes are bounded globally
             result = scriptEngine.eval(script, bindings);
-        } else{
+        } else {
             if (renderObject != null) {
                 Object thiz = scriptEngine.eval(renderObject);
                 result = ((Invocable) scriptEngine).invokeMethod(thiz, renderFunction, bindings);

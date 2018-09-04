@@ -5,7 +5,7 @@
   <artifactId>trivia</artifactId>
   <packaging>jar</packaging>
   <version>1.0</version>
-  <name>trivia</name>
+  <name>Trivia Example</name>
   <url>http://developer.amazon.com/ask</url>
   <licenses>
     <license>

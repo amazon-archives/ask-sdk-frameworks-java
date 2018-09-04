@@ -5,7 +5,7 @@
   <artifactId>colorpicker</artifactId>
   <packaging>jar</packaging>
   <version>1.0</version>
-  <name>colorpicker</name>
+  <name>Colorpicker Example</name>
   <url>http://developer.amazon.com/ask</url>
   <licenses>
     <license>

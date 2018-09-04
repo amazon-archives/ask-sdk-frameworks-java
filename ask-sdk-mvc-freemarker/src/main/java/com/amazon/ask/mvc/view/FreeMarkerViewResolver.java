@@ -38,7 +38,11 @@ public class FreeMarkerViewResolver extends ClassPathViewResolver {
 
     /**
      * Builds a default config for FreeMarker which reads templates from the classpath under the path specified in the prefix
-     * a prefix is specified
+     * a prefix is specified.
+     *
+     * @param configuration free marker config
+     * @param resourceClass class to load resources relative to
+     * @return supplied configuration if not nul, otherwise a default one
      */
     protected Configuration buildDefaultConfig(Configuration configuration, Class<?> resourceClass) {
         if (configuration != null) {

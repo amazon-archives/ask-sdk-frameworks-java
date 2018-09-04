@@ -6,7 +6,7 @@
     <version>0.1.0-SNAPSHOT</version>
     <name>ASK SDK Interaction Model Code Generator</name>
     <description>
-        Generates POJOs and resource files compatible with ask-sdk-interaction-model-mapper from 
+        Generates POJOs and resource files compatible with ask-sdk-interaction-model-mapper from
         standard SMAPI Interaction Model JSON files.
     </description>
     <url>http://developer.amazon.com/ask</url>
@@ -76,16 +76,8 @@
             </plugins>
         </pluginManagement>
 
-        <testResources>
-            <testResource>
-                <directory>tst</directory>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </testResource>
-        </testResources>
-
         <plugins>
+            <!-- executable jar with all dependencies -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -104,6 +96,34 @@
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- sources jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- javadoc jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
                         </goals>
                     </execution>
                 </executions>

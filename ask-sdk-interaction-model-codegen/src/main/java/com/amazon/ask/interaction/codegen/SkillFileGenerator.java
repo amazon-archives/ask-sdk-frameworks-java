@@ -23,8 +23,8 @@ public class SkillFileGenerator {
 
     /**
      * @param invocationNames localized invocation names
-     * @param intents
-     * @param slots
+     * @param intents intent definition and localized data sources
+     * @param slots slot type definitions and localized data sources
      * @param namespace java namespace of generated skill
      * @param skillName name of skill - corresponds to generated java class name
      * @return generated java file representing the skill
