@@ -58,7 +58,7 @@ public class GeneratorTest {
         underTest = new Generator(mockWriter, mockRenderer, mockApplication, mockDir, Collections.singletonList(en_US)) {
             @Override
             protected File getDestFile(String name) {
-                assertEquals("en_US.json", name);
+                assertEquals("en-US.json", name);
                 return mockFile;
             }
         };
@@ -88,9 +88,9 @@ public class GeneratorTest {
         Generator generator = new Generator(mockWriter, mockRenderer, mockApplication, mockDir, Arrays.asList(en_US, fr_FR)) {
             @Override
             protected File getDestFile(String name) {
-                if (name.equals("en_US.json")) return mockEnFile;
-                if (name.equals("fr_FR.json")) return mockFrFile;
-                fail("expected en_US.json or fr_FR.json");
+                if (name.equals("en-US.json")) return mockEnFile;
+                if (name.equals("fr-FR.json")) return mockFrFile;
+                fail("expected en-US.json or fr-FR.json");
                 return null;
             }
         };
@@ -119,9 +119,9 @@ public class GeneratorTest {
         Generator generator = new Generator(mockWriter, mockRenderer, mockApplication, mockDir, null) {
             @Override
             protected File getDestFile(String name) {
-                if (name.equals("en_US.json")) return mockEnFile;
-                if (name.equals("fr_FR.json")) return mockFrFile;
-                fail("expected en_US.json or fr_FR.json");
+                if (name.equals("en-US.json")) return mockEnFile;
+                if (name.equals("fr-FR.json")) return mockFrFile;
+                fail("expected en-US.json or fr-FR.json");
                 return null;
             }
         };

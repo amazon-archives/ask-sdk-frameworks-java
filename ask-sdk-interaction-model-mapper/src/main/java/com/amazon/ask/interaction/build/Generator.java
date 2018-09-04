@@ -66,7 +66,7 @@ public class Generator {
                 destdir.mkdirs();
             }
             for (Locale locale : locales) {
-                File out = getDestFile(stringifyLocale(locale) + ".json");
+                File out = getDestFile(locale.toLanguageTag() + ".json");
                 writer.writeValue(out, renderer.render(skillModel, locale));
             }
         } catch (IOException | RuntimeException ex) {
