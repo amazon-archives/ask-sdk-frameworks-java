@@ -37,7 +37,8 @@ public class IntentSkillResourceTest {
 
     @Before
     public void prepareInput() {
-        Mockito.when(mockIntentDefinition.getIntentType()).thenReturn(TypeFactory.defaultInstance().constructSimpleType(DefaultModel.class, new JavaType[]{}));
+        Mockito.when(mockIntentDefinition.getIntentType()).thenReturn(TypeFactory.defaultInstance()
+            .constructSimpleType(DefaultModel.class, new JavaType[]{}));
         input = RenderContext.intent()
             .withLocale(Locales.en_US)
             .withValue(mockIntentDefinition)

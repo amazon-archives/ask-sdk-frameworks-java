@@ -72,14 +72,6 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-        <testResources>
-            <testResource>
-                <directory>tst</directory>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </testResource>
-        </testResources>
     </build>
     <profiles>
         <profile>
