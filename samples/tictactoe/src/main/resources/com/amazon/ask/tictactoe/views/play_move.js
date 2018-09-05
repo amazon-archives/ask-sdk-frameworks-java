@@ -24,5 +24,3 @@ function render(model) {
         shouldEndSession: end
     };
 }
-
-

@@ -56,10 +56,7 @@ public class PlayingController {
 
     @IntentMapping(type = PlayMove.class)
     @WhenSessionAttribute(path = "state", hasValues = "playing")
-    public ModelAndView playMove(PlayMove move, AttributesManager attributesManager, Locale locale) {
-        GameState game = gameService.restoreGame(attributesManager)
-            .orElseThrow(() -> new IllegalStateException("Could not restore game state."));
-
+    public ModelAndView playMove(GameState game, PlayMove move, AttributesManager attributesManager, Locale locale) {
         Player currentPlayer = game.getCurrentPlayer();
         Player nextPlayer = currentPlayer == Player.X ? Player.O : Player.X;
         MoveResult result = game.playMove(move, currentPlayer);
