@@ -14,6 +14,8 @@
 package com.amazon.ask.tictactoe.service;
 
 import com.amazon.ask.attributes.AttributesManager;
+import com.amazon.ask.tictactoe.model.GameState;
+import com.amazon.ask.tictactoe.model.Player;
 
 import java.util.HashMap;
 import java.util.Map;

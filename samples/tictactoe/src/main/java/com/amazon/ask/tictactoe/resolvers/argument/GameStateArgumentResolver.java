@@ -16,7 +16,7 @@ package com.amazon.ask.tictactoe.resolvers.argument;
 import com.amazon.ask.mvc.mapper.ArgumentResolverContext;
 import com.amazon.ask.mvc.plugin.ArgumentResolver;
 import com.amazon.ask.tictactoe.service.GameService;
-import com.amazon.ask.tictactoe.service.GameState;
+import com.amazon.ask.tictactoe.model.GameState;
 
 import java.util.Optional;
 

@@ -27,9 +27,9 @@ import com.amazon.ask.mvc.annotation.mapping.RequestMapping;
 import com.amazon.ask.mvc.mapper.Priority;
 import com.amazon.ask.mvc.view.ModelAndView;
 import com.amazon.ask.tictactoe.service.GameService;
-import com.amazon.ask.tictactoe.service.GameState;
-import com.amazon.ask.tictactoe.service.MoveResult;
-import com.amazon.ask.tictactoe.service.Player;
+import com.amazon.ask.tictactoe.model.GameState;
+import com.amazon.ask.tictactoe.model.MoveResult;
+import com.amazon.ask.tictactoe.model.Player;
 import com.amazon.ask.tictactoe.intents.NewGame;
 import com.amazon.ask.tictactoe.intents.PlayMove;
 

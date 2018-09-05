@@ -31,7 +31,7 @@ import com.amazon.ask.mvc.mapper.Priority;
 import com.amazon.ask.tictactoe.Constants;
 import com.amazon.ask.tictactoe.intents.NewGame;
 import com.amazon.ask.tictactoe.service.GameService;
-import com.amazon.ask.tictactoe.service.GameState;
+import com.amazon.ask.tictactoe.model.GameState;
 
 import static com.amazon.ask.mvc.mapper.Priority.MINIMUM;
 import static com.amazon.ask.util.ValidationUtils.assertNotNull;

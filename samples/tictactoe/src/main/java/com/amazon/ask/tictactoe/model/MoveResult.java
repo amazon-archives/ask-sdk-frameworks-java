@@ -11,12 +11,14 @@
     the specific language governing permissions and limitations under the License.
  */
 
-package com.amazon.ask.tictactoe.service;
+package com.amazon.ask.tictactoe.model;
 
 /**
  *
  */
-public enum Player {
-    X,
-    O
+public enum MoveResult {
+    WIN,
+    ILLEGAL,
+    LEGAL,
+    DRAW
 }

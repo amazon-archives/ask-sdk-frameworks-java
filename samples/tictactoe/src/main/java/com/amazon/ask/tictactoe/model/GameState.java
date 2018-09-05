@@ -11,7 +11,7 @@
     the specific language governing permissions and limitations under the License.
  */
 
-package com.amazon.ask.tictactoe.service;
+package com.amazon.ask.tictactoe.model;
 
 import com.amazon.ask.tictactoe.intents.PlayMove;
 import com.amazon.ask.tictactoe.slots.Square;
