@@ -1,0 +1,26 @@
+{
+  "interactionModel" : {
+    "languageModel": {
+      "invocationName": "en_US",
+      "intents": [
+        {
+          "name": "BeanIntent",
+          "slots": [
+            {
+              "name": "standardName",
+              "type": "AMAZON.LITERAL"
+            },
+            {
+              "name": "CapitalFirstLetter",
+              "type": "AMAZON.DATE"
+            },
+            {
+              "name": "URL",
+              "type": "AMAZON.US_CITY"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

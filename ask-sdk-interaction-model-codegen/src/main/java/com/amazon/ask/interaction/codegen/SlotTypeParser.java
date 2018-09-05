@@ -5,6 +5,7 @@ import com.amazon.ask.interaction.model.SlotTypeValue;
 import com.amazon.ask.interaction.data.model.SlotTypeData;
 import com.amazon.ask.interaction.definition.SlotTypeDefinition;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,20 +20,23 @@ public class SlotTypeParser {
 
         Map<String, SlotTypeDefinition> seenTypes = new HashMap<>();
 
-        for (SlotType slotType : model.getSkillModel().getInteractionModel().getLanguageModel().getTypes()) {
-            SlotTypeDefinition type = parseType(slotType);
-            if (seenTypes.containsKey(type.getName())) {
-                if (!seenTypes.get(type.getName()).equals(type)) {
-                    throw new IllegalArgumentException("Duplicate slot types don't have matching definitions: " + seenTypes.get(slotType.getName()) + " does not match " + slotType);
+        Collection<SlotType> slotTypes = model.getSkillModel().getInteractionModel().getLanguageModel().getTypes();
+        if (slotTypes != null) {
+            for (SlotType slotType : slotTypes) {
+                SlotTypeDefinition type = parseType(slotType);
+                if (seenTypes.containsKey(type.getName())) {
+                    if (!seenTypes.get(type.getName()).equals(type)) {
+                        throw new IllegalArgumentException("Duplicate slot types don't have matching definitions: " + seenTypes.get(slotType.getName()) + " does not match " + slotType);
+                    }
                 }
-            }
-            seenTypes.put(slotType.getName(), type);
+                seenTypes.put(slotType.getName(), type);
 
-            SlotTypeData data = parseData(slotType);
-            if (results.containsKey(type)) {
-                data = SlotTypeData.combine(results.get(type), data);
+                SlotTypeData data = parseData(slotType);
+                if (results.containsKey(type)) {
+                    data = SlotTypeData.combine(results.get(type), data);
+                }
+                results.put(type, data);
             }
-            results.put(type, data);
         }
         return results;
     }

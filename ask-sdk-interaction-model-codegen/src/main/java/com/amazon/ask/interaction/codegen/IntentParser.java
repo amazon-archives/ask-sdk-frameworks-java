@@ -9,9 +9,13 @@ import com.amazon.ask.interaction.definition.IntentDefinition;
 import com.amazon.ask.interaction.definition.SlotTypeDefinition;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.beans.Introspector;
 import java.util.*;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static com.amazon.ask.interaction.codegen.Utils.isAmazon;
@@ -21,6 +25,8 @@ import static com.amazon.ask.util.ValidationUtils.assertNotNull;
  *
  */
 public class IntentParser {
+    private static final Logger LOGGER = LoggerFactory.getLogger(IntentParser.class);
+
     private final SlotTypeParser slotTypeParser;
 
     public IntentParser(SlotTypeParser slotTypeParser) {
@@ -95,7 +101,15 @@ public class IntentParser {
                     }
                 }
 
-                intentSlots.put(slot.getName(), slotType);
+                String beanName = Introspector.decapitalize(slot.getName());
+                if (!beanName.equals(slot.getName())) {
+                    LOGGER.warn("Renamed slot from '{}' to '{}' so that it matches the java.beans convention", slot.getName(), beanName);
+                }
+                if (intentSlots.containsKey(beanName)) {
+                    throw new IllegalArgumentException(String.format("Slot '%s' defined twice on intent '%s'", beanName, intent.getName()));
+                }
+
+                intentSlots.put(beanName, slotType);
             }
         }
         return intentSlots;
