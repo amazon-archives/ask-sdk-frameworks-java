@@ -1,4 +1,4 @@
-
+# Alexa Skills Kit MVC Sample - Color Picker
 
 ```bash
 
