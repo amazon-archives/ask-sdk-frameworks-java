@@ -1,6 +1,7 @@
 package com.amazon.ask.tictactoe.controllers;
 
 import com.amazon.ask.attributes.AttributesManager;
+import com.amazon.ask.interaction.types.intent.HelpIntent;
 import com.amazon.ask.model.IntentRequest;
 import com.amazon.ask.model.Response;
 import com.amazon.ask.model.ui.PlainTextOutputSpeech;
@@ -12,15 +13,17 @@ import com.amazon.ask.mvc.annotation.mapping.IntentMapping;
 import com.amazon.ask.mvc.annotation.mapping.RequestMapping;
 import com.amazon.ask.mvc.mapper.Priority;
 import com.amazon.ask.mvc.view.ModelAndView;
-import com.amazon.ask.tictactoe.game.GameService;
-import com.amazon.ask.tictactoe.game.GameState;
-import com.amazon.ask.tictactoe.game.MoveResult;
-import com.amazon.ask.tictactoe.game.Player;
+import com.amazon.ask.tictactoe.service.GameService;
+import com.amazon.ask.tictactoe.service.GameState;
+import com.amazon.ask.tictactoe.service.MoveResult;
+import com.amazon.ask.tictactoe.service.Player;
 import com.amazon.ask.tictactoe.intents.NewGame;
 import com.amazon.ask.tictactoe.intents.PlayMove;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import static com.amazon.ask.mvc.mapper.Priority.MINIMUM;
 import static com.amazon.ask.util.ValidationUtils.assertNotNull;
@@ -32,13 +35,15 @@ import static com.amazon.ask.util.ValidationUtils.assertNotNull;
 public class PlayingController {
     private final GameService gameService;
 
+    private final String HELP_RESPONSE = "You can say a directional word to play, for example north or top, north east or top right.";
+
     public PlayingController(GameService gameService) {
         this.gameService = assertNotNull(gameService, "gameService");
     }
 
     @IntentMapping(type = PlayMove.class)
     @WhenSessionAttribute(path = "state", hasValues = "playing")
-    public ModelAndView playMove(PlayMove move, AttributesManager attributesManager) {
+    public ModelAndView playMove(PlayMove move, AttributesManager attributesManager, Locale locale) {
         GameState game = gameService.restoreGame(attributesManager)
             .orElseThrow(() -> new IllegalStateException("Could not restore game state."));
 
@@ -47,7 +52,8 @@ public class PlayingController {
         MoveResult result = game.playMove(move, currentPlayer);
 
         Map<String, Object> model = new HashMap<>();
-        model.put("square", move.getSquare().name());
+        ResourceBundle messages = ResourceBundle.getBundle("com.amazon.ask.tictactoe.responses.SquareNames", locale);
+        model.put("square", messages.getString(move.getSquare().name()));
         model.put("currentPlayer", game.getCurrentPlayer().name());
         model.put("nextPlayer", nextPlayer.name());
         model.put("result", result.name());
@@ -74,42 +80,47 @@ public class PlayingController {
     @IntentMapping(type = YesIntent.class)
     @WhenSessionAttribute(path = "confirm", hasValues = "new-game")
     public Response yesNewGame(AttributesManager attributesManager) {
+        attributesManager.getSessionAttributes().remove("confirm");
+
         GameState gameState = gameService.newGame();
         gameService.saveGame(attributesManager, gameState);
-        attributesManager.getSessionAttributes().remove("confirm");
 
         return Response.builder()
             .withShouldEndSession(false)
             .withOutputSpeech(PlainTextOutputSpeech.builder()
-                .withText("Ok, I reset the game for you. Player x to start.")
+                .withText("Ok, I reset the game for you. Player X to start first.")
                 .build())
             .build();
     }
 
     @IntentMapping(type = NoIntent.class)
     @WhenSessionAttribute(path = "confirm", hasValues = "new-game")
-    public Response noNewGame(AttributesManager attributesManager) {
-        GameState gameState = gameService.restoreGame(attributesManager)
-            .orElseThrow(() -> new IllegalStateException("Could not restore game state."));
-
+    public Response noNewGame(GameState gameState) {
         return Response.builder()
             .withShouldEndSession(false)
             .withOutputSpeech(PlainTextOutputSpeech.builder()
-                .withText("Ok. It is Player " + gameState.getCurrentPlayer().name() + "'s turn.")
+                .withText("Ok. Let's keep playing. It is Player " + gameState.getCurrentPlayer().name() + "'s turn.")
+                .build())
+            .build();
+    }
+
+    @IntentMapping(type = HelpIntent.class)
+    public Response help(GameState gameState) {
+        return Response.builder()
+            .withShouldEndSession(false)
+            .withOutputSpeech(PlainTextOutputSpeech.builder()
+                .withText("It is Player " + gameState.getCurrentPlayer().name() + "'s turn. " + HELP_RESPONSE)
                 .build())
             .build();
     }
 
     @Priority(MINIMUM) // this method accepts all IntentRequests, so consider it last
     @RequestMapping(types = IntentRequest.class)
-    public Response unhandledIntent(AttributesManager attributesManager) {
-        GameState gameState = gameService.restoreGame(attributesManager)
-            .orElseThrow(() -> new IllegalStateException("Could not restore game state."));
-
+    public Response unhandledIntent(GameState gameState) {
         return Response.builder()
             .withShouldEndSession(false)
             .withOutputSpeech(PlainTextOutputSpeech.builder()
-                .withText("I'm sorry, I don't understand. It's your turn, Player " + gameState.getCurrentPlayer().name() + ".")
+                .withText("I'm sorry, I don't understand. It's your turn, Player " + gameState.getCurrentPlayer().name() + ". You can say help for instruction.")
                 .build())
             .build();
     }

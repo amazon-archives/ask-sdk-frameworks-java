@@ -6,9 +6,11 @@ import com.amazon.ask.interaction.types.intent.YesIntent;
 import com.amazon.ask.mvc.MvcSdkModule;
 import com.amazon.ask.mvc.SkillModule;
 import com.amazon.ask.mvc.view.nashorn.NashornViewResolver;
+import com.amazon.ask.tictactoe.controllers.GlobalController;
 import com.amazon.ask.tictactoe.controllers.MenuController;
 import com.amazon.ask.tictactoe.controllers.PlayingController;
-import com.amazon.ask.tictactoe.game.GameService;
+import com.amazon.ask.tictactoe.resolvers.argument.GameStateArgumentResolver;
+import com.amazon.ask.tictactoe.service.GameService;
 import com.amazon.ask.tictactoe.intents.NewGame;
 import com.amazon.ask.tictactoe.intents.PlayMove;
 
@@ -18,13 +20,15 @@ public class TicTacToeModule implements SkillModule {
     public void buildMvc(MvcSdkModule.Builder mvcBuilder) {
         GameService gameService = new GameService();
         mvcBuilder
+            .addController(new GlobalController())
             .addController(new MenuController(gameService))
             .addController(new PlayingController(gameService))
             .addViewResolver(NashornViewResolver.builder()
                 .withResourceClass(getClass())
                 .withPrefix("views/")
                 .withRenderFunction("render")
-                .build());
+                .build())
+            .addArgumentResolver(new GameStateArgumentResolver(gameService));
     }
 
     @Override

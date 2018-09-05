@@ -69,8 +69,7 @@ public class DecisionTreeController {
     @IntentMapping(type = CouchPotatoIntent.class)
     public ModelAndView couchPotatoIntent() {
         ModelAndView mv = new ModelAndView("basic");
-        mv.put("speech", "You don't want to start your career? Have fun wasting away on the couch.");
-        mv.put("reprompt", "Would you like to start a career or do you want to be a couch potato?");
+        mv.put("speech", "You don't want to start your career? Have fun wasting away on the couch. See you next time. Bye.");
 
         return mv;
     }

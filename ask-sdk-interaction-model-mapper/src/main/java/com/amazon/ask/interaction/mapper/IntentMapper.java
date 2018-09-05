@@ -34,13 +34,13 @@ import static com.amazon.ask.util.ValidationUtils.assertNotNull;
  */
 @SuppressWarnings("unchecked")
 public class IntentMapper {
-    private static final Map<ClassKey, com.amazon.ask.interaction.mapper.intent.IntentPropertyReader> DEFAULT_INTENT_PROPERTY_READERS = new HashMap<>();
+    private static final Map<ClassKey, IntentPropertyReader> DEFAULT_INTENT_PROPERTY_READERS = new HashMap<>();
     static {
         DEFAULT_INTENT_PROPERTY_READERS.put(new ClassKey(DialogState.class), new DialogStateReader());
         DEFAULT_INTENT_PROPERTY_READERS.put(new ClassKey(IntentConfirmationStatus.class), new IntentConfirmationStatusReader());
     }
 
-    private static final Map<ClassKey, com.amazon.ask.interaction.mapper.slot.SlotPropertyReader> DEFAULT_SLOT_PROPERTY_READERS = new HashMap<>();
+    private static final Map<ClassKey, SlotPropertyReader> DEFAULT_SLOT_PROPERTY_READERS = new HashMap<>();
     static {
         DEFAULT_SLOT_PROPERTY_READERS.put(new ClassKey(Slot.class), new RawSlotPropertyReader());
         DEFAULT_SLOT_PROPERTY_READERS.put(new ClassKey(Resolutions.class), new ResolutionsReader());
@@ -50,12 +50,14 @@ public class IntentMapper {
     private final Model model;
 
     private final Map<JavaType, IntentReader<?>> intentReaderCache;
-    private final Map<ClassKey, com.amazon.ask.interaction.mapper.slot.SlotPropertyReader> slotReaderCache;
+    private final Map<ClassKey, SlotPropertyReader> slotReaderCache;
 
-    private final Map<ClassKey, com.amazon.ask.interaction.mapper.intent.IntentPropertyReader> intentPropertyReaders;
-    private final Map<ClassKey, com.amazon.ask.interaction.mapper.slot.SlotPropertyReader> slotPropertyReaders;
+    private final Map<ClassKey, IntentPropertyReader> intentPropertyReaders;
+    private final Map<ClassKey, SlotPropertyReader> slotPropertyReaders;
 
-    protected IntentMapper(Model model, Map<ClassKey, com.amazon.ask.interaction.mapper.intent.IntentPropertyReader> intentPropertyReaders, Map<ClassKey, com.amazon.ask.interaction.mapper.slot.SlotPropertyReader> slotPropertyReaders) {
+    protected IntentMapper(Model model,
+                           Map<ClassKey, IntentPropertyReader> intentPropertyReaders,
+                           Map<ClassKey, SlotPropertyReader> slotPropertyReaders) {
         this.model = assertNotNull(model, "model");
         this.intentPropertyReaders = Collections.unmodifiableMap(assertNotNull(intentPropertyReaders, "intentPropertyReaders"));
         this.slotPropertyReaders = Collections.unmodifiableMap(assertNotNull(slotPropertyReaders, "slotPropertyReaders"));
@@ -189,7 +191,7 @@ public class IntentMapper {
                     }
                     slotNames.add(slotName);
                     if (reader == null) {
-                        com.amazon.ask.interaction.mapper.slot.SlotPropertyReader slotPropertyReader;
+                        SlotPropertyReader slotPropertyReader;
                         com.amazon.ask.interaction.annotation.data.SlotPropertyReader alexaSlotPropertyReader = reflector.getAnnotation(prop, com.amazon.ask.interaction.annotation.data.SlotPropertyReader.class);
                         if (alexaSlotPropertyReader != null) {
                             slotPropertyReader =  Utils.instantiate(alexaSlotPropertyReader.value());
@@ -211,7 +213,7 @@ public class IntentMapper {
         });
     }
 
-    public <T> com.amazon.ask.interaction.mapper.slot.SlotPropertyReader slotReaderFor(Class<T> slotClass) {
+    public <T> SlotPropertyReader slotReaderFor(Class<T> slotClass) {
         return this.slotReaderCache.computeIfAbsent(new ClassKey(slotClass), k -> {
             com.amazon.ask.interaction.annotation.data.SlotPropertyReader slotPropertyReader = Utils.findAnnotation(slotClass, com.amazon.ask.interaction.annotation.data.SlotPropertyReader.class);
             if (slotPropertyReader != null) {
@@ -226,7 +228,7 @@ public class IntentMapper {
             }
 
             TypeReflector<?> slotTypeReflector = new TypeReflector<>(slotClass);
-            Map<String, com.amazon.ask.interaction.mapper.slot.SlotPropertyReader> readers = new HashMap<>();
+            Map<String, SlotPropertyReader> readers = new HashMap<>();
             for (PropertyDescriptor slotProperty : slotTypeReflector.getPropertyDescriptors()) {
                 if (slotTypeReflector.getAnnotation(slotProperty, AlexaIgnore.class) != null) {
                     continue;
@@ -238,13 +240,13 @@ public class IntentMapper {
         });
     }
 
-    protected com.amazon.ask.interaction.mapper.slot.SlotPropertyReader resolveSlotPropertyReader(TypeReflector<?> slotTypeReflector, PropertyDescriptor slotProperty) {
+    protected SlotPropertyReader resolveSlotPropertyReader(TypeReflector<?> slotTypeReflector, PropertyDescriptor slotProperty) {
         Class<?> propertyType = slotProperty.getPropertyType();
         if (propertyType == Object.class) {
             propertyType = slotTypeReflector.reifyPropertyType(slotProperty);
         }
 
-        com.amazon.ask.interaction.mapper.slot.SlotPropertyReader reader;
+        SlotPropertyReader reader;
         com.amazon.ask.interaction.annotation.data.SlotPropertyReader attribute = slotTypeReflector.getAnnotation(slotProperty, com.amazon.ask.interaction.annotation.data.SlotPropertyReader.class);
         if (attribute == null) {
             attribute = Utils.findAnnotation(propertyType, com.amazon.ask.interaction.annotation.data.SlotPropertyReader.class);
@@ -256,7 +258,7 @@ public class IntentMapper {
         }
 
         if (reader == null) {
-            throw new IllegalArgumentException(String.format("Could not resolve a %s for %s", com.amazon.ask.interaction.mapper.slot.SlotPropertyReader.class.getName(), propertyType.getName()));
+            throw new IllegalArgumentException(String.format("Could not resolve a %s for %s", SlotPropertyReader.class.getName(), propertyType.getName()));
         }
 
         return reader;
@@ -274,8 +276,8 @@ public class IntentMapper {
 
     public static final class Builder {
         private Model model;
-        private Map<ClassKey, com.amazon.ask.interaction.mapper.intent.IntentPropertyReader> intentPropertyReaders = new HashMap<>();
-        private Map<ClassKey, com.amazon.ask.interaction.mapper.slot.SlotPropertyReader> slotPropertyReaders = new HashMap<>();
+        private Map<ClassKey, IntentPropertyReader> intentPropertyReaders = new HashMap<>();
+        private Map<ClassKey, SlotPropertyReader> slotPropertyReaders = new HashMap<>();
 
         private Builder() {
         }
@@ -285,17 +287,17 @@ public class IntentMapper {
             return this;
         }
 
-        public Builder withIntentPropertyReaders(Map<ClassKey, com.amazon.ask.interaction.mapper.intent.IntentPropertyReader> intentPropertyReaders) {
+        public Builder withIntentPropertyReaders(Map<ClassKey, IntentPropertyReader> intentPropertyReaders) {
             this.intentPropertyReaders = intentPropertyReaders;
             return this;
         }
 
-        public Builder addIntentPropertyReaders(Map<ClassKey, com.amazon.ask.interaction.mapper.intent.IntentPropertyReader> intentPropertyReaders) {
+        public Builder addIntentPropertyReaders(Map<ClassKey, IntentPropertyReader> intentPropertyReaders) {
             intentPropertyReaders.forEach(this::addIntentPropertyReader);
             return this;
         }
 
-        public Builder addIntentPropertyReader(ClassKey classKey, com.amazon.ask.interaction.mapper.intent.IntentPropertyReader intentPropertyReader) {
+        public Builder addIntentPropertyReader(ClassKey classKey, IntentPropertyReader intentPropertyReader) {
             if (this.intentPropertyReaders == null) {
                 this.intentPropertyReaders = new HashMap<>();
             }
@@ -303,17 +305,17 @@ public class IntentMapper {
             return this;
         }
 
-        public Builder withSlotPropertyReaders(Map<ClassKey, com.amazon.ask.interaction.mapper.slot.SlotPropertyReader> slotPropertyReaders) {
+        public Builder withSlotPropertyReaders(Map<ClassKey, SlotPropertyReader> slotPropertyReaders) {
             this.slotPropertyReaders = slotPropertyReaders;
             return this;
         }
 
-        public Builder addSlotPropertyReaders(Map<ClassKey, com.amazon.ask.interaction.mapper.slot.SlotPropertyReader> slotPropertyReaders) {
+        public Builder addSlotPropertyReaders(Map<ClassKey, SlotPropertyReader> slotPropertyReaders) {
             slotPropertyReaders.forEach(this::addSlotPropertyReader);
             return this;
         }
 
-        public Builder addSlotPropertyReader(ClassKey classKey, com.amazon.ask.interaction.mapper.slot.SlotPropertyReader slotPropertyReader) {
+        public Builder addSlotPropertyReader(ClassKey classKey, SlotPropertyReader slotPropertyReader) {
             if (this.slotPropertyReaders == null) {
                 this.slotPropertyReaders = new HashMap<>();
             }

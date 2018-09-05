@@ -1,8 +1,8 @@
 package com.amazon.ask.interaction.codegen;
 
+import com.amazon.ask.interaction.SkillApplication;
 import com.amazon.ask.interaction.TypeReflector;
 import com.amazon.ask.interaction.model.SkillModel;
-import com.amazon.ask.interaction.SkillApplication;
 import com.amazon.ask.interaction.renderer.SkillModelRenderer;
 import com.amazon.ask.interaction.types.slot.AmazonLiteral;
 import com.amazon.ask.interaction.types.slot.date.AmazonDate;
@@ -16,7 +16,6 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 import java.beans.PropertyDescriptor;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Arrays;

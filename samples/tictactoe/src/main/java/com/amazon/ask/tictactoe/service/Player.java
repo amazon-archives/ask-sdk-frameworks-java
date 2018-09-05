@@ -1,4 +1,4 @@
-package com.amazon.ask.tictactoe.game;
+package com.amazon.ask.tictactoe.service;
 
 /**
  *
