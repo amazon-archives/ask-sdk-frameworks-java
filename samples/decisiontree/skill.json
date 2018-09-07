@@ -1,0 +1,19 @@
+{
+    "skillManifest": {
+      "publishingInformation": {
+        "locales": {
+          "en-US": {
+            "name": "Decision Tree"
+          }
+        }
+      },
+      "apis": {
+        "custom": {
+            "endpoint": {
+                "uri": "<INSERT_YOUR_LAMBDA_ARN>"
+            }
+        }
+      },
+      "manifestVersion": "1.0"
+    }
+  }
