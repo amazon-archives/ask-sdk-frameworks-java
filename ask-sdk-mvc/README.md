@@ -1,22 +1,29 @@
-# Alexa Skils MVC Framework
+# ASK SDK Model-View-Controller (MVC) Framework
 
-The Alexa Skills MVC Framework extends the core ASK SDK, adding features for mapping requests to controller methods and rendering responses with view scripts and templates such as Nashorn Javascript and Freemarker. It also integrates the Interaction Model Mapper to create a single environment where both the interaction model and business logic of skills can be managed as code packages.
+The Alexa Skills Kit Model-View-Controller (MVC) Framework extends the [ASK SDK v2 for Java](https://github.com/alexa/alexa-skills-kit-sdk-for-java), adapting the [model-view-controller pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) to skill development by adding features for mapping requests to controller methods, and rendering responses with view scripts and templates such as Nashorn JavaScript and [Apache FreeMarker](https://freemarker.apache.org/). It also integrates with the [ASK Interaction Model Mapper](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-interaction-model-mapper), enabling you to manage both your interaction model and skill business logic as pluggable code packages.
 
-# Quickstart Examples
+For background on building Alexa skills on the Alexa developer portal, see [Build Skills with the Alexa Skills Kit](https://developer.amazon.com/docs/ask-overviews/build-skills-with-the-alexa-skills-kit.html). For a list of resources related to the ASK SDK for Java, see [Alexa Skills Kit SDK for Java](https://developer.amazon.com/docs/sdk/alexa-skills-kit-sdk-for-java.html).
 
-Link: https://code.amazon.com/packages/AskSdkJavaMvcExamples/trees/mainline
+# Samples
+
+For sample skills, see the following:
+
+* [Colorpicker](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/samples/colorpicker)
+* [Decision Tree](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/samples/decisiontree)
+* [Tic Tac Toe](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/samples/tictactoe)
+* [Trivia](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/samples/trivia)
 
 # Creating a MVC Skill
 
-## Entry Point
+## Your Skill Class
 
-To create a skill using MVC, you first create a class for your skill which extends `MVCSkillApplication`. This entry point is required for building and deploying your Skill's Endpoint and Interaction Model. It defines the skill's invocation name for each supported locale, and registers a collection of 'Skill Modules' making up the implementation.
+To create a skill using MVC, you first create a class for your skill that extends `MvcSkillApplication`. This entry point is required for building and deploying your skill's endpoint and interaction model. It defines the skill's invocation name for each supported locale, and registers a collection of `SkillModules` containing the interaction model and handling implementation.
 
 ```java
 public class HelloWorldSkill extends MvcSkillApplication {
     @Override
     public Map<Locale, String> getInvocationNames() {
-        return Collections.singletonMap(Locale.US, "my us invocation name");
+        return Collections.singletonMap(Locale.US, "my en-US invocation name");
     }
 
     @Override
@@ -26,26 +33,116 @@ public class HelloWorldSkill extends MvcSkillApplication {
 }
 ```
 
+## Build Configuration
+
+Using maven, configure a project to generate an interaction model JSON file and single JAR for AWS Lambda from the CLI.
+
+*For more information on the following concepts, see the Maven documentation on [dependency management](https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html) and the [build lifecycle](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html).*
+
+### Dependencies
+
+In your `pom.xml`, add a dependency on the `ask-sdk-mvc` framework:
+
+```xml
+<dependencies>
+  <dependency>
+    <groupId>com.amazon.alexa</groupId>
+    <artifactId>ask-sdk-mvc</artifactId>
+    <version>0.1.0</version>
+  </dependency>
+</dependencies>
+```
+
+### Interaction Model Generation
+
+In your `pom.xml`, add the `build-model` task from [ask-sdk-maven-plugins](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-maven-plugins) and configure your skill class as the target:
+
+```xml
+<plugin>
+    <groupId>com.amazon.alexa</groupId>
+    <artifactId>ask-sdk-maven-plugins</artifactId>
+    <version>0.1.0</version>
+    <configuration>
+        <destinationDir>ask</destinationDir>
+        <className>com.example.HelloWorldSkill</className>
+    </configuration>
+    <executions>
+        <execution>
+            <phase>compile</phase>
+            <goals>
+                <goal>build-model</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+Synthesize the JSON models with [mvn](https://maven.apache.org/install.html):
+
+```bash
+mvn compile
+```
+
+Update your Skill's model with the [ask cli](https://developer.amazon.com/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html):
+
+```bash
+ask api update-model \
+    --file ./target/ask/en-US.json \
+    --locale en-US \
+    --skill-id <your-skill-id>
+```
+
+### Single JAR for AWS Lambda
+
+Configure a task in your `pom.xml` to output a single .jar file containing your code and dependencies:
+
+*See official AWS documentation on [using Lambda with Java](https://docs.aws.amazon.com/lambda/latest/dg/lambda-java-how-to-create-deployment-package.html) for more information.*
+
+```xml
+<plugin>
+    <artifactId>maven-assembly-plugin</artifactId>
+    <version>3.1.0</version>
+    <configuration>
+        <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+        </descriptorRefs>
+    </configuration>
+    <executions>
+        <execution>
+            <phase>package</phase>
+        </execution>
+    </executions>
+</plugin>
+```
+
+Assemble your skill's single jar:
+
+```bash
+mvn package
+```
+
+And upload the jar to your lambda function:
+
+```bash
+aws update-function-code \
+    --function-name <name> \
+    --zip-file <aritfact-id>-<version>-jar-with-dependencies.jar
+    --publish
+```
+
 ## Skill Modules
 
-A Skill Module groups Controllers and Views (business logic) with their required Intents and Slot Types (interaction model). This enables developers to modularize, share and customize aspects of their skill programatically.
-
-For example, the `HelloWorldModule` below adds a single Controller for handling requests and includes the `AMAZON.StopIntent` in the Interaction Model.
+A `SkillModule` groups the business logic of controllers and views with the required intents and slot types in the interaction model, enabling you to share aspects of your skill programmatically. For example, the following `HelloWorldModule` adds a single controller for handling requests, and includes the `AMAZON.HelpIntent` in the interaction model:
 
 ```java
-// import the AMAZON.HelpIntent class from the Interaction Model Mapper library
-import com.amazon.ask.models.types.intent.HelpIntent;
-
 public class HelloWorldModule implements SkillModule {
     @Override
     public void buildMvc(MvcSdkModule.Builder mvcBuilder) {
-        // instantiate and add the controller
         mvcBuilder.addController(new HelloWorldContoller());
     }
 
     @Override
     public void buildModel(Model.Builder modelBuilder) {
-        // add the intent to the interaction model by registering its class
         modelBuilder.intent(HelpIntent.class);
     }
 }
@@ -53,20 +150,19 @@ public class HelloWorldModule implements SkillModule {
 
 ## Controllers
 
-A Controller is an instance of a class with methods that can handle inbound Alexa requests. Those methods make use of annotations to simplify the process of writing and registering the [core SDK request handling concepts](https://alexa-skills-kit-sdk-for-java.readthedocs.io/en/latest/Request-Processing.html).
+A controller is an instance of a class with methods for handling inbound Alexa requests. Its methods are scanned for annotations that map requests to methods and auto-wire interceptors and exception handlers.
 
-On application start up, MVC scans each registered controller for methods annotated with mapping annotations and creates a handler/interceptor instance for each found method. There are five mapping-annotations provided with the core MVC framework:
+* @RequestMapping - map a [Request](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/model/Request.html) sub-class to a method
+* @IntentMapping - map an [IntentRequest](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/model/IntentRequest.html) by name or intent type to a method
+* @RequestInterceptor - call a method as a [RequestInterceptor](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/dispatcher/request/interceptor/RequestInterceptor.html) in the request handler chain
+* @ResponseInterceptor - call a method as a [ResponseInterceptor](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/dispatcher/request/interceptor/ResponseInterceptor.html) in the request handler chain
+* @ExceptionHandler - map an exception type to a method which will recover return a response
 
-* `@RequestMapping` - creates a [RequestHandler](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/dispatcher/request/handler/RequestHandler.html) for a [Request](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/model/Request.html) type
-* `@IntentMapping` - creates a [RequestHandler](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/dispatcher/request/handler/RequestHandler.html) for a specific intent from an [IntentRequest](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/model/IntentRequest.html)
-* `@RequestInterceptor` - creates a [RequestInterceptor](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/dispatcher/request/interceptor/RequestInterceptor.html)
-* `@ResponseInterceptor` - creates a [ResponseInterceptor](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/dispatcher/request/interceptor/ResponseInterceptor.html)
-* `@ExceptionHandler` - creates an [ExceptionHandler](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/dispatcher/exception/ExceptionHandler.html)
-
-Below is a controller demonstrating their use:
+The following demonstrates the use of a controller:
 
 ```java
 public class HelloWorldController {
+    // map request by sub-class
     @RequestMapping(LaunchRequest.class)
     public Response onLaunch(HandlerInput handlerInput) {
         return Response.builder()
@@ -77,11 +173,13 @@ public class HelloWorldController {
             .build()
     }
 
+    // map intent request by intent name
     @IntentMapping(type = "AMAZON.StopIntent")
     public Response onStop(HandlerInput handlerInput) {
         // ...
     }
 
+    // map intent request by intent type
     @IntentMapping(type = HelpIntent.class)
     public Response onHelp(HandlerInput handlerInput) {
         // ...
@@ -97,8 +195,9 @@ public class HelloWorldController {
         // ...
     }
 
+    // recove from specific exception`
     @ExceptionHandler(exception = MyException.class)
-    public Response onException(MyException exception) {
+    public Response recoverFromMyException(MyException exception) {
         // ...
     }
 }
@@ -108,20 +207,22 @@ public class HelloWorldController {
 
 The `@RequestMapping` annotation binds any type of Alexa request to a controller method. In the above example, the `onLaunch` method will be selected when a `LaunchRequest` is received.
 
-The `@IntentMapping` annotation binds specific intents from your interaction model to controller methods. In the above example, `onStop` maps to the `AMAZON.StopIntent` intent by its name, and the `onHelp` method maps to the `AMAZON.HelpIntent` by its type, `HelpIntent.class`.
+The `@IntentMapping` annotation binds specific intents from your interaction model to controller methods. In the above example, `onStop` maps to the `AMAZON.StopIntent` intent by its name and the `onHelp` method maps to the `AMAZON.HelpIntent` by its type.
 
 ### Request Handler Chain
 
-Once a controller's method is selected to handle the request, a [RequestHandlerChain](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/dispatcher/request/handler/RequestHandlerChain.html) containing it and any interceptors or exception handlers is assembled to actually handle the request. Methods mapped within a controller are considered "locally scoped", so any methods annotated with @RequestInterceptor, @ResponseInterceptor or @ExceptionHandler are only added to the chain if it is their controller who is handling the request.
+When a controller's method is selected to handle the request, a [RequestHandlerChain](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/dispatcher/request/handler/RequestHandlerChain.html) containing it and any interceptors or exception handlers is assembled to handle the request. Methods mapped within a controller are considered locally scoped, so any methods annotated with `@RequestInterceptor`, `@ResponseInterceptor` or `@ExceptionHandler` are only added to the chain if it is their controller handling the request.
 
 ### Conditional Mappings
 
-MVC supports guarding a method's invocation with some condition described by an annotation. There are two annotations provided out of the box:
+MVC supports guarding a method's invocation with some condition described by an annotation. This works for all mapping types, not just request handlers.
 
-* @WhenSessionAttribute - require a session attribute have a specific value or is not set
+The following annotations are provided out of the box:
+
+* @WhenSessionAttribute - require a session attribute to have a specific value
 * @WhenDialogState - require the [dialog](https://developer.amazon.com/alexa-skills-kit/dialog-management) to be in some [state](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/model/DialogState.html).
 
-For example, we could write a handler and interceptor that are only invoked when the session contains the value 'playing' for a session attribute, 'state':
+For example, you can write a handler and interceptor that are only invoked when the session attribute `state` has the value `playing`:
 
 ```java
 @IntentMapping(type = HelpIntent.class)
@@ -148,9 +249,7 @@ public class PlayingStateController {
 
 ### Argument Resolution
 
-A method's arguments are resolved automatically using Argument Resolvers, helping to reduce boiler-plate code and simplify unit testing.
-
-For example, the following `onHelp` method resolves the whole request's `HandlerInput` instance and then manually gets the `Request` and `AttributesManager` to fulfill the request.
+A method's arguments are resolved automatically using an `ArgumentResolver`, helping to reduce boilerplate code and simplify unit testing. For example, the following `onHelp` method resolves the whole request's `HandlerInput` and then manually gets the `Request` and `AttributesManager` to fulfill the request.
 
 ```java
 public Response onHelp(HandlerInput input) {
@@ -160,17 +259,17 @@ public Response onHelp(HandlerInput input) {
 }
 ```
 
-... making use of argument resolution, this method can be simplified:
+This method can be simplified with argument resolution:
 
-```java
+```
 public Response onHelp(Request request, AttributesManager attributes) {
     // ...
 }
 ```
 
-.. also, any intent defined in code using the Interaction Model Mapper (TODO: link) can be deserialized to its POJO representation automatically, relieving developers from the manual and error-prone process of parsing a raw `IntentRequest`:
+Any class compatible with the [Interaction Model Mapper](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-interaction-model-mapper) can be automatically resolved to its concrete representation, avoiding the manual and error-prone process of parsing a raw `IntentRequest`:
 
-```java
+```
 @IntentMapping(type = HelloWorld.class)
 public Response onHelloWorld(HelloWorld intent) {
     System.out.println(intent.getGreeting());
@@ -178,88 +277,346 @@ public Response onHelloWorld(HelloWorld intent) {
 }
 ```
 
-*For a list of all default argument resolvers, see: TODO*
-
 ## Views
 
-The request handlers we've described so far have returned their Response inline using a builder. To promote code modularity, it is encouraged to separate your skill's application logic such as service calls and state management from the logic of rendering a response. As this is a MVC framework, it comes with support for a pluggable View and ViewResolver system, allowing developers to write templates and scripts that render responses from a collection of key-value-pairs, the 'model'.
+To promote code modularity, you should separate your skill's application logic such as service calls and state management from the logic of rendering a response. MVC comes with support for a pluggable view/resolver system, allowing developers to write templates and scripts that render responses from a model of key-value-pairs provided by the controller. The views are referenced by name and resolved based on request properties such as locale.
 
-*By default, the core MVC framework supports the JDK's javascript engine, Nashorn, but you can also import the (TODO: link) FreeMarker view resolver dependency or write your own.*
+### Nashorn (JavaScript) View Resolver
 
-To render a response with a view, we must adapt our controller's method to return a `ModelAndView` instance instead of a `Response`. This instance identifies a view by its name and provides the model containing relevant attributes.
+By default, the core MVC framework supports the JDK's javascript engine, [Nashorn](http://openjdk.java.net/projects/nashorn/), but you can also import the [FreeMarker view resolver](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-mvc-freemarker) or write your own.
+
+To render a response with JavaScript, we first register a `NashornViewResolver` which will find and execute our scripts:
+
+```java
+package com.example;
+
+public class HelloWorldModule implements SkillModule {
+    @Override
+    public void buildMvc(MvcSdkModule.Builder mvc) {
+        mvc.addController(new HelloWorldController())
+           .addViewResolver(NashornViewResolver.builder()
+                .withPrefix("views/") // files located in the views resource folder
+                .withResourceClass(getClass()) // resource path is relative to this class
+                .withRenderFunction("render") // call the 'render' function in the script
+                .build());
+    }
+}
+```
+
+Next, we adapt our controller's method to return a `ModelAndView` instance instead of a `Response`. `ModelAndView` identifies a view by its name and contains the model attributes.
 
 ```java
 @IntentMapping(type = HelloWorld.class)
 public ModelAndView onHelloWorld(HelloWorld intent) {
-    Map<String, Object> model = new HashMap<>();
-    model.put("greeting", intent.getGreeting()); // referenced by name in the view
-
-    return new ModelAndView("hello_world", model);
+    ModelAndView mav = new new ModelAndView("hello_world");
+    mav.put("greeting", intent.getGreeting());
+    return mav;
 }
 ```
 
-... next, we extract our view logic into a javascript file, '`hello_world.js`':
+Finally, we implement our view logic in a javascript file, `src/main/resources/com/example/views/hello_world.js`:
 
-```java
+```javascript
 function render(model) { // function taking the model as an argument
     return {
         outputSpeech: {
             type: "PlainText",
-            text: model.greeting // take the 'greeting' text from the model
+            text: model.greeting // use the 'greeting' text from the model
         },
         shouldEndSession: false
     };
 }
 ```
 
-... and finally, we register a `ViewResolver` which know how to find and execute the script:
+### View Candidate Enumerators
+
+View resolvers look for locale-specific views by default. For example, given a view named `name`, a prefix of `views/` and a suffix of `.js`, the resolver will select the first file that exists from the following:
+
+1. view_en_US.js
+2. view/en_US.js
+3. view_en.js
+4. view/en.js
+5. view.js
+6. view/global.js
+
+This logic is implemented by the `LocaleViewCandidateEnumerator` and included by default in the standard view resolver builders, but you can also add custom enumerators. For example, we could override the default behavior with an enumerator which selects a versioned view by appending the request's version as a suffix to the view name:
 
 ```java
-public class HelloWorldModule implements SkillModule {
+public class MyEnumerator implements ViewCandidateEnumerator {
     @Override
-    public void buildMvc(MvcSdkModule.Builder mvc) {
-        mvc
-            .addController(new HelloWorldController())
-            .addViewResolver(NashornViewResolver.builder()
-                .withPrefix("views/") // files located in the views resource folder
-                .withResourceClass(getClass()) // resource path is relative to this class
-                .withRenderFunction("render") // call the 'render' function in the script
-                .build());
+    public Stream<String> enumerate(String viewName, RequestEnvelope requestEnvelope) {
+        return Stream.of(viewName + "_" + requestEnvelope.getVersion());
+    }
+}
+
+// replace the enumerators
+NashornViewResolver.builder()
+    .withViewCandidateEnumerators(Collections.singletonList(new MyEnumerator())
+```
+
+## Interaction Model
+
+MVC integrates with the [Interaction Model Mapper](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-interaction-model-mapper) which models a skill's [interaction model](https://developer.amazon.com/docs/custom-skills/create-the-interaction-model-for-your-skill.html) in code, enabling its generation and automatic parsing of intent requests.
+
+Intents and slot types are defined as classes backed by sources of interaction model data such as classpath resource bundles. The interaction model can then be rendered from the CLI at application build time as part of a continuous/automated deployment lifecycle.
+
+### Intent Schema
+
+To define a new intent for your skill, create a class and annotate it with `@Intent`. The name of the intent defaults to the simple name of the class, but can also be defined explicitly with `@Intent(“DifferentName”)`.
+
+A slot is defined as properties annotated with `@SlotProperty`. The name defaults to the property name, but may also be defined explicitly with `@SlotProperty(name = “differentName”)`. The slot type is derived from the property type, such as `AmazonDate`, but can also be defined explicitly with `@SlotProperty(type = AmazonDate.class)`.
+
+```java
+@Intent
+public class MyIntent {
+    @SlotProperty
+    private AmazonDate date;
+
+    public AmazonDate getDate() {
+        return date;
     }
 
-    // ...
+    public void setDate(AmazonDate date) {
+        this.date = date;
+    }
+}
+```
+
+### Intent Data
+
+The interaction model also contains data for an intent such as sample utterances and confirmation/elicitation dialog prompts. You can associate data when registering the intent by constructing an `IntentDataSource`, or by annotating the intent type with an `@IntentResource`.
+
+For example, given a JSON resource file: `src/main/resources/com/example/intents/my_intent_en_US.json`
+
+```json
+{
+  "samples" : [
+    "what is the {date}
+  ]
+}
+```
+
+We can create an `IntentDataSource` which will scan for resources relative to the `MyIntent.class`, and associate it with the intent at registration time.
+
+```java
+package com.example;
+
+public class HelloWorldModule implements SkillModule {
+    @Override
+    public void buildModel(Model.Builder model) {
+        model.intent(MyIntent.class, IntentData.resource()
+            .withResourceClass(MyIntent.class)
+            .withName("my_intent")
+            .build());
+    }
+}
+```
+
+Alternatively, we can statically associate data with the intent's type by annotating it with an `@IntentResource` annotation. It creates the same resource manually instantiated above, and also supports custom resource classes, suffixes, and codecs:
+
+```java
+@IntentResource("models/my_intent")
+public class MyIntent {
+    // ..
+}
+```
+
+Rendering this class for the `en-US` locale results in the following intent schema:
+
+```json
+{
+  "name" : "MyIntent",
+  "slots: [
+    {
+      "name" : "date",
+      "type" : "AMAZON.DATE"
+    }
+  ],
+  "samples: [
+    "what is the {date}"
+  ]
+}
+```
+
+### Slot Type Schema
+
+The type of an intent's slot is derived from the `@SlotType` annotation on the property's type. For example, the type of the `date` property is `AmazonDate`, a class annotated with the `@SlotType` annotation, explicitly naming it `AMAZON.DATE`.
+
+```java
+@SlotType("AMAZON.DATE")
+public abstract class AmazonDate extends BaseSlotValue {
+    // ..
+}
+```
+
+Using the `@SlotType` annotation, you can implement custom slot types as classes like `AmazonDate`:
+
+```java
+@SlotType
+public class MySlotType extends BaseSlotValue {
+}
+```
+
+Or as an `enum`, where the symbols correspond to either the slot value or a matched [Entity Resolution ID](https://developer.amazon.com/docs/custom-skills/define-synonyms-and-ids-for-slot-type-values-entity-resolution.html).
+
+```java
+@SlotType
+public enum MySlotType {
+    SLOT_ID_1,
+    SLOT_ID_2;
+}
+```
+
+### Slot Type Data
+
+Like with intents, a slot type's interaction model data can be associated when registering its class by creating a `SlotTypeDataSource`, or by annotating the type's class with an `@SlotTypeResource` annotation.
+
+For example, given a JSON resource file, `src/main/resources/models/my_slot_type.json`:
+
+```json
+{
+  "values" : [
+    {
+      "id" : "SLOT_ID_1",
+      "name" : {
+        "value" : "a",
+        "synonyms" : [
+          "ay"
+        ]
+      }
+    },
+    {
+      "id" : "SLOT_ID_2",
+      "name" : {
+        "value" : "b",
+        "synonyms" : [
+          "bee"
+        ]
+      }
+    }
+  ]
+}
+```
+
+We can associate a `SlotTypeDataSource` which will scan for resources relative to the `MySlotType.class`:
+
+```java
+package com.example;
+
+public class HelloWorldModule implements SkillModule {
+    @Override
+    public void buildModel(Model.Builder model) {
+        model.slotType(MySlotType.class, SlotTypeData.resource()
+            .withResourceClass(MySlotType.class)
+            .withName("models/my_slot_type")
+            .build());
+    }
+}
+```
+
+Or, we can statically associate data with the slot's type by annotating it with a `@SlotTypeResource` annotation. It creates the same resource manually instantiated above:
+
+```java
+@SlotType
+@SlotTypeResource("models/my_slot_Type")
+public class MySlotType {
+    // ..
+}
+```
+
+Enums are also supported, but should only be used when fuzzy matching is not required:
+
+```java
+@SlotType
+@SlotTypeResource("models/my_slot_Type")
+public enum MySlotType {
+    SLOT_ID_1,
+    SLOT_ID_2;
+}
+```
+
+Rendering this class for the `en-US` locale results in the following slot type schema:
+
+```json
+{
+  "name" : "MySlotType",
+  "values" : [
+    {
+      "id" : "SLOT_ID_1",
+      "name" : {
+        "value" : "a",
+        "synonyms" : [
+          "ay"
+        ]
+      }
+    },
+    {
+      "id" : "SLOT_ID_2",
+      "name" : {
+        "value" : "b",
+        "synonyms" : [
+          "bee"
+        ]
+      }
+    }
+  ]
 }
 ```
 
 # Extending the MVC Framework
 
-TODO: Separate page for extensions?
-
 ## Resolvers
 
-The MVC framework attempts to provide extension points for each aspect as injectable 'Resolver' interfaces in the `com.amazon.ask.mvc.plugin` package. *TODO: link*
+The `MvcSdkModule` provides extension points for each aspect as injectable `Resolver` interfaces:
 
-* ViewResolver
-* ArgumentResolver
-* PredicateResolver
-* ExceptionHandlerResolver
-* RequestHandlerResolver
-* RequestInterceptorResolver
-* ResponseInterceptorResolver
+* `com.amazon.ask.mvc.plugin.ViewResolver`
+* `com.amazon.ask.mvc.plugin.ArgumentResolver`
+* `com.amazon.ask.mvc.plugin.PredicateResolver`
+* `com.amazon.ask.mvc.plugin.ExceptionHandlerResolver`
+* `com.amazon.ask.mvc.plugin.RequestHandlerResolver`
+* `com.amazon.ask.mvc.plugin.RequestInterceptorResolver`
+* `com.amazon.ask.mvc.plugin.ResponseInterceptorResolver`
 
-*The MvcSdkModule includes default resolvers which implements each of its fist-class features such as `@IntentMapping`, `@RequestMapping`, `@RequestInterceptor`, `@WhenSessionAttribute`, etc.*
+*The *`MvcSdkModule`* includes default resolvers which implements each of its fist-class features such as `@IntentMapping`, `@RequestMapping`, `@RequestInterceptor`, `@WhenSessionAttribute`, etc.*
 
 ### View Resolver
 
-Resolves a View to render the return value of a controller's method. Supports request and exception handler methods, e.g. those annotated with `@RequestMapping`, `@IntentMapping` or `@ExceptionHandler`.
+Resolves a View to render the return value of a controller's method as a `Response`. Supports request and exception handler methods, e.g. the return value of a method annotated with `@RequestMapping`, `@IntentMapping` or `@ExceptionHandler`.
 
-TODO: Show a basic one.
+**Example**: render a string returned by a controller as the output speech.
 
-TODO: Suggest extending the BaseViewResolver
+Write a view resolver which checks if the output is a `String`:
+
+```java
+public class StringViewResolver implements ViewResolver {
+    @Override
+    public Optional<View> resolve(Object handlerOutput, RequestEnvelope request) throws Exception {
+        if (handlerOutput instanceof String) {
+            return new StringView();
+        }
+    }
+}
+```
+
+Build a `Response` and cast the `handlerOutput` to a `String`:
+
+```java
+public class StringView implements View {
+    @Override
+    public Response render(Object handlerOutput, RequestEnvelope requestEnvelope) throws Exception {
+        return Response.builder()
+            .withShouldEndSession(false)
+            .withOutputSpeech(PlainTextOutputSpeech.builder()
+                .withText((String) handlerOutput)
+                .build())
+            .build()
+    }
+}
+```
 
 ### Argument
 
-Attempts to resolve the parameter of a method, given its reflective information and the request context.
+Attempts to resolve the value for method's parameter given its reflection information and the request.
 
 **Example**: resolve the [attributes manager](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/attributes/AttributesManager.html) from the `HanderInput` if the parameter's type is `AttributesManager.class:`
 
@@ -275,9 +632,9 @@ public class AttributesManagerResolver implements ArgumentResolver {
 }
 ```
 
-### Predicate/Condition
+### Predicate
 
-Resolves a Predicate<[HandlerInput](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/dispatcher/request/handler/HandlerInput.html)> from conditional annotation. The context may be that of a `ControllerContext`, or a `ControllerMethodContext` since conditional annotations are allowed to be on both the controller type and individual method mappings.
+Resolves a Predicate<[HandlerInput](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/dispatcher/request/handler/HandlerInput.html)> from a controller's type and methods. The context may be that of a `ControllerContext`, or a `ControllerMethodContext` since conditional annotations are allowed to be on both the controller type and individual methods.
 
 **Example**: `true` if the session contains a `state`:
 
@@ -318,6 +675,7 @@ public class ExceptionMappingResolver implements ExceptionHandlerResolver {
             // check if exception is type, invoke method, etc.
         }
         return Optional.of(handler);
+    }
 }
 ```
 
@@ -325,7 +683,7 @@ public class ExceptionMappingResolver implements ExceptionHandlerResolver {
 
 Resolves a [request handler](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/dispatcher/request/handler/RequestHandlerChain.html) for a controller's method.
 
-**Example**: invoke a method if intent name is 'Test':
+**Example**: invoke a method if intent name matches some value:
 
 ```java
 public @interface IntentMapping {
@@ -351,7 +709,7 @@ public class IntentMappingRequestHandlerResolver implements RequestHandlerResolv
 
 Resolves a [request interceptor](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/dispatcher/request/interceptor/RequestInterceptor.html) for a controller's method.
 
-**Example**: @RequestInterceptor print a message if the method is annotated with `@PrintInterceptor`:
+**Example**: print a message if the method is annotated with `@PrintInterceptor`:
 
 ```java
 public @interface PrintInterceptor {}
@@ -371,7 +729,7 @@ public class PrintRequestInterceptorResolver implements RequestInterceptorResolv
 
 ### Response Interceptor
 
-Resolves a [request interceptor](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/dispatcher/request/interceptor/ResponseInterceptor.html) for a controller's method.
+Resolves a [response interceptor](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/dispatcher/request/interceptor/ResponseInterceptor.html) for a controller's method.
 
 **Example**: print a message if the method is annotated with `@PrintInterceptor`:
 
@@ -393,14 +751,14 @@ public class PrintResponseInterceptorResolver implements ResponseInterceptorReso
 
 ## Auto Resolvers
 
-For annotation mappings, predicates and argument resolvers, a resolver can be automatically be resolved from a meta-annotation. The annotation type must be annotated with its corresponding @Auto* meta-annotation, identifying the class which implements the resolution logic:
+Annotation such as mappings (`@IntentMapping`), predicates (`@WhenSessionAttribute`) and arguments (`@SessionValues`) can be automatically resolved using a meta-annotation. The annotation type you want to resolve must be annotated with its corresponding `@Auto*` meta-annotation, identifying the class which implements it:
 
-* @AutoArgumentResolver
-* @AutoPredicateResolver
-* @AutoExceptionHandler
-* @AutoRequestHandler
-* @AutoRequestInterceptor
-* @AutoResponseInterceptor
+* `com.amazon.ask.mvc.annotation.plugin.AutoArgumentResolver`
+* `com.amazon.ask.mvc.annotation.plugin.AutoPredicateResolver`
+* `com.amazon.ask.mvc.annotation.plugin.AutoExceptionHandler`
+* `com.amazon.ask.mvc.annotation.plugin.AutoRequestHandler`
+* `com.amazon.ask.mvc.annotation.plugin.AutoRequestInterceptor`
+* `com.amazon.ask.mvc.annotation.plugin.AutoResponseInterceptor`
 
 **Example: **extract a slot by name for an annotated parameter such as `onIntent(@Slot(“answer”) String answer) { .. }`
 
@@ -418,14 +776,14 @@ public @interface Slot {
 }
 ```
 
-**Example:** check if a slot is present
+**Example:** Predicate to check if a slot value is present
 
 ```java
-@AutoPredicateResolver(NotNull.Plugin.class) // identify the auto-resolver
+@AutoPredicateResolver(SlotExists.Plugin.class) // identify the auto-resolver
 public @interface SlotExists {
     String value(); // slot name
 
-    class Plugin implements AutoPredicateResolver<SlotExists> {
+    class Plugin implements AutoPredicateResolver.Plugin<SlotExists> {
         @Override
         public Predicate<HandlerInput> apply(AnnotationContext entity, SlotExists annotation) {
             return input -> {

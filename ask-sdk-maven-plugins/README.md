@@ -48,7 +48,7 @@ Optionally, you can specify the individual locales you wish to generate a model 
 
 # MVC Skill Project Archetype
 
-This maven project template deploys a skill to [AWS Lambda](https://aws.amazon.com/lambda/) using a [CloudFormation](https://aws.amazon.com/cloudformation/) [SAM](https://github.com/awslabs/serverless-application-model) template. It requires you have installed and configured the [ASK CLI](https://developer.amazon.com/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html) and [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/installing.html).
+This maven project template sets up a MVC skill project which deploys to [AWS Lambda](https://aws.amazon.com/lambda/) using a [CloudFormation](https://aws.amazon.com/cloudformation/) [SAM](https://github.com/awslabs/serverless-application-model) template. It requires you have installed and configured the [ASK CLI](https://developer.amazon.com/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html) and [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/installing.html).
 
 ## Instructions
 
