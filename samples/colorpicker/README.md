@@ -1,4 +1,4 @@
-# Alexa Skills Kit SDK Sample - Color Picker
+# ASK SDK Frameworks Example - Color Picker
 This sample shows how to create a skill that illustrates the following concepts:
 
 - Custom slot type: demonstrates using custom slot types to handle a finite set of known values

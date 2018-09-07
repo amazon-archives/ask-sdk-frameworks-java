@@ -1,4 +1,4 @@
-# Alexa Skills Kit SDK Sample - Trivia
+# ASK SDK Frameworks Example - Trivia
 This Alexa sample skill is a template for a basic trivia skill. Provided a list of interesting questions about a topic, Alexa will select a question at random and ask it of the user when the skill is invoked.
 
 ## Setup
@@ -41,9 +41,9 @@ This uploads your generated interaction model to Alexa and starts the model buil
 
 ### Testing
 You can test your skill in one of three ways:
-- Through your Alexa device. Using your Alexa app, make sure the new skill is enabled under **My Skills**. Once done, you can invoke your skill using its invocation name ("Alexa, open color picker").
+- Through your Alexa device. Using your Alexa app, make sure the new skill is enabled under **My Skills**. Once done, you can invoke your skill using its invocation name ("Alexa, open reindeer trivia").
 - Through the [ASK Developer Console](https://developer.amazon.com/alexa/console/ask). Open your skill and use the **Test** tab to open the simulator and issue requests against your skill.
-- Using the ASK CLI [simulate command](https://developer.amazon.com/docs/smapi/ask-cli-command-reference.html#simulate-command), providing your skill ID and utterance text. For example: `ask simulate -s <YOUR_SKILL_ID> -t "open color picker" -l en-US`
+- Using the ASK CLI [simulate command](https://developer.amazon.com/docs/smapi/ask-cli-command-reference.html#simulate-command), providing your skill ID and utterance text. For example: `ask simulate -s <YOUR_SKILL_ID> -t "open reindeer trivia" -l en-US`
 
 Feel free to start playing around and making changes to the skill at this point. Anytime you want to push your changes, simply rebuild the skill, redeploy to CloudFormation, and update the skill model if model changes were made.
 
