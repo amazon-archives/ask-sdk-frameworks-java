@@ -4,9 +4,9 @@ The Alexa Skills Kit [Maven](maven.apache.org) Plugins provide a [Mojo](https://
 
 # Interaction Model Generation Mojo
 
-The MVC framework designs a skill's interaction model in code and generates the final JSON filess as part of project compilation. This Mojo provides this type of integration with Maven.
+Skills built with the MVC framework design their interaction model (intents, slots, etc.) in code instead of single JSON files. This Mojo generates the final interaction model JSON files required by Alexa as part of the maven `compile` phase.
 
-# Use
+# Usage
 
 Install the plugin into your `pom.xml` as part of the `compile` phase, and configure your skill class which extends `MvcSkillApplication` as the `className`:
 
@@ -30,7 +30,7 @@ Install the plugin into your `pom.xml` as part of the `compile` phase, and confi
 </plugin>
 ```
 
-Running `mvn compile` will compile your code, load it as java process and render an interaction model for each locale that has an invocation name declared in the `MvcSkillApplication`.
+Running `mvn compile` will compile your code, load it as java process and generate an interaction model for each locale that has an invocation name declared in the `MvcSkillApplication`.
 
 Each file is written to `./target/ask/`, e.g. `./target/ask/en-US.json`.
 
@@ -125,7 +125,7 @@ CloudFormation will create a Stack with a Lambda Function and IAM Role already c
 
 ### Create a Skill
 
-Now that you've deployed your AWS Lambda Function, you can complete the skill manifest file, `skill.json,` by configuring your function's ARN as the endpoint URI. To discover your function's ARN, use the AWS CLI to list them and copy the `FunctionArn` value:
+Now that you've deployed your AWS Lambda Function, you can complete the skill manifest file, `skill.json`, by configuring your function's ARN as the endpoint URI. To discover your function's ARN, use the AWS CLI to list them and copy the `FunctionArn` value:
 
 ```bash
 aws lambda list-functions
