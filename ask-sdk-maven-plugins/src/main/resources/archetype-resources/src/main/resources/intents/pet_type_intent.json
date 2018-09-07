@@ -2,6 +2,7 @@
   "samples": [
     "hello world"
   ],
+  "confirmationRequired": true,
   "confirmations": [
     {
       "type": "PlainText",
@@ -11,12 +12,14 @@
   "slots": {
     "petType": {
       "samples": [ "my slot type is {petType}" ],
+      "confirmationRequired": true,
       "confirmations": [
         {
           "type": "PlainText",
           "value": "did you mean {petType}?"
         }
       ],
+      "elicitationRequired": true,
       "elicitations": [
         {
           "type": "PlainText",
