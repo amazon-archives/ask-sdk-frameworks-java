@@ -24,8 +24,9 @@ public class ${skillName}Controller {
 
     @IntentMapping(type = PetTypeIntent.class)
     public ModelAndView petTypeIntent(PetTypeIntent intent) {
-        ModelAndView mv = new ModelAndView("pet");
-        mv.put("intent", intent);
+        ModelAndView mv = new ModelAndView("basic");
+        mv.put("speech", "Welcome to ${skillName}. This is where you will handle a custom intent.");
+        mv.put("reprompt", "What would you like to do?");
         return mv;
     }
 
