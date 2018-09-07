@@ -10,7 +10,7 @@
   ],
   "slots": {
     "petType": {
-      "samples": [ "my slot type is {mySlotType}" ],
+      "samples": [ "my slot type is {petType}" ],
       "confirmations": [
         {
           "type": "PlainText",

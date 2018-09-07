@@ -12,7 +12,11 @@
     <fileSet filtered="true">
       <directory/>
       <includes>
+        <include>update_interaction_model.sh</include>
+        <include>update_lambda.sh</include>
+        <include>README.md</include>
         <include>SAM.yaml</include>
+        <include>skill.json</include>
       </includes>
     </fileSet>
   </fileSets>
