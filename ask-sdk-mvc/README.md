@@ -388,7 +388,7 @@ The interaction model also contains data for an intent such as sample utterances
 
 For example, given a JSON resource file: `src/main/resources/com/example/intents/my_intent_en_US.json`
 
-```json
+```
 {
   "samples" : [
     "what is the {date}
@@ -423,7 +423,7 @@ public class MyIntent {
 
 Rendering this class for the `en-US` locale results in the following intent schema:
 
-```json
+```
 {
   "name" : "MyIntent",
   "slots: [
@@ -473,7 +473,7 @@ Like with intents, a slot type's interaction model data can be associated when r
 
 For example, given a JSON resource file, `src/main/resources/models/my_slot_type.json`:
 
-```json
+```
 {
   "values" : [
     {
@@ -537,7 +537,7 @@ public enum MySlotType {
 
 Rendering this class for the `en-US` locale results in the following slot type schema:
 
-```json
+```
 {
   "name" : "MySlotType",
   "values" : [
