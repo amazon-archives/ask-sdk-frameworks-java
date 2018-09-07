@@ -51,7 +51,9 @@ public class ViewRenderer {
      */
     @SuppressWarnings("unchecked")
     public Optional<Response> render(ControllerMethodContext context, Object output, RequestEnvelope requestEnvelope) {
-        if (output instanceof Response) {
+        if (output == null) {
+            return Optional.empty();
+        } else if (output instanceof Response) {
             return Optional.of((Response) output);
         } else if (output instanceof Optional) {
             // Check to see if the result was an optional response.
@@ -66,7 +68,6 @@ public class ViewRenderer {
     }
 
     protected Optional<Response> renderInternal(ControllerMethodContext context, Object output, RequestEnvelope requestEnvelope) {
-
         //see if there is a view renderer that can handle the output and build a response
         try {
             for (ViewResolver viewResolver : context.getSkillContext().getViewResolvers()) {
