@@ -126,7 +126,7 @@ public class IntentMapper {
      * @param slotClass class to parse from the slot
      * @param <T> type of the slot
      * @return parsed slot instance
-     * @throws IntentParseException if a {@link T} could not be parsed from the intent request's slot
+     * @throws IntentParseException if an instance could not be parsed from the intent request's slot
      */
     public <T> T parseIntentSlot(IntentRequest intentRequest, String slotName, Class<T> slotClass) throws IntentParseException {
         try {
@@ -154,7 +154,7 @@ public class IntentMapper {
      * @param intentClass type of class to parse intent request into
      * @param <T> type of intent
      * @return instance
-     * @throws IntentParseException if a {@link T} could not be parsed from the request
+     * @throws IntentParseException if an instance could not be parsed from the request
      */
     public <T> T parseIntent(IntentRequest intentRequest, Class<T> intentClass) throws IntentParseException {
         return intentReaderFor(intentClass).read(intentRequest);

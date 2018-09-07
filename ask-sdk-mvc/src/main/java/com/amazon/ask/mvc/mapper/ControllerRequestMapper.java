@@ -122,7 +122,7 @@ public class ControllerRequestMapper implements RequestMapper {
      *     <li>delegate responsibility to the underlying handler, but guard it with the predicate</li>
      *     <li>look for the {@link Priority} annotation on each method</li>
      *     <li>order each handler in the controller by its priority</li>
-     *     <li>methods not annotated with {@link Priority} are considered to have priority '0'</li>
+     *     <li>methods not annotated with {@link Priority} are considered to have priority 0</li>
      * </ul>
      *
      * @param controller scanned for methods with mappers
@@ -155,7 +155,7 @@ public class ControllerRequestMapper implements RequestMapper {
                         .withPriority(Optional.ofNullable(context.getMethod().getAnnotation(Priority.class))
                             .map(Priority::value)
                             .orElse(0))) // default to the '0' bucket for methods not annotated with Priority
-                    .map(B::build);
+                    .map(Guard.Builder::<G>build);
             })
             // sort in descending order, so "higher priority" is more intuitive
             .sorted((a, b) -> -1 * Integer.compare(a.getPriority(), b.getPriority()));

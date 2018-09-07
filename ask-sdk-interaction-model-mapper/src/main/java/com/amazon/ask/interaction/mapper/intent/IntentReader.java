@@ -22,7 +22,7 @@ public interface IntentReader<T> {
      *
      * @param intentRequest intent request
      * @return instance representation of this request
-     * @throws IntentParseException if a {@link T} instance could not be read from the request
+     * @throws IntentParseException if an instance could not be read from the request
      */
     T read(IntentRequest intentRequest) throws IntentParseException;
 }
