@@ -1,0 +1,28 @@
+{
+  "samples": [
+    "hello world"
+  ],
+  "confirmations": [
+    {
+      "type": "PlainText",
+      "value" : "Did you mean {petType}?"
+    }
+  ],
+  "slots": {
+    "petType": {
+      "samples": [ "my slot type is {mySlotType}" ],
+      "confirmations": [
+        {
+          "type": "PlainText",
+          "value": "did you mean {petType}?"
+        }
+      ],
+      "elicitations": [
+        {
+          "type": "PlainText",
+          "value": "Do you have a dog or a cat?"
+        }
+      ]
+    }
+  }
+}

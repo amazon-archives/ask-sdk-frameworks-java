@@ -1,6 +1,7 @@
 package ${package};
 
 import ${package}.controllers.${skillName}Controller;
+import ${package}.intents.PetTypeIntent;
 import com.amazon.ask.interaction.definition.Model;
 import com.amazon.ask.interaction.types.intent.CancelIntent;
 import com.amazon.ask.interaction.types.intent.HelpIntent;
@@ -24,6 +25,7 @@ public class ${skillName}Module implements SkillModule {
     @Override
     public void buildModel(Model.Builder modelBuilder) {
         modelBuilder
+            .intent(PetTypeIntent.class)
             .intent(CancelIntent.class)
             .intent(HelpIntent.class)
             .intent(StopIntent.class);

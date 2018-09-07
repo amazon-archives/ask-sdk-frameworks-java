@@ -10,6 +10,8 @@ import com.amazon.ask.mvc.annotation.mapping.IntentMapping;
 import com.amazon.ask.mvc.annotation.mapping.RequestMapping;
 import com.amazon.ask.mvc.view.ModelAndView;
 
+import ${package}.intents.PetTypeIntent;
+
 public class ${skillName}Controller {
 
     @RequestMapping(types = LaunchRequest.class)
@@ -17,6 +19,13 @@ public class ${skillName}Controller {
         ModelAndView mv = new ModelAndView("basic");
         mv.put("speech", "Welcome to ${skillName}. This is where you will greet users of your skill.");
         mv.put("reprompt", "What would you like to do?");
+        return mv;
+    }
+
+    @IntentMapping(type = PetTypeIntent.class)
+    public ModelAndView petTypeIntent(PetTypeIntent intent) {
+        ModelAndView mv = new ModelAndView("pet");
+        mv.put("intent", intent);
         return mv;
     }
 
