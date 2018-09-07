@@ -1,8 +1,11 @@
 {
-  "values" : {
-    "test" : {
-      "value" : "en_US file",
-      "synonyms" : [ "en_US file synonym" ]
+  "values" : [
+    {
+      "id" : "test",
+      "name": {
+        "value" : "en_US file",
+        "synonyms": [ "en_US file synonym" ]
+      }
     }
-  }
+  ]
 }

@@ -1,8 +1,11 @@
 {
-  "values" : {
-    "test" : {
-      "value" : "global folder",
-      "synonyms" : [ "global folder synonym" ]
+  "values" : [
+    {
+      "id" : "test",
+      "name": {
+        "value" : "global folder",
+        "synonyms": [ "global folder synonym" ]
+      }
     }
-  }
+  ]
 }

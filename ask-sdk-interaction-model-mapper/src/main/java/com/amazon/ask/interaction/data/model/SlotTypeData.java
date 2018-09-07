@@ -14,6 +14,7 @@
 package com.amazon.ask.interaction.data.model;
 
 
+import com.amazon.ask.interaction.model.SlotTypeValue;
 import com.amazon.ask.interaction.model.SlotValue;
 import com.amazon.ask.interaction.data.SlotTypeDataSource;
 import com.amazon.ask.interaction.data.source.Codec;
@@ -28,9 +29,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static com.amazon.ask.util.ValidationUtils.assertStringNotEmpty;
 
 /**
- * Structure of a file containing a Slot Type's values.
+ * Structure of a file containing a Slot Type's valuesIndex.
  */
 @JsonDeserialize(builder = SlotTypeData.Builder.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -61,15 +65,25 @@ public class SlotTypeData {
         return new Builder();
     }
 
-    private final Map<String, SlotValue> values;
+    private final Map<String, SlotValue> valuesIndex;
 
-    public SlotTypeData(Map<String, SlotValue> values) {
-        this.values = values == null ? Collections.emptyMap() : Collections.unmodifiableMap(values);
+    public SlotTypeData(Map<String, SlotValue> valuesIndex) {
+        this.valuesIndex = valuesIndex == null ? Collections.emptyMap() : Collections.unmodifiableMap(valuesIndex);
     }
 
     @JsonProperty("values")
-    public Map<String, SlotValue> getValues() {
-        return values;
+    public Collection<SlotTypeValue> getValues() {
+        return valuesIndex.entrySet().stream()
+            .map(e -> SlotTypeValue.builder()
+                .withId(e.getKey())
+                .withName(e.getValue())
+                .build())
+            .collect(Collectors.toList());
+    }
+
+    @JsonIgnore
+    public Map<String, SlotValue> getValuesIndex() {
+        return valuesIndex;
     }
 
     @JsonIgnore
@@ -82,12 +96,19 @@ public class SlotTypeData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SlotTypeData that = (SlotTypeData) o;
-        return Objects.equals(values, that.values);
+        return Objects.equals(valuesIndex, that.valuesIndex);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(values);
+        return Objects.hash(valuesIndex);
+    }
+
+    @Override
+    public String toString() {
+        return "SlotTypeData{" +
+            "valuesIndex=" + valuesIndex +
+            '}';
     }
 
     public static class Resource extends ResourceSource<SlotTypeDefinition, SlotTypeData> implements SlotTypeDataSource {
@@ -110,12 +131,23 @@ public class SlotTypeData {
         }
 
         public Builder add(SlotTypeData other) {
-            return this.addValues(other.getValues());
+            return this.addValues(other.getValuesIndex());
         }
 
         @JsonProperty("values")
-        public Builder withValues(Map<String, SlotValue> values) {
-            this.values = values;
+        public Builder withValues(Collection<SlotTypeValue> values) {
+            this.values = values.stream()
+                .peek(value -> assertStringNotEmpty(value.getId(), "slot value id"))
+                .collect(Collectors.toMap(
+                    SlotTypeValue::getId,
+                    SlotTypeValue::getName));
+            return this;
+        }
+
+        public Builder addValues(Collection<SlotTypeValue> values) {
+            values.stream()
+                .peek(value -> assertStringNotEmpty(value.getId(), "slot value id"))
+                .forEach(v -> addValue(v.getId(), v.getName()));
             return this;
         }
 

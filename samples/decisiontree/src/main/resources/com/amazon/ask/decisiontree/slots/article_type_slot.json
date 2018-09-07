@@ -1,12 +1,16 @@
 {
-  "values": {
-    "a": {
-      "value": "a",
-      "synonyms": []
+  "values": [
+    {
+      "id": "a",
+      "name": {
+        "value": "a"
+      }
     },
-    "an": {
-      "value": "an",
-      "synonyms": []
+    {
+      "id": "an",
+      "name": {
+        "value": "an"
+      }
     }
-  }
+  ]
 }

@@ -1,12 +1,22 @@
 {
-  "values" : {
-    "A" : {
-      "value" : "A",
-      "synonyms" : ["test_A_de_DE"]
+  "values": [
+    {
+      "id": "A",
+      "name": {
+        "value": "A",
+        "synonyms": [
+          "test_A_de_DE"
+        ]
+      }
     },
-    "B" : {
-      "value" : "B",
-      "synonyms" : ["test_B_de_DE"]
+    {
+      "id": "B",
+      "name": {
+        "value": "B",
+        "synonyms": [
+          "test_B_de_DE"
+        ]
+      }
     }
-  }
+  ]
 }

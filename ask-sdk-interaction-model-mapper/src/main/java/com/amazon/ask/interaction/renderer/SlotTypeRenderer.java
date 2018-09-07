@@ -47,8 +47,8 @@ public class SlotTypeRenderer {
     }
 
     protected List<SlotTypeValue> renderValues(SlotTypeData slotData) {
-        List<SlotTypeValue> values = new ArrayList<>(slotData.getValues().size());
-        for (Map.Entry<String, SlotValue> entry: slotData.getValues().entrySet()) {
+        List<SlotTypeValue> values = new ArrayList<>(slotData.getValuesIndex().size());
+        for (Map.Entry<String, SlotValue> entry: slotData.getValuesIndex().entrySet()) {
             values.add(SlotTypeValue.builder()
                 .withId(entry.getKey())
                 .withName(SlotValue.builder()

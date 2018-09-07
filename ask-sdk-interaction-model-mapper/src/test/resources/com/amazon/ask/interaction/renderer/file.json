@@ -1,8 +1,11 @@
 {
-  "values" : {
-    "test" : {
-      "value" : "global file",
-      "synonyms" : [ "global file synonym" ]
+  "values" : [
+    {
+      "id" : "test",
+      "name": {
+        "value" : "global file",
+        "synonyms": [ "global file synonym" ]
+      }
     }
-  }
+  ]
 }

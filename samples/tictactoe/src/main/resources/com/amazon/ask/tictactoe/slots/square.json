@@ -1,42 +1,94 @@
 {
-  "values" : {
-    "NORTH_WEST" : {
-      "value" : "north_west",
-      "synonyms" : [ "top left", "north_west" ]
+  "values" : [
+    {
+      "id" : "NORTH_WEST",
+      "name" : {
+        "value" : "north_west",
+        "synonyms" : [
+          "top left",
+          "north_west"
+        ]
+      }
     },
-    "NORTH" : {
-      "value" : "north",
-      "synonyms" : [ "top", "north" ]
+    {
+      "id" : "NORTH",
+      "name" : {
+        "value" : "north",
+        "synonyms" : [
+          "top",
+          "north"
+        ]
+      }
     },
-    "NORTH_EAST" : {
-      "value" : "north_east",
-      "synonyms" : [ "top right", "north_east" ]
+    {
+      "id" : "NORTH_EAST",
+      "name" : {
+        "value" : "north_east",
+        "synonyms" : [
+          "top right",
+          "north_east"
+        ]
+      }
     },
-
-    "WEST" : {
-      "value" : "west",
-      "synonyms" : [ "left", "west" ]
+    {
+      "id" : "WEST",
+      "name" : {
+        "value" : "west",
+        "synonyms" : [
+          "left",
+          "west"
+        ]
+      }
     },
-    "CENTER" : {
-      "value" : "center",
-      "synonyms" : [ "middle", "center" ]
+    {
+      "id" : "CENTER",
+      "name" : {
+        "value" : "center",
+        "synonyms" : [
+          "middle",
+          "center"
+        ]
+      }
     },
-    "EAST" : {
-      "value" : "east",
-      "synonyms" : [ "right", "east" ]
+    {
+      "id" : "EAST",
+      "name" : {
+        "value" : "east",
+        "synonyms" : [
+          "right",
+          "east"
+        ]
+      }
     },
-
-    "SOUTH_WEST" : {
-      "value" : "south_west",
-      "synonyms" : [ "bottom left", "south_west" ]
+    {
+      "id" : "SOUTH_WEST",
+      "name" : {
+        "value" : "south_west",
+        "synonyms" : [
+          "bottom left",
+          "south_west"
+        ]
+      }
     },
-    "SOUTH" : {
-      "value" : "south",
-      "synonyms" : [ "bottom", "south" ]
+    {
+      "id" : "SOUTH",
+      "name" : {
+        "value" : "south",
+        "synonyms" : [
+          "bottom",
+          "south"
+        ]
+      }
     },
-    "SOUTH_EAST" : {
-      "value" : "south_east",
-      "synonyms" : [ "bottom right", "south_east" ]
+    {
+      "id" : "SOUTH_EAST",
+      "name" : {
+        "value" : "south_east",
+        "synonyms" : [
+          "bottom right",
+          "south_east"
+        ]
+      }
     }
-  }
+  ]
 }

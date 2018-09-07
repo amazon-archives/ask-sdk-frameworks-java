@@ -1,8 +1,10 @@
 {
-  "values": {
-    "IAmType": {
-      "value": "I am",
-      "synonyms": []
+  "values": [
+    {
+      "id": "IAmType",
+      "name": {
+        "value": "I am"
+      }
     }
-  }
+  ]
 }

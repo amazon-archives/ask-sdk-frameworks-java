@@ -53,7 +53,7 @@ public class SlotTypeRendererTest {
 
     @Test
     public void testNoValues() {
-        when(mockSlotData.getValues()).thenReturn(Collections.emptyMap());
+        when(mockSlotData.getValuesIndex()).thenReturn(Collections.emptyMap());
 
         assertEquals(
             underTest.renderSlotType(mockSlotType, mockSlotData),
@@ -65,7 +65,7 @@ public class SlotTypeRendererTest {
 
     @Test
     public void testRenderValue() {
-        when(mockSlotData.getValues()).thenReturn(Collections.singletonMap(
+        when(mockSlotData.getValuesIndex()).thenReturn(Collections.singletonMap(
             "test_id", slotValueBuilder()
                 .withValue("test_value")
                 .withSynonyms(Collections.singletonList("test_synonym"))

@@ -1,25 +1,31 @@
 {
-  "values": {
-    "animals": {
-      "value": "animals",
-      "synonyms": [
-        "dogs",
-        "cats",
-        "birds",
-        "turtles",
-        "puppies",
-        "kittens",
-        "elephants"
-      ]
+  "values": [
+    {
+      "id": "animals",
+      "name": {
+        "value": "animals",
+        "synonyms": [
+          "dogs",
+          "cats",
+          "birds",
+          "turtles",
+          "puppies",
+          "kittens",
+          "elephants"
+        ]
+      }
     },
-    "people": {
-      "value": "people",
-      "synonyms": [
-        "men",
-        "women",
-        "kids",
-        "humans"
-      ]
+    {
+      "id": "people",
+      "name": {
+        "value": "people",
+        "synonyms": [
+          "men",
+          "women",
+          "kids",
+          "humans"
+        ]
+      }
     }
-  }
+  ]
 }
