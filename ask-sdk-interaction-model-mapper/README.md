@@ -71,7 +71,7 @@ public class MyIntent {
 
 The type of a slot is derived from the property type. For example, the type of the `date` property above is `AmazonDate`, a class annotated with the `@SlotType` annotation, explicitly naming it `AMAZON.DATE`.
 
-```
+```java
 @SlotType("AMAZON.DATE")
 public abstract class AmazonDate extends BaseSlotValue {
     // ..
@@ -80,7 +80,7 @@ public abstract class AmazonDate extends BaseSlotValue {
 
 Using the `@SlotType` annotation, you can implement custom slot types as classes:
 
-```
+```java
 @SlotType
 public class MySlotType extends BaseSlotValue {
 }
