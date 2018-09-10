@@ -39,7 +39,7 @@ public abstract class IntentRequestHandler<T> implements RequestHandler {
 
     protected final IntentReader<T> intentReader;
     protected final Class<T> intentClass;
-    protected final Intent intentAnnotation;
+    protected final String intentName;
 
     public IntentRequestHandler(Class<T> intentClass, IntentMapper intentMapper) {
         this(intentClass, intentMapper.intentReaderFor(intentClass));
@@ -49,9 +49,11 @@ public abstract class IntentRequestHandler<T> implements RequestHandler {
         this.intentClass = assertNotNull(intentClass, "intentClass");
         this.intentReader = assertNotNull(intentReader, "intentReader");
 
-        this.intentAnnotation = Utils.findAnnotation(intentClass, Intent.class);
-        if (this.intentAnnotation == null) {
-            throw new IllegalArgumentException(String.format("Class '%s' must be annotated with '%s'", intentClass.getName(), Intent.class.getName()));
+        Intent intentAnnotation = Utils.findAnnotation(intentClass, Intent.class);
+        if (intentAnnotation != null && intentAnnotation.value().length() > 0) {
+            this.intentName = intentAnnotation.value();
+        } else {
+            this.intentName = intentClass.getSimpleName();
         }
     }
 
@@ -59,7 +61,7 @@ public abstract class IntentRequestHandler<T> implements RequestHandler {
     public boolean canHandle(HandlerInput input) {
         if (input.getRequestEnvelope().getRequest() instanceof IntentRequest) {
             IntentRequest request = (IntentRequest) input.getRequestEnvelope().getRequest();
-            return request.getIntent().getName().equals(intentAnnotation.value());
+            return request.getIntent().getName().equals(intentName);
         }
         return false;
     }
