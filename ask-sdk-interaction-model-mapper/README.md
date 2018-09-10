@@ -376,7 +376,7 @@ Rendering this class for the `en-US` locale results in the following interaction
 
 Like with intents, a slot type's interaction model data can be associated when registering its class by creating a `SlotTypeDataSource`, or by annotating the type's class with a `@SlotTypeResource` annotation.
 
-For example, given a JSON resource file: `src/main/resources``/my_slot_type.json`
+For example, given a JSON resource file: `src/main/resources/my_slot_type.json`
 
 ```json
 {
@@ -427,7 +427,7 @@ Enums are also supported, but should only be used when fuzzy matching is not req
 ```java
 @SlotType
 @SlotTypeResource("my_slot_Type")
-public enum `MySlotType` {
+public enum MySlotType {
     SLOT_ID_1,
     SLOT_ID_2;
 }
@@ -437,7 +437,7 @@ Rendering this class for the `en-US` locale results in the following slot type s
 
 ```json
 {
-  "name" : "`MySlotType`",
+  "name" : "MySlotType",
   "values" : [
     {
       "id" : "SLOT_ID_1",
