@@ -195,7 +195,7 @@ public class HelloWorldController {
         // ...
     }
 
-    // recove from specific exception`
+    // recover from specific exceptions thrown by this controller's methods
     @ExceptionHandler(exception = MyException.class)
     public Response recoverFromMyException(MyException exception) {
         // ...
