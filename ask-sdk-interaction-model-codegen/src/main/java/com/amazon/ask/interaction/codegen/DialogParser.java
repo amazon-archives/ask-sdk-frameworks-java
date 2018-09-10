@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  */
 public class DialogParser {
     public Map<IntentDefinition, IntentData> parse(LocalizedInteractionModel model, Collection<IntentDefinition> intents) {
-        InteractionModel interactionModel = model.getSkillModel().getInteractionModel();
+        InteractionModel interactionModel = model.getInteractionModelEnvelope().getInteractionModel();
         Map<String, IntentDefinition> intentDefinitions = intents.stream().collect(Collectors.toMap(
             IntentDefinition::getName,
             Function.identity()));

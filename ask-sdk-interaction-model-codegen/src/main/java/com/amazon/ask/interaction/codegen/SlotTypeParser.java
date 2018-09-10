@@ -33,7 +33,7 @@ public class SlotTypeParser {
 
         Map<String, SlotTypeDefinition> seenTypes = new HashMap<>();
 
-        Collection<SlotType> slotTypes = model.getSkillModel().getInteractionModel().getLanguageModel().getTypes();
+        Collection<SlotType> slotTypes = model.getInteractionModelEnvelope().getInteractionModel().getLanguageModel().getTypes();
         if (slotTypes != null) {
             for (SlotType slotType : slotTypes) {
                 SlotTypeDefinition type = parseType(slotType);

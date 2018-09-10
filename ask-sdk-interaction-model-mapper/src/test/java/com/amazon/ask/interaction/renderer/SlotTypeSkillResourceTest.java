@@ -13,7 +13,7 @@
 
 package com.amazon.ask.interaction.renderer;
 
-import com.amazon.ask.interaction.model.SkillModel;
+import com.amazon.ask.interaction.model.InteractionModelEnvelope;
 import com.amazon.ask.interaction.model.SlotValue;
 import com.amazon.ask.interaction.Locales;
 import com.amazon.ask.interaction.annotation.data.SlotTypeSkillResource;
@@ -38,7 +38,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class SlotTypeSkillResourceTest {
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    private static final Codec<SkillModel> CODEC = new JsonCodec<>(MAPPER.readerFor(SkillModel.class));
+    private static final Codec<InteractionModelEnvelope> CODEC = new JsonCodec<>(MAPPER.readerFor(InteractionModelEnvelope.class));
 
     private final SlotTypeSkillResource.Plugin underTest = new SlotTypeSkillResource.Plugin();
 

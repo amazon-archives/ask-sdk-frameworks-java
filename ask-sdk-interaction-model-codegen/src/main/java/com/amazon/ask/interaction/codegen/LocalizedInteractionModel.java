@@ -14,7 +14,7 @@
 package com.amazon.ask.interaction.codegen;
 
 import com.amazon.ask.interaction.model.InteractionModel;
-import com.amazon.ask.interaction.model.SkillModel;
+import com.amazon.ask.interaction.model.InteractionModelEnvelope;
 
 import java.util.Locale;
 
@@ -24,16 +24,16 @@ import static com.amazon.ask.util.ValidationUtils.assertNotNull;
  * Associate a {@link InteractionModel} add a {@link Locale}
  */
 public class LocalizedInteractionModel {
-    private final SkillModel skillModel;
+    private final InteractionModelEnvelope interactionModelEnvelope;
     private final Locale locale;
 
-    public LocalizedInteractionModel(SkillModel skillModel, Locale locale) {
-        this.skillModel = assertNotNull(skillModel, "skillModel");
+    public LocalizedInteractionModel(InteractionModelEnvelope interactionModelEnvelope, Locale locale) {
+        this.interactionModelEnvelope = assertNotNull(interactionModelEnvelope, "skillModel");
         this.locale = assertNotNull(locale, "locale");
     }
 
-    public SkillModel getSkillModel() {
-        return skillModel;
+    public InteractionModelEnvelope getInteractionModelEnvelope() {
+        return interactionModelEnvelope;
     }
 
     public Locale getLocale() {

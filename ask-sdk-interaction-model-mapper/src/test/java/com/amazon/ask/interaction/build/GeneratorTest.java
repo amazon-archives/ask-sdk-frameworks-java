@@ -16,6 +16,7 @@ package com.amazon.ask.interaction.build;
 import com.amazon.ask.interaction.model.InteractionModel;
 import com.amazon.ask.interaction.SkillApplication;
 import com.amazon.ask.interaction.definition.SkillModel;
+import com.amazon.ask.interaction.model.InteractionModelEnvelope;
 import com.amazon.ask.interaction.renderer.SkillModelRenderer;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.junit.Before;
@@ -58,7 +59,7 @@ public class GeneratorTest {
     @Mock
     private SkillModelRenderer mockRenderer;
 
-    private com.amazon.ask.interaction.model.SkillModel mockModel = com.amazon.ask.interaction.model.SkillModel.builder().build();
+    private InteractionModelEnvelope mockModel = InteractionModelEnvelope.builder().build();
 
     private Generator underTest;
 
@@ -108,10 +109,10 @@ public class GeneratorTest {
             }
         };
 
-        com.amazon.ask.interaction.model.SkillModel mockEnModel = com.amazon.ask.interaction.model.SkillModel.builder()
+        InteractionModelEnvelope mockEnModel = InteractionModelEnvelope.builder()
             .withInteractionModel(InteractionModel.builder().build())
             .build();
-        com.amazon.ask.interaction.model.SkillModel mockFrModel = com.amazon.ask.interaction.model.SkillModel.builder().build();
+        InteractionModelEnvelope mockFrModel = InteractionModelEnvelope.builder().build();
 
         Mockito.when(mockRenderer.render(mockSkill, en_US)).thenReturn(mockEnModel);
         Mockito.when(mockRenderer.render(mockSkill, fr_FR)).thenReturn(mockFrModel);
@@ -139,10 +140,10 @@ public class GeneratorTest {
             }
         };
 
-        com.amazon.ask.interaction.model.SkillModel mockEnModel = com.amazon.ask.interaction.model.SkillModel.builder()
+        InteractionModelEnvelope mockEnModel = InteractionModelEnvelope.builder()
             .withInteractionModel(InteractionModel.builder().build())
             .build();
-        com.amazon.ask.interaction.model.SkillModel mockFrModel = com.amazon.ask.interaction.model.SkillModel.builder().build();
+        InteractionModelEnvelope mockFrModel = InteractionModelEnvelope.builder().build();
 
         Mockito.when(mockRenderer.render(mockSkill, en_US)).thenReturn(mockEnModel);
         Mockito.when(mockRenderer.render(mockSkill, fr_FR)).thenReturn(mockFrModel);

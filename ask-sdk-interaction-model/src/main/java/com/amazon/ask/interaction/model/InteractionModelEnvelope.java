@@ -22,8 +22,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * envelope containing the interaction model
  */
 
-@JsonDeserialize(builder = SkillModel.Builder.class)
-public final class SkillModel{
+@JsonDeserialize(builder = InteractionModelEnvelope.Builder.class)
+public final class InteractionModelEnvelope {
 
   @JsonProperty("interactionModel")
   private com.amazon.ask.interaction.model.InteractionModel interactionModel = null;
@@ -32,7 +32,7 @@ public final class SkillModel{
     return new Builder();
   }
 
-  private SkillModel(Builder builder) {
+  private InteractionModelEnvelope(Builder builder) {
     this.interactionModel = builder.interactionModel;
   }
 
@@ -52,8 +52,8 @@ public final class SkillModel{
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SkillModel skillModel = (SkillModel) o;
-    return Objects.equals(this.interactionModel, skillModel.interactionModel);
+    InteractionModelEnvelope interactionModelEnvelope = (InteractionModelEnvelope) o;
+    return Objects.equals(this.interactionModel, interactionModelEnvelope.interactionModel);
   }
 
   @Override
@@ -94,8 +94,8 @@ public final class SkillModel{
     }
       
 
-    public SkillModel build() {
-      return new SkillModel(this);
+    public InteractionModelEnvelope build() {
+      return new InteractionModelEnvelope(this);
     }
   }
 }

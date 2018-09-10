@@ -14,7 +14,7 @@
 package com.amazon.ask.interaction.codegen;
 
 import com.amazon.ask.interaction.model.InteractionModel;
-import com.amazon.ask.interaction.model.SkillModel;
+import com.amazon.ask.interaction.model.InteractionModelEnvelope;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.cli.*;
 
@@ -73,7 +73,7 @@ public class Application {
                 }
                 Locale locale = Locale.forLanguageTag(parts[0]);
                 File file = new File(parts[1]);
-                generator.parseModel(new LocalizedInteractionModel(MAPPER.readValue(file, SkillModel.class), locale));
+                generator.parseModel(new LocalizedInteractionModel(MAPPER.readValue(file, InteractionModelEnvelope.class), locale));
             }
             generator.generate(new File(output));
         }

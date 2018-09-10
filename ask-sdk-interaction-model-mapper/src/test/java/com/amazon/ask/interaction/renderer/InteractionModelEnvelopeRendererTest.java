@@ -16,6 +16,7 @@ package com.amazon.ask.interaction.renderer;
 import com.amazon.ask.interaction.model.InteractionModel;
 import com.amazon.ask.interaction.Locales;
 import com.amazon.ask.interaction.definition.SkillModel;
+import com.amazon.ask.interaction.model.InteractionModelEnvelope;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +30,7 @@ import static org.junit.Assert.assertEquals;
  *
  */
 @RunWith(MockitoJUnitRunner.class)
-public class SkillModelRendererTest {
+public class InteractionModelEnvelopeRendererTest {
 
     @Mock
     private InteractionModelRenderer mockRenderer;
@@ -50,8 +51,8 @@ public class SkillModelRendererTest {
     public void testRenderModel() {
         Mockito.when(mockRenderer.render(mockSkillModel, Locales.en_US)).thenReturn(mockInteractionModel);
 
-        com.amazon.ask.interaction.model.SkillModel expected = com.amazon.ask.interaction.model.SkillModel.builder().withInteractionModel(mockInteractionModel).build();
-        com.amazon.ask.interaction.model.SkillModel actual = underTest.render(mockSkillModel, Locales.en_US);
+        InteractionModelEnvelope expected = InteractionModelEnvelope.builder().withInteractionModel(mockInteractionModel).build();
+        InteractionModelEnvelope actual = underTest.render(mockSkillModel, Locales.en_US);
         assertEquals(expected, actual);
     }
 

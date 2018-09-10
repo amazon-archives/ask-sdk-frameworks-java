@@ -36,7 +36,7 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Associates a resource file containing {@link SkillModel} with a type annotated with {@link Intent}.
+ * Associates a resource file containing {@link InteractionModelEnvelope} with a type annotated with {@link Intent}.
  *
  * Using the intent's name, its {@link IntentData} is cherry-picked from the skill model file.
  */
@@ -61,17 +61,17 @@ public @interface IntentSkillResource {
     Class<?> resourceClass() default Object.class;
 
     /**
-     * @return class of {@link Codec} to read {@link SkillModel} data
+     * @return class of {@link Codec} to read {@link InteractionModelEnvelope} data
      */
-    Class<? extends Codec<SkillModel>> codec() default DefaultCodec.class;
+    Class<? extends Codec<InteractionModelEnvelope>> codec() default DefaultCodec.class;
 
     /**
-     * Parse the standard Skill Model JSON Schema, defined by {@link SkillModel}.
+     * Parse the standard Skill Model JSON Schema, defined by {@link InteractionModelEnvelope}.
      */
-    class DefaultCodec extends JsonCodec<SkillModel> {
+    class DefaultCodec extends JsonCodec<InteractionModelEnvelope> {
         private static final ObjectMapper MAPPER = new ObjectMapper();
         public DefaultCodec() {
-            super(MAPPER.readerFor(SkillModel.class));
+            super(MAPPER.readerFor(InteractionModelEnvelope.class));
         }
     }
 
@@ -98,7 +98,7 @@ public @interface IntentSkillResource {
             return Stream.of(intentData).map(s -> s.apply(context));
         }
 
-        protected IntentData read(RenderContext<IntentDefinition> input, InputStream resource, Codec<SkillModel> codec) throws IOException {
+        protected IntentData read(RenderContext<IntentDefinition> input, InputStream resource, Codec<InteractionModelEnvelope> codec) throws IOException {
             InteractionModel model = codec.read(resource).getInteractionModel();
 
             IntentData.Builder builder = IntentData.builder();

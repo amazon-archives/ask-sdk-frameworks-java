@@ -74,7 +74,7 @@ public class Generator {
     public void parseModel(LocalizedInteractionModel model) {
         Locale locale = model.getLocale();
         locales.add(model.getLocale());
-        invocationNames.put(model.getLocale(), model.getSkillModel().getInteractionModel().getLanguageModel().getInvocationName());
+        invocationNames.put(model.getLocale(), model.getInteractionModelEnvelope().getInteractionModel().getLanguageModel().getInvocationName());
         slotTypeParser.parse(model).forEach((key, value) -> update(this.slots, locale, key, value, SlotTypeData::combine));
         intentParser.parse(model).forEach((key, value) -> update(this.intents, locale, key, value, IntentData::combine));
         dialogParser.parse(model, this.intents.keySet()).forEach((key, value) -> update(this.intents, locale, key, value, IntentData::combine));

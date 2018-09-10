@@ -21,7 +21,7 @@ import com.amazon.ask.interaction.data.source.Codec;
 import com.amazon.ask.interaction.data.source.JsonCodec;
 import com.amazon.ask.interaction.definition.SlotTypeDefinition;
 import com.amazon.ask.interaction.model.InteractionModel;
-import com.amazon.ask.interaction.model.SkillModel;
+import com.amazon.ask.interaction.model.InteractionModelEnvelope;
 import com.amazon.ask.interaction.model.SlotTypeValue;
 import com.amazon.ask.interaction.model.SlotValue;
 import com.amazon.ask.interaction.renderer.RenderContext;
@@ -37,7 +37,7 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * Associates a resource file containing {@link SkillModel} with a type annotated with {@link SlotType}.
+ * Associates a resource file containing {@link InteractionModelEnvelope} with a type annotated with {@link SlotType}.
  *
  * Using the slot type's name, its {@link SlotTypeData} is cherry-picked from the skill model file.
  */
@@ -62,17 +62,17 @@ public @interface SlotTypeSkillResource {
     Class<?> resourceClass() default Object.class;
 
     /**
-     * @return class of {@link Codec} to read {@link SkillModel} data
+     * @return class of {@link Codec} to read {@link InteractionModelEnvelope} data
      */
-    Class<? extends Codec<SkillModel>> codec() default DefaultCodec.class;
+    Class<? extends Codec<InteractionModelEnvelope>> codec() default DefaultCodec.class;
 
     /**
-     * Parse the standard Skill Model JSON Schema, defined by {@link SkillModel}.
+     * Parse the standard Skill Model JSON Schema, defined by {@link InteractionModelEnvelope}.
      */
-    class DefaultCodec extends JsonCodec<SkillModel> {
+    class DefaultCodec extends JsonCodec<InteractionModelEnvelope> {
         private static final ObjectMapper MAPPER = new ObjectMapper();
         public DefaultCodec() {
-            super(MAPPER.readerFor(SkillModel.class));
+            super(MAPPER.readerFor(InteractionModelEnvelope.class));
         }
     }
 
@@ -98,7 +98,7 @@ public @interface SlotTypeSkillResource {
             return Stream.of(intentData.build()).map(s -> s.apply(context));
         }
 
-        protected SlotTypeData read(RenderContext<SlotTypeDefinition> input, InputStream resource, Codec<SkillModel> codec) throws IOException {
+        protected SlotTypeData read(RenderContext<SlotTypeDefinition> input, InputStream resource, Codec<InteractionModelEnvelope> codec) throws IOException {
             InteractionModel model = codec.read(resource).getInteractionModel();
             SlotTypeData.Builder slotMetadataBuilder = SlotTypeData.builder();
 

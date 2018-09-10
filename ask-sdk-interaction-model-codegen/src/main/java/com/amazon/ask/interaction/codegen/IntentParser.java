@@ -51,7 +51,7 @@ public class IntentParser {
         Map<String, IntentDefinition> seenIntents = new HashMap<>();
 
         Map<SlotTypeDefinition, SlotTypeData> slotTypes = slotTypeParser.parse(model);
-        for (Intent intent : model.getSkillModel().getInteractionModel().getLanguageModel().getIntents()) {
+        for (Intent intent : model.getInteractionModelEnvelope().getInteractionModel().getLanguageModel().getIntents()) {
             IntentDefinition intentDefinition = parseDefinition(intent, slotTypes.keySet());
             if (seenIntents.containsKey(intent.getName())) {
                 IntentDefinition other = seenIntents.get(intent.getName());

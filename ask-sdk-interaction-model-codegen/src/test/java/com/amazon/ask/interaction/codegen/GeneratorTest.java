@@ -15,7 +15,7 @@ package com.amazon.ask.interaction.codegen;
 
 import com.amazon.ask.interaction.SkillApplication;
 import com.amazon.ask.interaction.TypeReflector;
-import com.amazon.ask.interaction.model.SkillModel;
+import com.amazon.ask.interaction.model.InteractionModelEnvelope;
 import com.amazon.ask.interaction.renderer.SkillModelRenderer;
 import com.amazon.ask.interaction.types.slot.AmazonLiteral;
 import com.amazon.ask.interaction.types.slot.date.AmazonDate;
@@ -73,8 +73,8 @@ public class GeneratorTest {
 
         // Render the interaction model and ensure it equals the original interaction model
         for (Locale locale : Arrays.asList(Locale.forLanguageTag("en-US"), Locale.forLanguageTag("de-DE"))) {
-            SkillModel expectedModel = mapper.readValue(new File("models/" + locale.toLanguageTag() + ".json"), SkillModel.class);
-            SkillModel actualModel = renderer.render(application.getSkillModel(), locale);
+            InteractionModelEnvelope expectedModel = mapper.readValue(new File("models/" + locale.toLanguageTag() + ".json"), InteractionModelEnvelope.class);
+            InteractionModelEnvelope actualModel = renderer.render(application.getSkillModel(), locale);
             assertEquals(
                 mapper.writerWithDefaultPrettyPrinter().writeValueAsString(expectedModel),
                 mapper.writerWithDefaultPrettyPrinter().writeValueAsString(actualModel));
