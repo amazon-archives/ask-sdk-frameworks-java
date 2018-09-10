@@ -124,7 +124,7 @@ mvn package
 And upload the jar to your lambda function:
 
 ```bash
-aws update-function-code \
+aws lambda update-function-code \
     --function-name <name> \
     --zip-file <aritfact-id>-<version>-jar-with-dependencies.jar
     --publish
