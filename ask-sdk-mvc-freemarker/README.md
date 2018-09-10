@@ -23,11 +23,12 @@ package com.example;
 public class MyModule implements SkillModule {
 	@Override
     public void buildMvc(MvcSdkModule mvc) {
-    	mvc.addViewResolver(FreeMarkerViewResolver.builder()
-        	.withResourceClass(getClass())
-        	.withPrefix("views/")
-            .withName("my_view")
-	        .build());
+    	  mvc.addViewResolver(
+    	      FreeMarkerViewResolver.builder()
+              .withResourceClass(getClass())
+              .withPrefix("views/")
+              .withName("my_view")
+              .build());
     }
 }
 ```
@@ -58,9 +59,9 @@ And return a `ModelAndView` containing the `favoriteColor` model attribute and v
 
 ```java
 public class MyController {
-	@IntentMapping(type = MyColorIsIntent.class)
+    @IntentMapping(type = MyColorIsIntent.class)
     public ModelAndView handleIntent(MyColorIsIntent intent) {
-    	Map<String, Object> model = new HashMap<>();
+        Map<String, Object> model = new HashMap<>();
         model.put("favoriteColor", intent.getColor());
         return new ModelAndView("my_view", model);
     }
