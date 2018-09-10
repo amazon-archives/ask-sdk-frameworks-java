@@ -21,14 +21,14 @@ Install the Freemarker `ViewResolver` as part of your `SkillModule`:
 package com.example;
 
 public class MyModule implements SkillModule {
-	@Override
+    @Override
     public void buildMvc(MvcSdkModule mvc) {
-    	  mvc.addViewResolver(
-    	      FreeMarkerViewResolver.builder()
-              .withResourceClass(getClass())
-              .withPrefix("views/")
-              .withName("my_view")
-              .build());
+        mvc.addViewResolver(
+            FreeMarkerViewResolver.builder()
+                .withResourceClass(getClass())
+                .withPrefix("views/")
+                .withName("my_view")
+                .build());
     }
 }
 ```
