@@ -316,6 +316,10 @@ public class IntentMapper {
             return this;
         }
 
+        public Builder addIntentPropertyReader(Class<?> clazz, IntentPropertyReader intentPropertyReader) {
+            return addIntentPropertyReader(new ClassKey(clazz), intentPropertyReader);
+        }
+
         public Builder addIntentPropertyReader(ClassKey classKey, IntentPropertyReader intentPropertyReader) {
             if (this.intentPropertyReaders == null) {
                 this.intentPropertyReaders = new HashMap<>();
@@ -332,6 +336,10 @@ public class IntentMapper {
         public Builder addSlotPropertyReaders(Map<ClassKey, SlotPropertyReader> slotPropertyReaders) {
             slotPropertyReaders.forEach(this::addSlotPropertyReader);
             return this;
+        }
+
+        public Builder addSlotPropertyReader(Class<?> slotClass, SlotPropertyReader slotPropertyReader) {
+            return addSlotPropertyReader(new ClassKey(slotClass), slotPropertyReader);
         }
 
         public Builder addSlotPropertyReader(ClassKey classKey, SlotPropertyReader slotPropertyReader) {
