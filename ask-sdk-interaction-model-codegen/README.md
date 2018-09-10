@@ -1,6 +1,6 @@
 # ASK SDK Interaction Model Code Generator
 
-This tool generates java classes from [interaction model JSON files](https://developer.amazon.com/docs/custom-skills/create-the-interaction-model-for-your-skill.html) for use with the [Interaction Model Mapper](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/samgood-dev/ask-sdk-interaction-model-mapper).
+This tool generates java classes from [interaction model JSON files](https://developer.amazon.com/docs/custom-skills/create-the-interaction-model-for-your-skill.html) for use with the [Interaction Model Mapper](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-interaction-model-mapper).
 
 
 # Installation

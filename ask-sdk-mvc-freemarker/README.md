@@ -1,6 +1,6 @@
 # Apache Freemarker MVC View Resolver
 
-This plugin integrates the [Apache FreeMarker](https://freemarker.apache.org/) templating engine as a view format in the [Alexa Skills Kit MVC Framework](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/samgood-dev/ask-sdk-mvc), enabling developers to render responses using `.ftl` template files.
+This plugin integrates the [Apache FreeMarker](https://freemarker.apache.org/) templating engine as a view format in the [Alexa Skills Kit MVC Framework](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-mvc), enabling developers to render responses using `.ftl` template files.
 
 # Dependency
 
