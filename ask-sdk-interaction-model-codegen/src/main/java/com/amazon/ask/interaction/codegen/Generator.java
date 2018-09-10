@@ -96,19 +96,19 @@ public class Generator {
     }
 
     public void generate(File path) throws IOException {
-        if (!path.exists()) {
-            path.mkdirs();
-        }
-        if (!path.isDirectory()) {
-            throw new IllegalArgumentException("Path must be a directory: " + path.getPath());
-        }
+        File javaPath = new File(path, "src/main/java/");
+        File resourcesPath = new File(path, "src/main/resources/");
+
+        makeDirectory(path);
+        makeDirectory(javaPath);
+        makeDirectory(resourcesPath);
 
         List<TypeName> intentClasses = new ArrayList<>();
 
         for (IntentDefinition intentDefinition : intents.keySet()) {
             if (intentDefinition.isCustom()) {
                 JavaFile intentFile = intentFileGenerator.generate(intentDefinition, namespace);
-                intentFile.writeTo(path);
+                intentFile.writeTo(javaPath);
 
                 intentClasses.add(ClassName.get(intentFile.packageName, intentFile.typeSpec.name));
             } else {
@@ -118,28 +118,24 @@ public class Generator {
 
         for (SlotTypeDefinition slotType : slots.keySet()) {
             if (slotType.isCustom()) {
-                slotTypeGenerator.generate(slotType, namespace).writeTo(path);
+                slotTypeGenerator.generate(slotType, namespace).writeTo(javaPath);
             }
         }
 
         if (skillName != null) {
-            skillFileGenerator.generate(invocationNames, intents, slots, namespace, skillName).writeTo(path);
+            skillFileGenerator.generate(invocationNames, intents, slots, namespace, skillName).writeTo(javaPath);
         }
 
         for (IntentDefinition intentDefinition : intents.keySet()) {
             Map<Locale, IntentData> data = new HashMap<>();
             for (Locale locale : locales) {
-
-
-
                 IntentData intentData = intents.get(intentDefinition).get(locale);
                 data.put(locale, intentData);
             }
 
-
             if (data.values().stream().anyMatch(d -> !d.isEmpty())) {
                 for (Map.Entry<Locale, IntentData> entry : data.entrySet()) {
-                    File dir = new File(path, (namespace + ".intents.data").replaceAll("\\.", "/"));
+                    File dir = new File(resourcesPath, (namespace + ".intents").replaceAll("\\.", "/"));
                     if (!dir.exists()) {
                         dir.mkdirs();
                     }
@@ -162,7 +158,7 @@ public class Generator {
                 }
                 if (data.values().stream().anyMatch(d -> !d.isEmpty())) {
                     for (Locale locale : locales) {
-                        File dir = new File(path, (namespace + ".slots.data").replaceAll("\\.", "/"));
+                        File dir = new File(resourcesPath, (namespace + ".slots").replaceAll("\\.", "/"));
                         if (!dir.exists()) {
                             dir.mkdirs();
                         }
@@ -180,11 +176,12 @@ public class Generator {
         }
     }
 
-    private File dataDirectory(File parent, String name) {
-        File dir = new File(parent, namespace.replaceAll("\\.", "/") + "/" + name);
-        if (!dir.exists()) {
-            dir.mkdirs();
+    private static void makeDirectory(File file) {
+        if (!file.exists()) {
+            file.mkdirs();
         }
-        return dir;
+        if (!file.isDirectory()) {
+            throw new IllegalArgumentException("Path must be a directory: " + file.getPath());
+        }
     }
 }

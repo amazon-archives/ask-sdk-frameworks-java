@@ -40,7 +40,7 @@ public class SlotTypeGenerator {
                     .addMember("value", "$S", slotType.getName())
                     .build())
                 .addAnnotation(AnnotationSpec.builder(SlotTypeResource.class)
-                    .addMember("value", "$S", "data/" + slotType.getName())
+                    .addMember("value", "$S", slotType.getName())
                     .build())
                 .build())
             .build();

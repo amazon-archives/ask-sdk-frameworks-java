@@ -42,7 +42,7 @@ public class IntentFileGenerator {
                 .addMember("value", "$S", intentDefinition.getName())
                 .build())
             .addAnnotation(AnnotationSpec.builder(IntentResource.class)
-                .addMember("value", "$S", "data/" + intentDefinition.getName())
+                .addMember("value", "$S", intentDefinition.getName())
                 .build())
             .addModifiers(Modifier.PUBLIC);
 

@@ -57,17 +57,21 @@ public class GeneratorTest {
         // Compile generated code
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
-        File typeFile = new File(path + "/com/example/slots/PetType.java");
-        File intentFile = new File(path + "/com/example/intents/PetTypeIntent.java");
-        File skillFile = new File(path + "/com/example/PetSkill.java");
-        File codeDir = new File(path + "/");
+        File typeFile = new File(path + "/src/main/java/com/example/slots/PetType.java");
+        File intentFile = new File(path + "/src/main/java/com/example/intents/PetTypeIntent.java");
+        File skillFile = new File(path + "/src/main/java/com/example/PetSkill.java");
+        File javaDir = new File(path + "/src/main/java");
+        File resourcesDir = new File(path + "/src/main/resources");
         Iterable<? extends JavaFileObject> files = fileManager.getJavaFileObjects(typeFile, intentFile, skillFile);
         JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, null, null, null, files);
         assertTrue(task.call());
         fileManager.close();
 
         // Load the generated code
-        URLClassLoader classLoader = new URLClassLoader(new URL[]{codeDir.toURI().toURL()});
+        URLClassLoader classLoader = new URLClassLoader(new URL[]{
+            javaDir.toURI().toURL(),
+            resourcesDir.toURI().toURL()
+        });
         Class<?> clazz = classLoader.loadClass("com.example.PetSkill");
         SkillApplication application =  (SkillApplication) clazz.newInstance();
 
@@ -96,8 +100,9 @@ public class GeneratorTest {
         // Compile generated code
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, null, null);
-        File intentFile = new File(path + "/com/example/intents/BeanIntent.java");
-        File codeDir = new File(path + "/");
+        File intentFile = new File(path + "/src/main/java/com/example/intents/BeanIntent.java");
+        File javaDir = new File(path + "/src/main/java/");
+        File resourcesDir = new File(path + "/src/main/resources/");
 
         Iterable<? extends JavaFileObject> files = fileManager.getJavaFileObjects(intentFile);
         JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, null, null, null, files);
@@ -105,7 +110,10 @@ public class GeneratorTest {
         fileManager.close();
 
         // Load the generated code
-        URLClassLoader classLoader = new URLClassLoader(new URL[]{codeDir.toURI().toURL()});
+        URLClassLoader classLoader = new URLClassLoader(new URL[]{
+            javaDir.toURI().toURL(),
+            resourcesDir.toURI().toURL()
+        });
         Class clazz = classLoader.loadClass("com.example.intents.BeanIntent");
         TypeReflector<?> reflector = new TypeReflector<Object>(clazz);
         assertEquals(3, reflector.getPropertyDescriptors().size());

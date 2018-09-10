@@ -66,7 +66,7 @@ public class SkillFileGenerator {
                         defineSkillBlock.add(".intent($T.class, $T.resource()\n" +
                             "    .withResourceClass(getClass())\n" +
                             "    .withName($S)\n" +
-                            "    .build())\n", intentClass, IntentData.class, "intents/data/" + builtInIntentName(intentClass));
+                            "    .build())\n", intentClass, IntentData.class, "intents/" + builtInIntentName(intentClass));
                     } else {
                         try {
                             defineSkillBlock.add(".intent($T.class)\n", intentClass);
@@ -83,7 +83,7 @@ public class SkillFileGenerator {
                         defineSkillBlock.add(".slotType($T.class, $T.resource()\n" +
                             "    .withResourceClass(getClass())\n" +
                             "    .withName($S)\n" +
-                            "    .build())", TypeNames.get(slotType.getName()), SlotTypeData.class, "slots/data/" + slotType.getName());
+                            "    .build())", TypeNames.get(slotType.getName()), SlotTypeData.class, "slots/" + slotType.getName());
                     }
                 }
             }
