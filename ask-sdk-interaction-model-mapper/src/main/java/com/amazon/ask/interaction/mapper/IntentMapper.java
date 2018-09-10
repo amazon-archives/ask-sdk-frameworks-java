@@ -14,6 +14,7 @@
 package com.amazon.ask.interaction.mapper;
 
 
+import com.amazon.ask.interaction.definition.SkillModel;
 import com.amazon.ask.model.DialogState;
 import com.amazon.ask.model.IntentConfirmationStatus;
 import com.amazon.ask.model.IntentRequest;
@@ -293,6 +294,11 @@ public class IntentMapper {
         private Map<ClassKey, SlotPropertyReader> slotPropertyReaders = new HashMap<>();
 
         private Builder() {
+        }
+
+        public Builder withSkillModel(SkillModel model) {
+            this.model = model.getModel();
+            return this;
         }
 
         public Builder withModel(Model model) {
