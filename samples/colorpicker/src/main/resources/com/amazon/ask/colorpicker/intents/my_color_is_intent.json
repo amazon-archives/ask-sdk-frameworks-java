@@ -1,0 +1,20 @@
+{
+  "confirmations" : [ ],
+  "slots" : {
+    "color" : {
+      "confirmationRequired": true,
+      "confirmations" : [
+        {
+          "type" : "PlainText",
+          "value" : "are you sure ${color} is your favorite color?"
+        }
+      ],
+      "elicitations" : [ ],
+      "samples" : [ ]
+    }
+  },
+  "samples" : [
+    "my color is {color}",
+    "my favorite color is {color}"
+  ]
+}

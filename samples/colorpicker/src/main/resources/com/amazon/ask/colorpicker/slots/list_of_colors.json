@@ -1,0 +1,46 @@
+{
+  "values" : [
+    {
+      "id" : "red",
+      "name" : {
+        "value" : "red",
+        "synonyms" : [ ]
+      }
+    },
+    {
+      "id" : "orange",
+      "name" : {
+        "value" : "orange",
+        "synonyms" : [ ]
+      }
+    },
+    {
+      "id" : "green",
+      "name" : {
+        "value" : "green",
+        "synonyms" : [ ]
+      }
+    },
+    {
+      "id" : "blue",
+      "name" : {
+        "value" : "blue",
+        "synonyms" : [ ]
+      }
+    },
+    {
+      "id" : "yellow",
+      "name" : {
+        "value" : "yellow",
+        "synonyms" : [ ]
+      }
+    },
+    {
+      "id" : "purple",
+      "name" : {
+        "value" : "purple",
+        "synonyms" : [ ]
+      }
+    }
+  ]
+}

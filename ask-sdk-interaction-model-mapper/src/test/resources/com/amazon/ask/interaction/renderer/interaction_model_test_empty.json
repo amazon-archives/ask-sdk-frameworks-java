@@ -1,0 +1,8 @@
+{
+  "interactionModel": {
+    "languageModel" : {
+      "invocationName" : "withjavamodel",
+      "intents" : []
+    }
+  }
+}

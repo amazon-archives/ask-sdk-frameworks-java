@@ -1,0 +1,17 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "hey",
+            "intents": [
+                {
+                    "name": "inta",
+                    "samples": []
+                },
+                {
+                    "name": "intc",
+                    "samples": []
+                }
+            ]
+        }
+    }
+}

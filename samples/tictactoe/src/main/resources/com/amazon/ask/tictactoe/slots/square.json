@@ -1,0 +1,94 @@
+{
+  "values" : [
+    {
+      "id" : "NORTH_WEST",
+      "name" : {
+        "value" : "north_west",
+        "synonyms" : [
+          "top left",
+          "north_west"
+        ]
+      }
+    },
+    {
+      "id" : "NORTH",
+      "name" : {
+        "value" : "north",
+        "synonyms" : [
+          "top",
+          "north"
+        ]
+      }
+    },
+    {
+      "id" : "NORTH_EAST",
+      "name" : {
+        "value" : "north_east",
+        "synonyms" : [
+          "top right",
+          "north_east"
+        ]
+      }
+    },
+    {
+      "id" : "WEST",
+      "name" : {
+        "value" : "west",
+        "synonyms" : [
+          "left",
+          "west"
+        ]
+      }
+    },
+    {
+      "id" : "CENTER",
+      "name" : {
+        "value" : "center",
+        "synonyms" : [
+          "middle",
+          "center"
+        ]
+      }
+    },
+    {
+      "id" : "EAST",
+      "name" : {
+        "value" : "east",
+        "synonyms" : [
+          "right",
+          "east"
+        ]
+      }
+    },
+    {
+      "id" : "SOUTH_WEST",
+      "name" : {
+        "value" : "south_west",
+        "synonyms" : [
+          "bottom left",
+          "south_west"
+        ]
+      }
+    },
+    {
+      "id" : "SOUTH",
+      "name" : {
+        "value" : "south",
+        "synonyms" : [
+          "bottom",
+          "south"
+        ]
+      }
+    },
+    {
+      "id" : "SOUTH_EAST",
+      "name" : {
+        "value" : "south_east",
+        "synonyms" : [
+          "bottom right",
+          "south_east"
+        ]
+      }
+    }
+  ]
+}

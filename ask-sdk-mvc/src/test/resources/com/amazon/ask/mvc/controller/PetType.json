@@ -1,0 +1,7 @@
+{
+  "synonyms": {
+    "CAT": [ "cat" ],
+    "DOG": [ "dog" ],
+    "DRAGON": [ "dragon" ]
+  }
+}

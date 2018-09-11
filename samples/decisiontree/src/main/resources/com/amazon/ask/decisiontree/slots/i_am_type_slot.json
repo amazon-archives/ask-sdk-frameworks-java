@@ -1,0 +1,27 @@
+{
+  "values": [
+    {
+      "id": "true",
+      "name": {
+        "value": "positive",
+        "synonyms": [
+          "I don't want",
+          "I really don't like",
+          "I don't like",
+          "I hate"
+        ]
+      }
+    }, {
+      "id": "false",
+      "name": {
+        "value": "negative",
+        "synonyms": [
+          "I don't want",
+          "I really don't like",
+          "I don't like",
+          "I hate"
+        ]
+      }
+    }
+  ]
+}

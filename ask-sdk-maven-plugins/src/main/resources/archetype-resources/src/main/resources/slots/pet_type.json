@@ -1,0 +1,22 @@
+{
+  "values": [
+    {
+      "id": "cat",
+      "name": {
+        "value": "cat",
+        "synonyms": [
+          "kitty"
+        ]
+      }
+    },
+    {
+      "id": "dog",
+      "name": {
+        "value": "dog",
+        "synonyms": [
+          "fido"
+        ]
+      }
+    }
+  ]
+}

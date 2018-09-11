@@ -1,0 +1,82 @@
+{
+  "confirmations" : [ ],
+  "slots" : {
+    "salaryImportance" : {
+      "samples" : [
+        "{iWant} to be {salaryImportance}",
+        "{salaryImportance}"
+      ],
+      "elicitationRequired": true,
+      "confirmationRequired": false,
+      "elicitations": [
+        {
+          "type" : "PlainText",
+          "value" : "Which phrase best describes your thoughts about money, there's nothing more important, not top priority, or I don't care about money."
+        }
+      ]
+    },
+    "personality" : {
+      "samples" : [
+        "{iAm} {article} {personality}",
+        "{personality}"
+      ],
+      "elicitationRequired": true,
+      "confirmationRequired": false,
+      "elicitations": [
+        {
+          "type" : "PlainText",
+          "value" : "Would you say that you are an introvert or an extrovert?"
+        }
+      ]
+    },
+    "preferredSpecies" : {
+      "samples" : [
+        "{iLike} {preferredSpecies}",
+        "{preferredSpecies}"
+      ],
+      "elicitationRequired": true,
+      "confirmationRequired": false,
+      "elicitations": [
+        {
+          "type" : "PlainText",
+          "value" : "Between animals and people which do you prefer?"
+        }
+      ]
+    },
+    "bloodTolerance" : {
+      "samples" : [
+        "I would {bloodTolerance}",
+        "{bloodTolerance}"
+      ],
+      "elicitationRequired": true,
+      "confirmationRequired": false,
+      "elicitations": [
+        {
+          "type" : "PlainText",
+          "value" : "If you saw blood would you scream or shrug?"
+        }
+      ]
+    },
+    "iLike" : {
+      "samples" : []
+    },
+    "iWant" : {
+      "samples" : []
+    },
+    "iAm" : {
+      "samples" : []
+    },
+    "article" : {
+      "samples" : []
+    }
+  },
+  "samples" : [
+    "recommend a job",
+    "{iLike} {preferredSpecies}",
+    "{iLike} {bloodTolerance}",
+    "{iAm} {article} {personality}",
+    "{iWant} to be {salaryImportance}",
+    "to recommend a job",
+    "start my career"
+  ]
+}

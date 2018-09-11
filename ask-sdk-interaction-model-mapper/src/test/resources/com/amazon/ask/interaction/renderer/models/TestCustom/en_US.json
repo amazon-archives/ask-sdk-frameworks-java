@@ -1,0 +1,22 @@
+{
+  "values": [
+    {
+      "id": "A",
+      "name": {
+        "value": "A",
+        "synonyms": [
+          "test_A_en_US"
+        ]
+      }
+    },
+    {
+      "id": "B",
+      "name": {
+        "value": "B",
+        "synonyms": [
+          "test_B_en_US"
+        ]
+      }
+    }
+  ]
+}

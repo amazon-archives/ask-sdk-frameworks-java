@@ -1,0 +1,11 @@
+{
+  "values" : [
+    {
+      "id" : "test",
+      "name": {
+        "value" : "en_US folder",
+        "synonyms": [ "en_US folder synonym" ]
+      }
+    }
+  ]
+}

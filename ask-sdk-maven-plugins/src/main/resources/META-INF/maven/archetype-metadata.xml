@@ -1,0 +1,28 @@
+<archetype-descriptor xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd"
+  name="skill-quickstart" partial="false">
+
+  <fileSets>
+    <fileSet filtered="true" packaged="true">
+      <directory>src/main/java</directory>
+    </fileSet>
+    <fileSet filtered="true" packaged="true">
+      <directory>src/main/resources</directory>
+    </fileSet>
+    <fileSet filtered="true">
+      <directory/>
+      <includes>
+        <include>update_interaction_model.sh</include>
+        <include>update_lambda.sh</include>
+        <include>README.md</include>
+        <include>SAM.yaml</include>
+        <include>skill.json</include>
+      </includes>
+    </fileSet>
+  </fileSets>
+
+  <requiredProperties>
+    <requiredProperty key="skillName"/>
+    <requiredProperty key="invocationName"/>
+  </requiredProperties>
+</archetype-descriptor>
