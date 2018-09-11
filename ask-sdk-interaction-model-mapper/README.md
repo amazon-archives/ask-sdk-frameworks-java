@@ -4,23 +4,23 @@ The Interaction Model Mapper enables you to manage your skill's interaction mode
 
 * [Configuration](#configuration)
 * [Interaction Model Schema](#interaction-model-schema)
-   * [Intent Classes](#intent-classes)
-   * [Slot Type Classes](#slot-type-classes)
+   * [Intents](#intents)
+   * [Slot Types](#slot-types)
 * [Interaction Model Data](#interaction-model-data)
-   * [Intent sample utterances and prompts](#intent-sample-utterances-and-prompts)
-   * [Slot values, ids and synonyms](#slot-values-ids-and-synonyms)
-   * [Data localization](#data-localization)
+   * [Samples, Confirmations and Elicitations](#samples-confirmations-and-elicitations)
+   * [Slot Values, IDs and Synonyms](#slot-values-ids-and-synonyms)
+   * [Localization](#localization)
 * [Intent Mapper](#intent-mapper)
-   * [Intent Classes](#intent-classes-1)
-   * [Slot Type Classes](#slot-type-classes-1)
+   * [Intents](#intents-1)
+   * [Slot Types](#slot-types-1)
 * [Intent Request Handler](#intent-request-handler)
 * [Built-in Intents](#built-in-intents)
+   * [Standard](#standard-intents)
 * [Built-in Slot Types](#built-in-slot-types)
    * [<a href="https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#numbers-dates-and-times" rel="nofollow">Numbers, Dates and Times</a>](#numbers-dates-and-times)
    * [<a href="https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#phrases" rel="nofollow">Phrases</a>](#phrases)
    * [<a href="https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#list-types" rel="nofollow">List Types</a>](#list-types)
    * [<a href="https://developer.amazon.com/docs/custom-skills/literal-slot-type-reference.html" rel="nofollow">Literal</a>](#literal)
-
 
 ## Configuration
 
@@ -95,7 +95,7 @@ ask api update-model \
 ## Interaction Model Schema
 Both custom and built-in variations of Alexa intents and slot types are defined as java classes annotated with `@Intent` or `@SlotType`.
 
-### Intent Classes
+### Intents
 
 To define a new intent for your skill, create a class and annotate it with `@Intent`. The name of the intent defaults to the simple name of the class, but can also be defined explicitly with `@Intent(“DifferentName”)`.
 
@@ -117,7 +117,7 @@ public class MyIntent {
 }
 ```
 
-### Slot Type Classes
+### Slot Types
 
 The type of a slot is derived from the property type. For example, the type of the `date` property above is `AmazonDate`, a class annotated with the `@SlotType` annotation, explicitly naming it `AMAZON.DATE`.
 
@@ -150,7 +150,7 @@ public enum MySlotType {
 
 Intents and slot types are associated with localized data such as sample utterances, prompts, slot values and synoynms, etc. stored in resource bundles.
 
-### Intent sample utterances and prompts
+### Samples, Confirmations and Elicitations
 
 An intent can be associated with data by passing an `IntentDataSource` when registering it with the `Model.Builder`, or by statically annotating its type with an `@IntentResource`. Both methods point to resource files.
 
@@ -293,7 +293,7 @@ Rendering this class for the `en-US` locale results in the following interaction
 }
 ```
 
-### Slot values, ids and synonyms
+### Slot Values, IDs and Synonyms
 
 Like with intents, a slot type's interaction model data can be associated when registering its class by creating a `SlotTypeDataSource`, or by annotating the type's class with a `@SlotTypeResource` annotation.
 
@@ -388,7 +388,7 @@ Rendering this class for the `en-US` locale results in the following slot type s
 }
 ```
 
-### Data localization
+### Localization
 
 By default, data for intents and slot types are organized like [java resource bundles](https://docs.oracle.com/javase/7/docs/api/java/util/ResourceBundle.html), so different files are selected when generating an interaction model for a particular locale.
 
@@ -425,7 +425,7 @@ model.intent(MyIntent.class, IntentData.resource()
 
 The `IntentMapper` automatically reads a POJO intent instance from a raw `IntentRequest`. Intent and slot type classes contain properties that are inspected at runtime with reflection to interpret a request.
 
-### Intent Classes
+### Intents
 
 The logic for parsing a property from an `IntentRequest` is defined by the implementation of an `IntentPropertyReader`:
 
@@ -487,7 +487,7 @@ class MyIntent {
 }
 ```
 
-### Slot Type Classes
+### Slot Types
 
 Similarly to intent classes, the logic for parsing a property from a slot value is defined by the implementation of a `SlotPropertyReader`:
 
@@ -558,9 +558,11 @@ public class MyIntentHandler extends IntentRequestHandler<MyIntent> {
 }
 ```
 
-## [Built-in Intents]((https://developer.amazon.com/docs/custom-skills/standard-built-in-intents.html))
+## Built-in Intents
 
-Built-in intents can be found in the `com.amazon.ask.interaction.types.intent` namespace:
+### [Standard]((https://developer.amazon.com/docs/custom-skills/standard-built-in-intents.html))
+
+The standard built-in intents can be found in the `com.amazon.ask.interaction.types.intent` namespace:
 
 | Intent | Class |
 |-|-|
