@@ -1,10 +1,10 @@
 # Overview
 
-The Alexa Skills Kit [Maven](maven.apache.org) Plugins provide a [Mojo](https://maven.apache.org/developers/mojo-api-specification.html) to generate your Skill's Interaction Model, and an [Archetype](https://maven.apache.org/guides/introduction/introduction-to-archetypes.html) to generate a standard [MVC](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-mvc) Skill Project.
+The Alexa Skills Kit [Maven](maven.apache.org) Plugins provide a [mojo](https://maven.apache.org/developers/mojo-api-specification.html) to generate your skill's interaction model, and an [archetype](https://maven.apache.org/guides/introduction/introduction-to-archetypes.html) to generate a standard [MVC](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-mvc) project.
 
 # Interaction Model Generation Mojo
 
-Skills built with the MVC framework design their interaction model (intents, slots, etc.) in code instead of single JSON files. This Mojo generates the final interaction model JSON files required by Alexa as part of the maven `compile` phase.
+This Mojo generates the final interaction model JSON files required by Alexa as part of the maven `compile`.
 
 # Usage
 
@@ -103,7 +103,7 @@ Building your project outputs two artifacts to the `target` directory:
 
 ### Deploy a lambda function with a [CloudFormation](https://aws.amazon.com/cloudformation/) [SAM](https://github.com/awslabs/serverless-application-model) template
 
-Your project directory will contain a `SAM.yaml` template describing a Lambda Function and referencing the assembled jar: `./target/hello-world-1.0-jar-with-dependencies.jar`. Use the AWS CLI to package this template and your code into a deployable CloudFormation template, `./target/packaged-SAM.yaml`:
+Your project directory will contain a `SAM.yaml` template describing a Lambda function and referencing the assembled jar: `./target/hello-world-1.0-jar-with-dependencies.jar`. Use the AWS CLI to package this template with your code as a deployable CloudFormation template, `./target/packaged-SAM.yaml`:
 
 ```bash
 aws cloudformation package \
@@ -121,11 +121,11 @@ aws cloudformation deploy \
   --capabilities CAPABILITY_IAM
 ```
 
-CloudFormation will create a Stack with a Lambda Function and IAM Role already configured to handle Alexa requests.
+CloudFormation will create a stack with a lambda function and IAM role already configured to handle alexa requests.
 
-### Create a Skill
+### Create your skill
 
-Now that you've deployed your AWS Lambda Function, you can complete the skill manifest file, `skill.json`, by configuring your function's ARN as the endpoint URI. To discover your function's ARN, use the AWS CLI to list them and copy the `FunctionArn` value:
+Now that you've deployed your function, you can complete the skill manifest file, `skill.json`. Use the AWS CLI to list the lambda functions them and copy the `FunctionArn` value as your endpoint URI.
 
 ```bash
 aws lambda list-functions
@@ -134,13 +134,11 @@ aws lambda list-functions
 Example:
 ```json
 {
-    ..
     "FunctionName": "EXAMPLE1231",
     "MemorySize": 512,
     "CodeSize": 123,
     "FunctionArn": "arn:aws:lambda:us-west-2:123456789:function:Example-ABCDEFG",
     "Handler": "com.example.Example::handleRequest",
-    ..
 }
 ```
 
@@ -171,7 +169,7 @@ Please use the following command to track the skill status:
     ask api get-skill-status -s amzn1.ask.skill.12345678-1234-1234-1234-123456789012
 ```
 
-### Generate and update your Skill's Interaction Model
+### Generate and update your skill's interaction model
 
 Your skill's interaction model is generated as part of project compilation:
 
@@ -179,7 +177,7 @@ Your skill's interaction model is generated as part of project compilation:
 mvn compile
 ```
 
-After compilation, use the ASK CLI to update your skill's interaction model:
+After compilation, use the ASK CLI to build the model:
 
 ```bash
 ask api update-model \

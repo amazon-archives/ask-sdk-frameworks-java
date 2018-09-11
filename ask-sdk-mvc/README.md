@@ -401,6 +401,8 @@ We can create an `IntentDataSource` which will scan for resources relative to th
 ```java
 package com.example;
 
+import com.example.intents.MyIntent;
+
 public class HelloWorldModule implements SkillModule {
     @Override
     public void buildModel(Model.Builder model) {
@@ -415,7 +417,9 @@ public class HelloWorldModule implements SkillModule {
 Alternatively, we can statically associate data with the intent's type by annotating it with an `@IntentResource` annotation. It creates the same resource manually instantiated above, and also supports custom resource classes, suffixes, and codecs:
 
 ```java
-@IntentResource("models/my_intent")
+package com.example.intents;
+
+@IntentResource("my_intent")
 public class MyIntent {
     // ..
 }
@@ -452,6 +456,8 @@ public abstract class AmazonDate extends BaseSlotValue {
 Using the `@SlotType` annotation, you can implement custom slot types as classes like `AmazonDate`:
 
 ```java
+package com.example.slots;
+
 @SlotType
 public class MySlotType extends BaseSlotValue {
 }
@@ -460,6 +466,8 @@ public class MySlotType extends BaseSlotValue {
 Or as an `enum`, where the symbols correspond to either the slot value or a matched [Entity Resolution ID](https://developer.amazon.com/docs/custom-skills/define-synonyms-and-ids-for-slot-type-values-entity-resolution.html).
 
 ```java
+package com.example.slots;
+
 @SlotType
 public enum MySlotType {
     SLOT_ID_1,
@@ -471,7 +479,7 @@ public enum MySlotType {
 
 Like with intents, a slot type's interaction model data can be associated when registering its class by creating a `SlotTypeDataSource`, or by annotating the type's class with an `@SlotTypeResource` annotation.
 
-For example, given a JSON resource file, `src/main/resources/models/my_slot_type.json`:
+For example, given a JSON resource file, `src/main/resources/com/example/slots/my_slot_type.json`:
 
 ```
 {
@@ -503,12 +511,14 @@ We can associate a `SlotTypeDataSource` which will scan for resources relative t
 ```java
 package com.example;
 
+import com.example.slots.MySlotType;
+
 public class HelloWorldModule implements SkillModule {
     @Override
     public void buildModel(Model.Builder model) {
         model.slotType(MySlotType.class, SlotTypeData.resource()
             .withResourceClass(MySlotType.class)
-            .withName("models/my_slot_type")
+            .withName("my_slot_type")
             .build());
     }
 }
@@ -517,8 +527,10 @@ public class HelloWorldModule implements SkillModule {
 Or, we can statically associate data with the slot's type by annotating it with a `@SlotTypeResource` annotation. It creates the same resource manually instantiated above:
 
 ```java
+package com.example.slots;
+
 @SlotType
-@SlotTypeResource("models/my_slot_Type")
+@SlotTypeResource("my_slot_Type")
 public class MySlotType {
     // ..
 }
@@ -527,8 +539,10 @@ public class MySlotType {
 Enums are also supported, but should only be used when fuzzy matching is not required:
 
 ```java
+package com.example.slots;
+
 @SlotType
-@SlotTypeResource("models/my_slot_Type")
+@SlotTypeResource("my_slot_Type")
 public enum MySlotType {
     SLOT_ID_1,
     SLOT_ID_2;
@@ -577,7 +591,7 @@ The `MvcSdkModule` provides extension points for each aspect as injectable `Reso
 * `com.amazon.ask.mvc.plugin.RequestInterceptorResolver`
 * `com.amazon.ask.mvc.plugin.ResponseInterceptorResolver`
 
-*The *`MvcSdkModule`* includes default resolvers which implements each of its fist-class features such as `@IntentMapping`, `@RequestMapping`, `@RequestInterceptor`, `@WhenSessionAttribute`, etc.*
+The `MvcSdkModule` includes default resolvers which implements each of its fist-class features such as `@IntentMapping`, `@RequestMapping`, `@RequestInterceptor`, `@WhenSessionAttribute`, etc.
 
 ### View Resolver
 
