@@ -13,8 +13,8 @@
 
 package com.amazon.ask.interaction.codegen;
 
-import com.amazon.ask.interaction.SkillApplication;
 import com.amazon.ask.interaction.TypeReflector;
+import com.amazon.ask.interaction.build.SkillModelSupplier;
 import com.amazon.ask.interaction.model.InteractionModelEnvelope;
 import com.amazon.ask.interaction.renderer.SkillModelRenderer;
 import com.amazon.ask.interaction.types.slot.AmazonLiteral;
@@ -73,12 +73,12 @@ public class GeneratorTest {
             resourcesDir.toURI().toURL()
         });
         Class<?> clazz = classLoader.loadClass("com.example.PetSkill");
-        SkillApplication application =  (SkillApplication) clazz.newInstance();
+        SkillModelSupplier skillModelSupplier =  (SkillModelSupplier) clazz.newInstance();
 
         // Render the interaction model and ensure it equals the original interaction model
         for (Locale locale : Arrays.asList(Locale.forLanguageTag("en-US"), Locale.forLanguageTag("de-DE"))) {
             InteractionModelEnvelope expectedModel = mapper.readValue(new File("models/" + locale.toLanguageTag() + ".json"), InteractionModelEnvelope.class);
-            InteractionModelEnvelope actualModel = renderer.render(application.getSkillModel(), locale);
+            InteractionModelEnvelope actualModel = renderer.render(skillModelSupplier.getSkillModel(), locale);
             assertEquals(
                 mapper.writerWithDefaultPrettyPrinter().writeValueAsString(expectedModel),
                 mapper.writerWithDefaultPrettyPrinter().writeValueAsString(actualModel));

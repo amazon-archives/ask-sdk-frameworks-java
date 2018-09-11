@@ -14,7 +14,6 @@
 package com.amazon.ask.interaction.build;
 
 import com.amazon.ask.interaction.model.InteractionModel;
-import com.amazon.ask.interaction.SkillApplication;
 import com.amazon.ask.interaction.definition.SkillModel;
 import com.amazon.ask.interaction.model.InteractionModelEnvelope;
 import com.amazon.ask.interaction.renderer.SkillModelRenderer;
@@ -40,7 +39,7 @@ import static org.junit.Assert.fail;
 public class GeneratorTest {
 
     @Mock
-    private SkillApplication mockApplication;
+    private SkillModelSupplier mockApplication;
 
     @Mock
     private File mockDir;
@@ -64,7 +63,7 @@ public class GeneratorTest {
     private Generator underTest;
 
     @Before
-    public void before() throws IOException {
+    public void before() {
         underTest = new Generator(mockWriter, mockRenderer, mockApplication, mockDir, Collections.singletonList(en_US));
         Mockito.when(mockApplication.getSkillModel()).thenReturn(mockSkill);
         Mockito.when(mockRenderer.render(mockSkill, en_US)).thenReturn(mockModel);

@@ -13,10 +13,10 @@
 
 package com.amazon.ask.maven.models;
 
-import com.amazon.ask.interaction.SkillApplication;
 import com.amazon.ask.interaction.Utils;
 import com.amazon.ask.interaction.build.Generator;
 import com.amazon.ask.interaction.build.GeneratorException;
+import com.amazon.ask.interaction.build.SkillModelSupplier;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -98,7 +98,7 @@ public class ModelGeneratorMojo extends AbstractMojo {
                 .map(Utils::parseLocale)
                 .collect(Collectors.toList());
 
-        SkillApplication application = resolveSkillApplication(className);
+        SkillModelSupplier application = resolveSkillApplication(className);
         try {
             generate(application, destinationDir, resolvedLocales);
         } catch (GeneratorException e) {
@@ -106,11 +106,11 @@ public class ModelGeneratorMojo extends AbstractMojo {
         }
     }
 
-    protected void generate(SkillApplication application, File destdir, List<Locale> locales) throws GeneratorException {
+    protected void generate(SkillModelSupplier application, File destdir, List<Locale> locales) throws GeneratorException {
         new Generator(application, destdir, locales).generate();
     }
 
-    private SkillApplication resolveSkillApplication(String className) throws MojoExecutionException {
+    private SkillModelSupplier resolveSkillApplication(String className) throws MojoExecutionException {
         List<String> classpathElements;
         try {
             classpathElements = project.getCompileClasspathElements();
@@ -126,7 +126,7 @@ public class ModelGeneratorMojo extends AbstractMojo {
             ClassLoader projectClassLoader = new URLClassLoader(projectClasspathList.toArray(new URL[0]),
                     currentThread.getContextClassLoader());
             currentThread.setContextClassLoader(projectClassLoader);
-            return (SkillApplication) projectClassLoader.loadClass(className).newInstance();
+            return (SkillModelSupplier) projectClassLoader.loadClass(className).newInstance();
         } catch (ReflectiveOperationException | DependencyResolutionRequiredException e) {
             throw new MojoExecutionException("Could not resolve skill application", e);
         }

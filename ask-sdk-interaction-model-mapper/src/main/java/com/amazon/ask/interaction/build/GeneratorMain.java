@@ -13,8 +13,8 @@
 
 package com.amazon.ask.interaction.build;
 
-import com.amazon.ask.interaction.SkillApplication;
 import com.amazon.ask.interaction.Utils;
+import com.amazon.ask.interaction.definition.SkillModel;
 import org.apache.commons.cli.*;
 
 import java.io.File;
@@ -22,16 +22,16 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Main CLI program for generating interaction model files for a {@link SkillApplication}
+ * Main CLI program for generating interaction model files for a {@link SkillModel}
  *
- * --classname  absolute class name of a {@link SkillApplication}
+ * --classname  absolute class name of a {@link SkillModel}
  * --destdir    directory to write artifacts to
  * --locale     locale (e.g. en_US) of model to generate. Can be repeated for multiple locales.
  */
 public class GeneratorMain {
     private static final Options OPTIONS = new Options();
     static {
-        OPTIONS.addOption("c", "classname", true, "name of application class extending " + SkillApplication.class.getName());
+        OPTIONS.addOption("c", "classname", true, "name of application class extending " + SkillModelSupplier.class.getName());
         OPTIONS.addOption("d", "destdir", true, "directory of generated interaction model files");
         OPTIONS.addOption("l", "locale", true, "one or more locales (en_US, de_DE, etc) to generate models for");
     }
@@ -65,9 +65,9 @@ public class GeneratorMain {
         validateArg(classname, "classname");
         validateArg(destdir, "destdir");
 
-        SkillApplication application;
+        SkillModelSupplier skillModelSupplier;
         try {
-            application = (SkillApplication) Class.forName(classname).newInstance();
+            skillModelSupplier = (SkillModelSupplier) Class.forName(classname).newInstance();
         } catch (ReflectiveOperationException ex) {
             throw new GeneratorException(ex);
         }
@@ -79,11 +79,11 @@ public class GeneratorMain {
                 .collect(Collectors.toList());
         }
 
-        generate(application, new File(destdir), locales);
+        generate(skillModelSupplier, new File(destdir), locales);
     }
 
-    protected void generate(SkillApplication application, File destdir, List<Locale> locales) throws GeneratorException {
-        new Generator(application, destdir, locales).generate();
+    protected void generate(SkillModelSupplier skillModelSupplier, File destdir, List<Locale> locales) throws GeneratorException {
+        new Generator(skillModelSupplier, destdir, locales).generate();
     }
 
     private static void validateArg(Object value, String name) {

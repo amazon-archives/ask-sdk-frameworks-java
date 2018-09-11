@@ -16,7 +16,7 @@ package com.amazon.ask.mvc;
 import com.amazon.ask.Skill;
 import com.amazon.ask.Skills;
 import com.amazon.ask.builder.SkillBuilder;
-import com.amazon.ask.interaction.SkillApplication;
+import com.amazon.ask.interaction.build.SkillModelSupplier;
 import com.amazon.ask.interaction.definition.Model;
 import com.amazon.ask.interaction.definition.SkillModel;
 
@@ -27,12 +27,11 @@ import java.util.Map;
 /**
  * Application composed from multiple {@link SkillModule}s
  */
-public abstract class MvcSkillApplication implements SkillApplication {
+public abstract class MvcSkillApplication implements SkillModelSupplier {
 
     /**
      * @return builds the {@link Skill} from its modules {@link SkillModule}.
      */
-    @Override
     public Skill getSkill() {
         List<SkillModule> modules = getModules();
         // Let all modules configure their MVC runtime
@@ -64,6 +63,7 @@ public abstract class MvcSkillApplication implements SkillApplication {
      *
      * @return skill definition containing all module's interaction models
      */
+    @Override
     public SkillModel getSkillModel() {
         return buildSkillModel(getModules());
     }

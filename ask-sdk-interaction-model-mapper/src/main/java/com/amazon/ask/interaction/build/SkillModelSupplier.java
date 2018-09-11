@@ -11,26 +11,17 @@
     the specific language governing permissions and limitations under the License.
  */
 
-package com.amazon.ask.interaction;
+package com.amazon.ask.interaction.build;
 
-import com.amazon.ask.Skill;
 import com.amazon.ask.interaction.definition.SkillModel;
 
 /**
- * Integration point:
- * - enable build tools which generate the interaction model
- * - injection of runtime entry point
- *
- * Unifies a skill's interaction model add its runtime information.
+ * Supplies a {@link SkillModel} for integration with project management tools like maven.
  */
-public interface SkillApplication {
-    /**
-     * @return this skill's definition
-     */
-    SkillModel getSkillModel();
+public interface SkillModelSupplier {
 
     /**
-     * @return the skill's runtime
+     * @return a skill model
      */
-    Skill getSkill();
+    SkillModel getSkillModel();
 }

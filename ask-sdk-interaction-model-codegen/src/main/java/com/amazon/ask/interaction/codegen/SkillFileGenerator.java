@@ -14,8 +14,8 @@
 package com.amazon.ask.interaction.codegen;
 
 import com.amazon.ask.Skill;
-import com.amazon.ask.interaction.SkillApplication;
 import com.amazon.ask.interaction.annotation.type.Intent;
+import com.amazon.ask.interaction.build.SkillModelSupplier;
 import com.amazon.ask.interaction.data.model.IntentData;
 import com.amazon.ask.interaction.data.model.SlotTypeData;
 import com.amazon.ask.interaction.definition.IntentDefinition;
@@ -30,7 +30,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Generates a {@link SkillApplication} {@link JavaFile} for a set of intents.
+ * Generates a {@link SkillModelSupplier} {@link JavaFile} for a set of intents.
  */
 public class SkillFileGenerator {
 
@@ -98,21 +98,13 @@ public class SkillFileGenerator {
         TypeSpec skillType = TypeSpec
             .classBuilder(ClassName.get(namespace, skillName))
             .addModifiers(Modifier.PUBLIC)
-            .addSuperinterface(SkillApplication.class)
+            .addSuperinterface(SkillModelSupplier.class)
             .addMethod(MethodSpec
                 .methodBuilder("getSkillModel")
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(SkillModel.class)
                 .addCode(defineSkillBlock.build())
-                .build())
-            .addMethod(MethodSpec.methodBuilder("getSkill")
-                .addAnnotation(Override.class)
-                .addModifiers(Modifier.PUBLIC)
-                .returns(Skill.class)
-                .addCode(CodeBlock.builder()
-                    .addStatement("throw new $T($S)", RuntimeException.class, "TODO")
-                    .build())
                 .build())
             .build();
 

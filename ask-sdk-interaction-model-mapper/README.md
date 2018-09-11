@@ -16,6 +16,8 @@ The Interaction Model Mapper enables you to manage your skill's interaction mode
 
 The SkillApplication interface acts as a hook for generating the interaction model from project management tools. For maven integration, see the [ask-sdk-maven-plugins](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-maven-plugins/) maven mojo.
 
+It
+
 Your skill application class defines a `SkillModel` containing your interaction model's schema and data, and constructs a `Skill` to handle those requests at runtime.
 
 ```java

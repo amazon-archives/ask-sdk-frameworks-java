@@ -13,9 +13,7 @@
 
 package com.amazon.ask.interaction.build;
 
-import com.amazon.ask.Skill;
 import com.amazon.ask.interaction.Locales;
-import com.amazon.ask.interaction.SkillApplication;
 import com.amazon.ask.interaction.definition.Model;
 import com.amazon.ask.interaction.definition.SkillModel;
 import com.amazon.ask.interaction.types.intent.StopIntent;
@@ -77,15 +75,15 @@ public class GeneratorMainTest {
             "-l", "fr_FR"
         }) {
             @Override
-            protected void generate(SkillApplication application, File destdir, List<Locale> locales) throws GeneratorException {
-                assertEquals(TestApplication.class, application.getClass());
+            protected void generate(SkillModelSupplier skillModelSupplier, File destdir, List<Locale> locales) throws GeneratorException {
+                assertEquals(TestApplication.class, skillModelSupplier.getClass());
                 assertEquals(new File("destdir"), destdir);
                 assertEquals(Arrays.asList(Locales.en_US, Locales.fr_FR), locales);
             }
         }.run();
     }
 
-    public static class TestApplication implements SkillApplication {
+    public static class TestApplication implements SkillModelSupplier {
 
         @Override
         public SkillModel getSkillModel() {
@@ -96,11 +94,6 @@ public class GeneratorMainTest {
                     .intent(StopIntent.class)
                     .build())
                 .build();
-        }
-
-        @Override
-        public Skill getSkill() {
-            return null;
         }
     }
 }

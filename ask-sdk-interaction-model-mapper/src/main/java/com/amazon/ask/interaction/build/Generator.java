@@ -13,7 +13,6 @@
 
 package com.amazon.ask.interaction.build;
 
-import com.amazon.ask.interaction.SkillApplication;
 import com.amazon.ask.interaction.Utils;
 import com.amazon.ask.interaction.definition.SkillModel;
 import com.amazon.ask.interaction.renderer.SkillModelRenderer;
@@ -27,54 +26,52 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static com.amazon.ask.interaction.Utils.stringifyLocale;
-import static com.amazon.ask.util.ValidationUtils.assertNotEmpty;
 import static com.amazon.ask.util.ValidationUtils.assertNotNull;
 
 /**
- * Generates localized interaction models for a {@link SkillApplication} and writes them
- * to a directory, creating it if necessary.
+ * Generates localized interaction models for a {@link SkillModel} and writes
+ * them to a directory, creating it if necessary.
  */
 public class Generator {
     private final ObjectWriter writer;
     private final SkillModelRenderer renderer;
-    private final SkillApplication application;
+    private final SkillModelSupplier skillModelSupplier;
     private final File destdir;
     private final List<Locale> locales;
 
     /**
-     * @param application skill application being generated
+     * @param skillModelSupplier skill model being generated
      * @param destdir directory to write model artifacts
      * @param locales list of locales to generate models for
      * @throws IllegalArgumentException if application or detdir are null, or if locales is null or unit
      */
-    public Generator(SkillApplication application, File destdir, List<Locale> locales) {
+    public Generator(SkillModelSupplier skillModelSupplier, File destdir, List<Locale> locales) {
         this(
             new ObjectMapper()
                 .setSerializationInclusion(JsonInclude.Include.NON_NULL)
                 .writer(Utils.PRETTY_PRINTER),
-            new SkillModelRenderer(), application, destdir, locales);
+            new SkillModelRenderer(), skillModelSupplier, destdir, locales);
     }
 
-    public Generator(ObjectWriter writer, SkillModelRenderer renderer, SkillApplication application, File destdir, List<Locale> locales) {
+    public Generator(ObjectWriter writer, SkillModelRenderer renderer, SkillModelSupplier skillModelSupplier, File destdir, List<Locale> locales) {
         this.writer = assertNotNull(writer, "writer");
         this.renderer = assertNotNull(renderer, "renderer");
-        this.application = assertNotNull(application, "application");
+        this.skillModelSupplier = assertNotNull(skillModelSupplier, "application");
         this.destdir = assertNotNull(destdir, "destdir");
         this.locales = locales == null || locales.isEmpty()
-            ? new ArrayList<>(application.getSkillModel().getInvocationNames().keySet())
+            ? new ArrayList<>(skillModelSupplier.getSkillModel().getInvocationNames().keySet())
             : locales;
     }
 
     /**
-     * Generates localized interaction models for a {@link SkillApplication} and
+     * Generates localized interaction models for a {@link SkillModel} and
      * writes them to a directory, creating it if necessary.
      *
      * @throws GeneratorException if there was an error generating or writing the model
      */
     public void generate() throws GeneratorException {
         try {
-            SkillModel skillModel = application.getSkillModel();
+            SkillModel skillModel = skillModelSupplier.getSkillModel();
             if (!destdir.exists()) {
                 destdir.mkdirs();
             }
