@@ -21,6 +21,6 @@ import com.amazon.ask.interaction.types.slot.BaseSlotValue;
  * @see <a href="https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#list-types">List Types</a>
  */
 @BuiltIn
-@SlotType("AMAZON.EU_CITY")
+@SlotType("AMAZON.EUROPE_CITY")
 public class EUCity extends BaseSlotValue {
 }
