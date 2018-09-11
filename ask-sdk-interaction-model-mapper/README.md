@@ -709,7 +709,6 @@ List slot types can be found in the `com.amazon.ask.interaction.types.slot.list`
 | `AMAZON.WeatherCondition` | `WeatherCondition` |
 | `AMAZON.WrittenCreativeWorkType` | `WrittenCreativeWorkType` |
 
-
 ### [Literal](https://developer.amazon.com/docs/custom-skills/literal-slot-type-reference.html)
 
 *Note: this slot type is only available in en-US.*
@@ -717,3 +716,155 @@ List slot types can be found in the `com.amazon.ask.interaction.types.slot.list`
 | Slot Type | Class|
 |-|-|
 |`AMAZON.LITERAL`|`com.amazon.ask.interaction.types.AmazonLiteral`|
+
+## Extending the Mapper
+
+The `Model.Builder` provides extension points for resolving intent and slot type data:
+
+* `com.amazon.ask.interaction.data.IntentDataResolver`
+* `com.amazon.ask.interaction.data.SlotTypeDataResolver`
+* `com.amazon.ask.interaction.data.IntentDataSource`
+* `com.amazon.ask.interaction.data.SlotTypeDataSource`
+* `com.amazon.ask.interaction.data.source.Codec`
+* `com.amazon.ask.interaction.data.source.ResourceSource`
+
+### Custom File Codec
+
+Say we want to use the slot type format from the popular [alexa-utterance-generator](https://github.com/KayLerch/alexa-utterance-generator):
+
+```
+{car|ride|taxi|cab}
+{hotel|room}
+{table|restaurant|dinner}
+bike
+```
+
+Instead of writing the equivalent JSON:
+
+```json
+[ {
+  "id" : "car",
+  "name" : {
+    "value" : "car",
+    "synonyms" : [ "ride", "taxi", "cab" ]
+  }
+}, {
+  "id" : "hotel",
+  "name" : {
+    "value" : "hotel",
+    "synonyms" : [ "room" ]
+  }
+}, {
+  "id" : "table",
+  "name" : {
+    "value" : "table",
+    "synonyms" : [ "restaurant", "dinner" ]
+  }
+}, {
+  "id" : bike,
+  "name" : {
+    "value" : "bike",
+    "synonyms" : [ ]
+  }
+} ]
+```
+
+You can implement a codec to read your custom file format and convert it into `SlotTypeData`:
+
+```java
+public class SlotTypeGrammarCodec implements Codec<SlotTypeData> {
+    @Override
+    public SlotTypeData read(InputStream inputStream) throws IOException {
+        SlotTypeData.Builder slot = SlotTypeData.builder();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            //parse lines and convert into slot values, add to SlotTypeData.builder
+        }
+        return slot.build();
+    }
+}
+```
+
+And then override the default behavior when constructing an `IntentDataSource`:
+
+```java
+Model model = Model.builder()
+    .intent(MySlotType.class, IntentData.resource()
+        .withCodec(new SlotTypeGrammarCodec()) // custom codec
+        .withResourceClass(MySlotType.class)
+        .withName("my_slot_type")
+        .build())
+    .build();
+```
+
+Or when annotating the type with `@SlotTypeResource`:
+
+```java
+@SlotType
+@SlotTypeResource(value = "my_slot_type", codec = SlotTypeGrammarCodec.class)
+```
+
+### Custom Annotation
+
+To avoid overriding the codec each time, create your own annotation representing your custom format:
+
+```java
+@Target(TYPE)
+@Retention(RUNTIME)
+@AutoSlotTypeData(SlotTypeGrammarPlugin.class)
+public @interface CustomSlotTypeFormat {
+    /**
+     * Resource name containing data.
+     */
+    String value();
+
+    /**
+     * Suffix of resource file - defaults to .custom.
+     */
+    String suffix() default ".custom";
+
+    /**
+     * Class to load resources from, defaults to the annotated class.
+     */
+    Class resourceClass() default Object.class;
+}
+```
+
+Implement an `AutoSlotTypeData.Plugin` for your `@CustomSlotTypeFormat` annotation:
+
+*(This interface is called when a class is found with your annotation)*
+
+```java
+public class SlotTypeGrammarPlugin implements AutoSlotTypeData.Plugin<CustomSlotTypeFormat> {
+    @Override
+    public Stream<SlotTypeData> apply(RenderContext<SlotTypeDefinition> entity, CustomSlotTypeFormat annotation) {
+        return Stream.of(SlotTypeData.resource()
+            .withName(annotation.value())
+            .withSuffix(annotation.suffix())
+            .withCodec(new SlotTypeGrammarCodec())
+            .withResourceClass(annotation.resourceClass() == Object.class ? entity.getValue().getSlotTypeClass() : annotation.resourceClass())
+            .build())
+            .map(s -> s.apply(entity));
+    }
+}
+```
+
+And attach the `@AutoSlotTypeData` meta-annotation to your `@CustomSlotTypeFormat` annotation, or else it won't be discovered during model generation:
+
+*(This meta-annotation is what identifies the `AutoSlotTypeData.Plugin` implementation)*
+
+```java
+@AutoSlotTypeData(SlotTypeGrammarPlugin.class)
+public @interface CustomSlotTypeFormat {
+  // ..
+}
+```
+
+Now you can annotate the slot type:
+
+```java
+
+@CustomSlotTypeFormat("my_slot_type")
+public class MySlotType {
+    // ..
+}
+```
