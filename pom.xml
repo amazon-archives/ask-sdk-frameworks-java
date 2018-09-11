@@ -3,7 +3,7 @@
     <groupId>com.amazon.alexa</groupId>
     <artifactId>ask-sdk-frameworks-pom</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
     <name>ASK SDK Frameworks for Java</name>
     <description>The Alexa Skills Kit SDK Frameworks for Java.</description>
     <url>http://developer.amazon.com/ask</url>
