@@ -92,7 +92,7 @@ In your `pom.xml`, add the `build-model` task from [ask-sdk-maven-plugins](https
 <plugin>
     <groupId>com.amazon.alexa</groupId>
     <artifactId>ask-sdk-maven-plugins</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <configuration>
         <destinationDir>ask</destinationDir>
         <className>com.example.HelloWorldSkill</className>
@@ -632,7 +632,7 @@ The `MvcSdkModule` provides extension points for each aspect as injectable `Reso
 * `com.amazon.ask.mvc.plugin.RequestInterceptorResolver`
 * `com.amazon.ask.mvc.plugin.ResponseInterceptorResolver`
 
-The `MvcSdkModule` includes default resolvers which implements each of its fist-class features such as `@IntentMapping`, `@RequestMapping`, `@RequestInterceptor`, `@WhenSessionAttribute`, etc.
+The `MvcSdkModule` includes default resolvers which implements each of its first-class features such as `@IntentMapping`, `@RequestMapping`, `@RequestInterceptor`, `@WhenSessionAttribute`, etc.
 
 #### View Resolver
 
@@ -671,9 +671,9 @@ public class StringView implements View {
 
 #### Argument
 
-Attempts to resolve the value for method's parameter given its reflection information and the request.
+Attempts to resolve the value for a method's parameter given its reflection information and the request.
 
-**Example**: resolve the [attributes manager](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/attributes/AttributesManager.html) from the `HanderInput` if the parameter's type is `AttributesManager.class:`
+**Example**: resolve the [attributes manager](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/attributes/AttributesManager.html) from the `HanderInput` if the parameter's type is `AttributesManager`:
 
 ```java
 public class AttributesManagerResolver implements ArgumentResolver {

@@ -75,7 +75,7 @@ import java.util.stream.Collectors;
  *
  * The plugin can also be executed directly from the command line:
  *
- * {@code mvn com.amazon.alexalabs:ask-sdk-maven-plugins:0.1.0-SNAPSHOT:build-model -DdestinationDir=interactionmodel -DclassName=com.myskill.ModelSkill -Dlocales=en_US}
+ * {@code mvn com.amazon.alexalabs:ask-sdk-maven-plugins:0.1.1:build-model -DdestinationDir=interactionmodel -DclassName=com.myskill.ModelSkill -Dlocales=en_US}
  */
 @Mojo(name = "build-model", requiresDependencyResolution = ResolutionScope.RUNTIME)
 public class ModelGeneratorMojo extends AbstractMojo {

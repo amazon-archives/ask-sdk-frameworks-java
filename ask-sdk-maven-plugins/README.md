@@ -1,6 +1,6 @@
 # Overview
 
-The Alexa Skills Kit [Maven](maven.apache.org) Plugins provide a [mojo](https://maven.apache.org/developers/mojo-api-specification.html) to generate your skill's interaction model, and an [archetype](https://maven.apache.org/guides/introduction/introduction-to-archetypes.html) to generate a standard [MVC](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-mvc) project.
+The Alexa Skills Kit [Maven](https://maven.apache.org) Plugins provide a [mojo](https://maven.apache.org/developers/mojo-api-specification.html) to generate your skill's interaction model, and an [archetype](https://maven.apache.org/guides/introduction/introduction-to-archetypes.html) to generate a standard [MVC](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-mvc) project.
 
 # Interaction Model Generation Mojo
 
@@ -14,7 +14,7 @@ Install the plugin into your `pom.xml` as part of the `compile` phase, and confi
 <plugin>
     <groupId>com.amazon.alexa</groupId>
     <artifactId>ask-sdk-maven-plugins</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <configuration>
         <destinationDir>ask</destinationDir>
         <className>com.example.HelloWorldSkill</className>
@@ -60,7 +60,7 @@ Execute the following command and follow the interactive prompts on the CLI:
 mvn archetype:generate \
   -DarchetypeGroupId=com.amazon.alexa \
   -DarchetypeArtifactId=ask-sdk-maven-plugins \
-  -DarchetypeVersion=0.1.0
+  -DarchetypeVersion=0.1.1
 ```
 
 Example usage:

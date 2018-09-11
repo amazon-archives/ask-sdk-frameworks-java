@@ -2,7 +2,13 @@
     "skillManifest": {
       "publishingInformation": {
         "locales": {
+          "en-GB": {
+            "name": "Trivia"
+          },
           "en-US": {
+            "name": "Trivia"
+          },
+          "de-DE": {
             "name": "Trivia"
           }
         }

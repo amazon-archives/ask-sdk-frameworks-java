@@ -27,8 +27,8 @@ public class TriviaSkill extends MvcSkillApplication {
     protected Map<Locale, String> getInvocationNames() {
         Map<Locale, String> invocationNames = new HashMap<>();
         invocationNames.put(Locale.forLanguageTag("en-US"), "reindeer trivia");
-        invocationNames.put(Locale.forLanguageTag("en-GB"), "game");
-        invocationNames.put(Locale.forLanguageTag("de-DE"), "spiel");
+        invocationNames.put(Locale.forLanguageTag("en-GB"), "reindeer trivia");
+        invocationNames.put(Locale.forLanguageTag("de-DE"), "rentier trivia");
         return invocationNames;
     }
 

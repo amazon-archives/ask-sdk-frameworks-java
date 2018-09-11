@@ -34,7 +34,7 @@ public class ColorPickerModule implements SkillModule {
             .addController(new ColorPickerController())
             .addViewResolvers(FreeMarkerViewResolver.builder()
                 .withResourceClass(ColorPickerSkill.class)
-                .withPrefix("views/")
+                .withPrefix("/com/amazon/ask/colorpicker/views/")
                 .build());
     }
 

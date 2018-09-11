@@ -25,15 +25,14 @@ public class MyModule implements SkillModule {
     public void buildMvc(MvcSdkModule mvc) {
         mvc.addViewResolver(
             FreeMarkerViewResolver.builder()
-                .withResourceClass(getClass())
-                .withPrefix("views/")
+                .withPrefix("/com/example/views/")
                 .withName("my_view")
                 .build());
     }
 }
 ```
 
-Create a resource file containing the view template, `src/main/resources/com/example/my_view.ftl`:
+Create a resource file containing the view template, `src/main/resources/com/example/views/my_view.ftl`:
 
 ```
 <#if favoriteColor??>

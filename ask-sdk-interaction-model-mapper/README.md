@@ -59,13 +59,13 @@ public class HelloWorldSkill implements SkillModelSupplier {
 
 The `SkillModel` contains your interaction model's intents and slot type schemas, and data such as invocation name, sample utterances and prompts for each target locale.
 
-To generate interaction models from maven, add the `build-model` task from [ask-sdk-maven-plugins](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-maven-plugins) and configure your [SkillModelSupplier](#SkillModelSupplier) class as the target:
+To generate interaction models from maven, add the `build-model` task from [ask-sdk-maven-plugins](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-maven-plugins) and configure your `SkillModelSupplier` class as the target:
 
 ```xml
 <plugin>
     <groupId>com.amazon.alexa</groupId>
     <artifactId>ask-sdk-maven-plugins</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <configuration>
         <destinationDir>ask</destinationDir>
         <className>com.example.HelloWorldSkill</className>
@@ -427,7 +427,7 @@ model.intent(MyIntent.class, IntentData.resource()
 
 ### Custom File Format
 
-Say you want to use the slot type format from the popular [alexa-utterance-generator](https://github.com/KayLerch/alexa-utterance-generator):
+Say you want to use the slot type format from the [alexa-utterance-generator](https://github.com/KayLerch/alexa-utterance-generator):
 
 ```
 {car|ride|taxi|cab}
@@ -609,7 +609,7 @@ Unless explicitly annotated with the `@IntentPropertyReader` annotation:
 @Intent
 class MyIntent {
     @IntentPropertyReader(MyOtherPropertyReader.class)
-    private Object property;
+    private MyType myType;
 }
 ```
 
