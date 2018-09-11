@@ -17,10 +17,10 @@ The Interaction Model Mapper enables you to manage your skill's interaction mode
 * [Built-in Intents](#built-in-intents)
    * [Standard](#standard-intents)
 * [Built-in Slot Types](#built-in-slot-types)
-   * [<a href="https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#numbers-dates-and-times" rel="nofollow">Numbers, Dates and Times</a>](#numbers-dates-and-times)
-   * [<a href="https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#phrases" rel="nofollow">Phrases</a>](#phrases)
-   * [<a href="https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#list-types" rel="nofollow">List Types</a>](#list-types)
-   * [<a href="https://developer.amazon.com/docs/custom-skills/literal-slot-type-reference.html" rel="nofollow">Literal</a>](#literal)
+   * [Numbers, Dates and Times](#numbers-dates-and-times)
+   * [Phrases](#phrases)
+   * [List Types](#list-types)
+   * [Literal](#literal)
 
 ## Configuration
 
