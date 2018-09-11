@@ -2,6 +2,8 @@
 
 The Interaction Model Mapper enables you to manage your skill's interaction model as java classes and resources packaged in a standard JAR. It provides tools to generate the interaction model JSON files from the CLI at project build time, and automatically parse a raw `IntentRequest` into its corresponding “plain old java object” (POJO) at runtime.
 
+## Index
+
 * [Configuration](#configuration)
 * [Interaction Model Schema](#interaction-model-schema)
    * [Intents](#intents)
