@@ -12,7 +12,7 @@ The Interaction Model Mapper enables you to manage your skill's interaction mode
    * [Samples, Confirmations and Elicitations](#samples-confirmations-and-elicitations)
    * [Slot Values, IDs and Synonyms](#slot-values-ids-and-synonyms)
    * [Localization](#localization)
-   * [Custom File Codec](#custom-file-codec)
+   * [Custom File Format](#custom-file-format)
    * [Custom Annotation](#custom-annotation)
 * [Intent Mapper](#intent-mapper)
    * [Intents](#intents-1)
