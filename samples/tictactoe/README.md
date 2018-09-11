@@ -1,5 +1,8 @@
 # ASK SDK Frameworks Example - Tic Tac Toe
-This Alexa sample skill is a generic Tic Tac Toe skill library.
+This sample shows how to create a skill that illustrates the following concepts:
+- Modeling a slot type as an enum where the symbols correspond to [entity resolution](https://developer.amazon.com/docs/custom-skills/define-synonyms-and-ids-for-slot-type-values-entity-resolution.html) identifiers.
+- Add predicate annotations such as `@WhenSessionAttribute` to a controller's type
+- Render responses with a javascript view
 
 ## Setup
 To run this example we will:
