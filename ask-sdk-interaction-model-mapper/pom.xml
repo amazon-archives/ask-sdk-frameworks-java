@@ -3,7 +3,7 @@
     <groupId>com.amazon.alexa</groupId>
     <artifactId>ask-sdk-interaction-model-mapper</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
     <name>ASK SDK Interaction Model Mapper</name>
     <description>
         The Interaction Model Mapper enables a code-first approach to the development of a skill by abstracting the
@@ -38,7 +38,7 @@
         <dependency>
             <groupId>com.amazon.alexa</groupId>
             <artifactId>ask-sdk-interaction-model</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
+            <version>0.1.0</version>
         </dependency>
         <dependency>
             <groupId>com.amazon.alexa</groupId>

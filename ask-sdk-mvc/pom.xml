@@ -3,7 +3,7 @@
     <groupId>com.amazon.alexa</groupId>
     <artifactId>ask-sdk-mvc</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
     <name>ASK SDK MVC Framework</name>
     <description>
         The Alexa Skills Kit MVC Framework extends the existing ASK SDK, adding features for mapping requests to methods
@@ -36,7 +36,7 @@
         <dependency>
             <groupId>com.amazon.alexa</groupId>
             <artifactId>ask-sdk-interaction-model-mapper</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
+            <version>0.1.0</version>
         </dependency>
         <dependency>
             <groupId>com.amazon.alexa</groupId>

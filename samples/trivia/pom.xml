@@ -31,12 +31,12 @@
     <dependency>
       <groupId>com.amazon.alexa</groupId>
       <artifactId>ask-sdk-mvc</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>0.1.0</version>
     </dependency>
     <dependency>
       <groupId>com.amazon.alexa</groupId>
       <artifactId>ask-sdk-mvc-freemarker</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>0.1.0</version>
     </dependency>
   </dependencies>
 
@@ -61,7 +61,7 @@
       <plugin>
         <groupId>com.amazon.alexa</groupId>
         <artifactId>ask-sdk-maven-plugins</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.1.0</version>
         <configuration>
           <destinationDir>${project.build.directory}/ask</destinationDir>
           <className>com.amazon.ask.trivia.TriviaSkill</className>
