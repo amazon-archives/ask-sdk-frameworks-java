@@ -23,6 +23,9 @@ The Interaction Model Mapper enables you to manage your skill's interaction mode
    * [Phrases](#phrases)
    * [List Types](#list-types)
    * [Literal](#literal)
+* [Extending the Mapper](#extending-the-mapper)
+   * [Custom File Codec](#custom-file-codec)
+   * [Custom Annotation](#custom-annotation)
 
 ## Configuration
 
