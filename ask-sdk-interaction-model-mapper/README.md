@@ -19,6 +19,8 @@ The SkillApplication interface acts as a hook for generating the interaction mod
 Your skill application class defines a `SkillModel` containing your interaction model's schema and data, and constructs a `Skill` to handle those requests at runtime.
 
 ```java
+package com.example;
+
 public class MySkill implements SkillApplication {
     @Override
     public SkillModel getSkillModel() {
@@ -237,7 +239,7 @@ public class MyIntentHandler extends IntentRequestHandler<MyIntent> {
 
 An intent's class definition defines the intent schema (name and slot names/types), but the interaction model also contains data such as sample utterances and confirmation/elicitation dialog management prompts. This data is associated when registering the intent by constructing an `IntentDataSource` or by annotating the intent type with an `@IntentResource`.
 
-For example, given a JSON resource file: `src/main/resources/my_intent_en_US.json`
+For example, given a JSON resource file: `src/main/resources/com/example/intents/my_intent_en_US.json`
 
 ```json
 {
@@ -287,6 +289,8 @@ model.intent(MyIntent.class, IntentData.resource()
 Alternatively, we can statically associate data with the intent's type by annotating it with an `@IntentResource` annotation. It creates the same resource manually instantiated above, and also supports custom resource classes, suffixes, and file formats:
 
 ```java
+package com.example.intents;
+
 @Intent
 @IntentResource("my_intent")
 public class MyIntent {
@@ -376,7 +380,7 @@ Rendering this class for the `en-US` locale results in the following interaction
 
 Like with intents, a slot type's interaction model data can be associated when registering its class by creating a `SlotTypeDataSource`, or by annotating the type's class with a `@SlotTypeResource` annotation.
 
-For example, given a JSON resource file: `src/main/resources/my_slot_type.json`
+For example, given a JSON resource file: `src/main/resources/com/example/slots/my_slot_type.json`
 
 ```json
 {
@@ -415,6 +419,8 @@ model.slotType(MySlotType.class, SlotTypeData.resource()
 Or, we can statically associate data with the slot's type by annotating it with a `@SlotTypeResource` annotation. It creates the same resource manually instantiated above:
 
 ```java
+package com.example.slots;
+
 @SlotType
 @SlotTypeResource("my_slot_Type")
 public class MySlotType {
@@ -425,6 +431,8 @@ public class MySlotType {
 Enums are also supported, but should only be used when fuzzy matching is not required:
 
 ```java
+package com.example.slots;
+
 @SlotType
 @SlotTypeResource("my_slot_Type")
 public enum MySlotType {
@@ -477,12 +485,12 @@ class MyIntent {}
 
 Generating the interaction model for en-US will select the first file that exists from the following:
 
-* `src/main/resources/com/example/my_intent_en_US.json`
-* `src/main/resources/com/example/my_intent/en_US.json`
-* `src/main/resources/com/example/my_intent_en.json`
-* `src/main/resources/com/example/my_intent/en.json`
-* `src/main/resources/com/example/my_intent.json`
-* `src/main/resources/com/example/my_intent/global.json`
+* `src/main/resources/com/example/intents/my_intent_en_US.json`
+* `src/main/resources/com/example/intents/my_intent/en_US.json`
+* `src/main/resources/com/example/intents/my_intent_en.json`
+* `src/main/resources/com/example/intents/my_intent/en.json`
+* `src/main/resources/com/example/intents/my_intent.json`
+* `src/main/resources/com/example/intents/my_intent/global.json`
 
 This process is called “resource candidate enumeration”. You can provide custom enumerators when explicitly associating data sources with intent classes:
 
