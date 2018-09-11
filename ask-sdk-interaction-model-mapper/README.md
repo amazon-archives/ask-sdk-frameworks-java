@@ -1,8 +1,30 @@
-# ASK SDK Interaction Model Mapper
+## ASK SDK Interaction Model Mapper
 
 The Interaction Model Mapper enables you to manage your skill's interaction model as java classes and resources packaged in a standard JAR. It provides tools to generate the interaction model JSON files from the CLI at project build time, and automatically parse a raw `IntentRequest` into its corresponding “plain old java object” (POJO) at runtime.
 
-## Dependency
+* [Configuration](#configuration)
+* [Interaction Model Schema](#interaction-model-schema)
+   * [Intent Classes](#intent-classes)
+   * [Slot Type Classes](#slot-type-classes)
+* [Interaction Model Data](#interaction-model-data)
+   * [Intent sample utterances and prompts](#intent-sample-utterances-and-prompts)
+   * [Slot values, ids and synonyms](#slot-values-ids-and-synonyms)
+   * [Data localization](#data-localization)
+* [Intent Mapper](#intent-mapper)
+   * [Intent Classes](#intent-classes-1)
+   * [Slot Type Classes](#slot-type-classes-1)
+* [Intent Request Handler](#intent-request-handler)
+* [Built-in Intents](#built-in-intents)
+* [Built-in Slot Types](#built-in-slot-types)
+   * [<a href="https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#numbers-dates-and-times" rel="nofollow">Numbers, Dates and Times</a>](#numbers-dates-and-times)
+   * [<a href="https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#phrases" rel="nofollow">Phrases</a>](#phrases)
+   * [<a href="https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#list-types" rel="nofollow">List Types</a>](#list-types)
+   * [<a href="https://developer.amazon.com/docs/custom-skills/literal-slot-type-reference.html" rel="nofollow">Literal</a>](#literal)
+
+
+## Configuration
+
+Add a dependency on `ask-sdk-interaction-model-mapper` to your `pom.xml`:
 
 ```xml
 <dependency>
@@ -11,14 +33,6 @@ The Interaction Model Mapper enables you to manage your skill's interaction mode
     <version>0.1.0</version>
 </dependency>
 ```
-
-## Skill Model
-
-The `SkillModel` contains your interaction model's intents and slot type schemas, and data such as invocation name, sample utterances and prompts for each target locale.
-
-Project management systems such as maven generate the interaction model JSON files as part of the project build process. For maven integration, see the [ask-sdk-maven-plugins](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-maven-plugins/) maven mojo.
-
-## Skill Model Supplier
 
 Implement the `SkillModelSupplier` interface and add all invocation names, intents, slot types and data to your skill's `SkillModel`.
 
@@ -39,9 +53,9 @@ public class HelloWorldSkill implements SkillModelSupplier {
 }
 ```
 
-## Interaction Model Generation
+The `SkillModel` contains your interaction model's intents and slot type schemas, and data such as invocation name, sample utterances and prompts for each target locale.
 
-In your `pom.xml`, add the `build-model` task from [ask-sdk-maven-plugins](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-maven-plugins) and configure your `SkillModelSupplier` class as the target:
+To generate interaction models from maven, add the `build-model` task from [ask-sdk-maven-plugins](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-maven-plugins) and configure your [SkillModelSupplier](#SkillModelSupplier) class as the target:
 
 ```xml
 <plugin>
@@ -63,13 +77,13 @@ In your `pom.xml`, add the `build-model` task from [ask-sdk-maven-plugins](https
 </plugin>
 ```
 
-Synthesize the JSON models with [mvn](https://maven.apache.org/install.html):
+Then generate the JSON models with [mvn](https://maven.apache.org/install.html):
 
 ```bash
 mvn compile
 ```
 
-Update your Skill's model with the [ask cli](https://developer.amazon.com/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html):
+And update your Skill's model with the [ask cli](https://developer.amazon.com/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html):
 
 ```bash
 ask api update-model \
@@ -78,7 +92,10 @@ ask api update-model \
     --skill-id <your-skill-id>
 ```
 
-## Intent Schema
+## Interaction Model Schema
+Both custom and built-in variations of Alexa intents and slot types are defined as java classes annotated with `@Intent` or `@SlotType`.
+
+### Intent Classes
 
 To define a new intent for your skill, create a class and annotate it with `@Intent`. The name of the intent defaults to the simple name of the class, but can also be defined explicitly with `@Intent(“DifferentName”)`.
 
@@ -100,7 +117,7 @@ public class MyIntent {
 }
 ```
 
-## Slot Type Schema
+### Slot Type Classes
 
 The type of a slot is derived from the property type. For example, the type of the `date` property above is `AmazonDate`, a class annotated with the `@SlotType` annotation, explicitly naming it `AMAZON.DATE`.
 
@@ -129,146 +146,13 @@ public enum MySlotType {
 }
 ```
 
-## Intent Mapper
+## Interaction Model Data
 
-The `IntentMapper` automatically reads a POJO intent instance from a raw `IntentRequest`. Intent and slot type classes contain properties that are inspected at runtime with reflection to interpret a request.
+Intents and slot types are associated with localized data such as sample utterances, prompts, slot values and synoynms, etc. stored in resource bundles.
 
-### Intent Classes
+### Intent sample utterances and prompts
 
-The logic for parsing a property from an `IntentRequest` is defined by the implementation of an `IntentPropertyReader`:
-
-```java
-public interface IntentPropertyReader<T> {
-    T read(IntentRequest intentRequest) throws IntentParseException;
-}
-```
-
-Associate a reader with a type when constructing the `IntentMapper`:
-
-```java
-IntentMapper.builder()
-    .addIntentPropertyReader(MyType.class, new MyTypeReader())
-```
-
-Properties with the type, `MyType`, will now be read with the `MyTypeReader` implementation:
-
-```java
-@Intent // IntentPropertyReader only applies to intent types
-class MyIntent {
-    private MyType myType; // use MyTypeReader to read the value
-}
-```
-
-Unless explicitly annotated with the `@IntentPropertyReader` annotation:
-
-```java
-@Intent
-class MyIntent {
-    @IntentPropertyReader(MyOtherPropertyReader.class)
-    private Object property;
-}
-```
-
-You can then parse a raw `IntentRequest` into the `MyIntent` object:
-
-```java
-IntentRequest request = ...;
-IntentMapper mapper = ...;
-
-MyIntent myIntent = mapper.parseIntent(request, MyIntent.class);
-```
-
-Properties that represent the intent's slots must also be annotated with `@SlotProperty` annotation:
-
-```java
-@Intent
-class MyIntent {
-    @SlotProperty
-    private AmazonDate dateSlot;
-
-    @SlotProperty(type = AmazonDate.class) // slot has type, AMAZON.DATE
-    private Slot explicitDateSlot; // use default Slot reader to read the value
-
-    @SlotProperty(type = AmazonDate.class) // slot has type, AMAZON.DATE
-    @IntentPropertyReader(MyCustomReader.class) // use a custom reader class
-    private MyCustomObject customDateRepresentation;
-}
-```
-
-### Slot Type Classes
-
-Similarly to intent classes, the logic for parsing a property from a slot value is defined by the implementation of a `SlotPropertyReader`:
-
-```java
-public interface SlotPropertyReader<T> {
-    T read(IntentRequest intentRequest, Slot slot) throws SlotValueParseException;
-}
-```
-
-Slot property readers are then associated with a type when constructing the `IntentMapper`:
-
-```java
-IntentMapper.builder()
-    .addSlotPropertyReader(MyType.class, new MyTypeReader())
-```
-
-Properties on slot type classes with the type, `MyType`, will now be parsed with the `MyTypeReader` implementation:
-
-```java
-@SlotType // SlotPropertyReader only applies to slot types
-class MyIntent {
-    private MyType myType;
-}
-```
-
-Unless explicitly annotated with `@SlotPropertyReader`:
-
-```java
-@SlotType
-class MyIntent {
-    @SlotPropertyReader(MyTypeReader.class)
-    private MyType myType;
-}
-```
-
-Most slot types extend `BaseSlotValue` which simply extracts the raw `Slot` value:
-
-```java
-public abstract class BaseSlotValue {
-    @SlotPropertyReader(RawSlotPropertyReader.class)
-    private Slot slot;
-
-    public Slot getSlot() {
-        return slot;
-    }
-
-    public void setSlot(Slot slot) {
-        this.slot = slot;
-    }
-}
-```
-
-## Intent Request Handler
-
-You can automatically derive the `canHandle` and `IntentRequest` parsing logic of a `RequestHandler` for your intent class by extending the `IntentRequestHandler`:
-
-```java
-public class MyIntentHandler extends IntentRequestHandler<MyIntent> {
-    public MyIntentHandler(IntentMapper intentMapper) {
-        super(MyIntent.class, // pass in your intent's class
-              intentMapper); // with a configured intent mapper
-    }
-
-    @Override
-    public Optional<Response> handle(HandlerInput input, MyIntent myIntent) {
-        // handle the intent request
-    }
-}
-```
-
-## Intent Data
-
-An intent's class definition defines the intent schema (name and slot names/types), but the interaction model also contains data such as sample utterances and confirmation/elicitation dialog management prompts. This data is associated when registering the intent by constructing an `IntentDataSource` or by annotating the intent type with an `@IntentResource`.
+An intent can be associated with data by passing an `IntentDataSource` when registering it with the `Model.Builder`, or by statically annotating its type with an `@IntentResource`. Both methods point to resource files.
 
 For example, given a JSON resource file: `src/main/resources/com/example/intents/my_intent_en_US.json`
 
@@ -308,13 +192,15 @@ For example, given a JSON resource file: `src/main/resources/com/example/intents
 }
 ```
 
-We can create an `IntentDataSource` which will scan for resources relative to the `MyIntent.class`, and associate it with the intent at registration time.
+We can create an `IntentDataSource` which will scan for resources with name `my_intent` relative to the `MyIntent` class, and associate it with the intent at registration time.
 
 ```java
-model.intent(MyIntent.class, IntentData.resource()
-    .withResourceClass(MyIntent.class)
-    .withName("my_intent")
-    .build());
+Model model = Model.builder()
+	.intent(MyIntent.class, IntentData.resource()
+        .withResourceClass(MyIntent.class)
+        .withName("my_intent")
+        .build())
+    .build();
 ```
 
 Alternatively, we can statically associate data with the intent's type by annotating it with an `@IntentResource` annotation. It creates the same resource manually instantiated above, and also supports custom resource classes, suffixes, and file formats:
@@ -407,7 +293,7 @@ Rendering this class for the `en-US` locale results in the following interaction
 }
 ```
 
-## Slot Type Data
+### Slot values, ids and synonyms
 
 Like with intents, a slot type's interaction model data can be associated when registering its class by creating a `SlotTypeDataSource`, or by annotating the type's class with a `@SlotTypeResource` annotation.
 
@@ -441,10 +327,12 @@ For example, given a JSON resource file: `src/main/resources/com/example/slots/m
 We can associate a `SlotTypeDataSource` which will scan for resources relative to the `MySlotType.class`:
 
 ```java
-model.slotType(MySlotType.class, SlotTypeData.resource()
-    .withResourceClass(MySlotType.class)
-    .withName("my_slot_type")
-    .build());
+Model model = Model.builder()
+	.slotType(MySlotType.class, SlotTypeData.resource()
+        .withResourceClass(MySlotType.class)
+        .withName("my_slot_type")
+        .build())
+    .build();
 ```
 
 Or, we can statically associate data with the slot's type by annotating it with a `@SlotTypeResource` annotation. It creates the same resource manually instantiated above:
@@ -500,7 +388,7 @@ Rendering this class for the `en-US` locale results in the following slot type s
 }
 ```
 
-## Data Localization
+### Data localization
 
 By default, data for intents and slot types are organized like [java resource bundles](https://docs.oracle.com/javase/7/docs/api/java/util/ResourceBundle.html), so different files are selected when generating an interaction model for a particular locale.
 
@@ -532,3 +420,296 @@ model.intent(MyIntent.class, IntentData.resource()
     .addResourceCandidateEnumerator(new MyEnumerator())
     .build());
 ```
+
+## Intent Mapper
+
+The `IntentMapper` automatically reads a POJO intent instance from a raw `IntentRequest`. Intent and slot type classes contain properties that are inspected at runtime with reflection to interpret a request.
+
+### Intent Classes
+
+The logic for parsing a property from an `IntentRequest` is defined by the implementation of an `IntentPropertyReader`:
+
+```java
+public interface IntentPropertyReader<T> {
+    T read(IntentRequest intentRequest) throws IntentParseException;
+}
+```
+
+Associate a reader with a type when constructing the `IntentMapper`:
+
+```java
+IntentMapper.builder()
+    .addIntentPropertyReader(MyType.class, new MyTypeReader())
+```
+
+Properties with the type, `MyType`, will now be read with the `MyTypeReader` implementation:
+
+```java
+@Intent // IntentPropertyReader only applies to intent types
+class MyIntent {
+    private MyType myType; // use MyTypeReader to read the value
+}
+```
+
+Unless explicitly annotated with the `@IntentPropertyReader` annotation:
+
+```java
+@Intent
+class MyIntent {
+    @IntentPropertyReader(MyOtherPropertyReader.class)
+    private Object property;
+}
+```
+
+You can then parse a raw `IntentRequest` into the `MyIntent` object:
+
+```java
+IntentRequest request = ...;
+IntentMapper mapper = ...;
+
+MyIntent myIntent = mapper.parseIntent(request, MyIntent.class);
+```
+
+Remember, properties that represent the intent's slots must also be annotated with `@SlotProperty` annotation:
+
+```java
+@Intent
+class MyIntent {
+    @SlotProperty
+    private AmazonDate dateSlot;
+
+    @SlotProperty(type = AmazonDate.class) // slot has type, AMAZON.DATE
+    private Slot explicitDateSlot; // use default Slot reader to read the value
+
+    @SlotProperty(type = AmazonDate.class) // slot has type, AMAZON.DATE
+    @IntentPropertyReader(MyCustomReader.class) // use a custom reader class
+    private MyCustomObject customDateRepresentation;
+}
+```
+
+### Slot Type Classes
+
+Similarly to intent classes, the logic for parsing a property from a slot value is defined by the implementation of a `SlotPropertyReader`:
+
+```java
+public interface SlotPropertyReader<T> {
+    T read(IntentRequest intentRequest, Slot slot) throws SlotValueParseException;
+}
+```
+
+Slot property readers are then associated with a type when constructing the `IntentMapper`:
+
+```java
+IntentMapper.builder()
+    .addSlotPropertyReader(MyType.class, new MyTypeReader())
+```
+
+Properties on slot type classes with the type, `MyType`, will now be parsed with the `MyTypeReader` implementation:
+
+```java
+@SlotType // SlotPropertyReader only applies to slot types
+class MyIntent {
+    private MyType myType;
+}
+```
+
+Unless explicitly annotated with `@SlotPropertyReader`:
+
+```java
+@SlotType
+class MyIntent {
+    @SlotPropertyReader(MyTypeReader.class)
+    private MyType myType;
+}
+```
+
+Most slot types extend `BaseSlotValue` which simply extracts the raw `Slot` value:
+
+```java
+public abstract class BaseSlotValue {
+    @SlotPropertyReader(RawSlotPropertyReader.class)
+    private Slot slot;
+
+    public Slot getSlot() {
+        return slot;
+    }
+
+    public void setSlot(Slot slot) {
+        this.slot = slot;
+    }
+}
+```
+
+## Intent Request Handler
+
+You can automatically derive the `canHandle` and `IntentRequest` parsing logic of a `RequestHandler` for your intent class by extending the `IntentRequestHandler`:
+
+```java
+public class MyIntentHandler extends IntentRequestHandler<MyIntent> {
+    public MyIntentHandler(IntentMapper intentMapper) {
+        super(MyIntent.class, // pass in your intent's class
+              intentMapper); // with a configured intent mapper
+    }
+
+    @Override
+    public Optional<Response> handle(HandlerInput input, MyIntent myIntent) {
+        // handle the intent request
+    }
+}
+```
+
+## [Built-in Intents]((https://developer.amazon.com/docs/custom-skills/standard-built-in-intents.html))
+
+Built-in intents can be found in the `com.amazon.ask.interaction.types.intent` namespace:
+
+| Intent | Class |
+|-|-|
+|`AMAZON.CancelIntent` | `CancelIntent` |
+|`AMAZON.FallbackIntent` | `FallbackIntent` |
+|`AMAZON.HelpIntent` | `HelpIntent` |
+|`AMAZON.LoopOffIntent` | `LoopOffIntent` |
+|`AMAZON.LoopOnIntent` | `LoopOnIntent` |
+|`AMAZON.MoreIntent` | `MoreIntent` |
+|`AMAZON.NavigateHomeIntent` | `NavigateHomeIntent` |
+|`AMAZON.NavigateSettingsIntent` | `NavigateSettingsIntent` |
+|`AMAZON.NextIntent` | `NextIntent` |
+|`AMAZON.NoIntent` | `NoIntent` |
+|`AMAZON.PageDownIntent` | `PageDownIntent` |
+|`AMAZON.PageUpIntent` | `PageUpIntent` |
+|`AMAZON.PauseIntent` | `PauseIntent` |
+|`AMAZON.PreviousIntent` | `PreviousIntent` |
+|`AMAZON.RepeatIntent` | `RepeatIntent` |
+|`AMAZON.ResumeIntent` | `ResumeIntent` |
+|`AMAZON.ScrollDownIntent` | `ScrollDownIntent` |
+|`AMAZON.ScrollLeftIntent` | `ScrollLeftIntent` |
+|`AMAZON.ScrollRightIntent` | `ScrollRightIntent` |
+|`AMAZON.ScrollUpIntent` | `ScrollUpIntent` |
+|`AMAZON.ShuffleOffIntent` | `ShuffleOffIntent` |
+|`AMAZON.ShuffleOnIntent` | `ShuffleOnIntent` |
+|`AMAZON.StartOverIntent` | `StartOverIntent` |
+|`AMAZON.StopIntent` | `StopIntent` |
+|`AMAZON.YesIntent` | `YesIntent` |
+
+## [Built-in Slot Types]((https://developer.amazon.com/docs/custom-skills/slot-type-reference.html))
+
+
+### [Numbers, Dates and Times](https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#numbers-dates-and-times)
+
+| Slot Type | Class|
+|-|-|
+|`AMAZON.DATE`|`com.amazon.ask.interaction.types.date.AmazonDate`|
+|`AMAZON.DURATION`|`com.amazon.ask.interaction.types.AmazonDuration`|
+|`AMAZON.FOUR_DIGIT_NUMBER`|`com.amazon.ask.interaction.types.FourDigitNumber`|
+|`AMAZON.NUMBER`|`com.amazon.ask.interaction.types.AmazonNumber`|
+|`AMAZON.PhoneNumber`|`com.amazon.ask.interaction.types.PhoneNumber`|
+|`AMAZON.TIME`|`com.amazon.ask.interaction.types.time.AmazonTime`|
+
+### [Phrases](https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#phrases)
+
+| Slot Type | Class|
+|-|-|
+|`AMAZON.SearchQuery`|`com.amazon.ask.interaction.types.SearchQuery`|
+
+### [List Types](https://developer.amazon.com/docs/custom-skills/slot-type-reference.html#list-types)
+
+List slot types can be found in the `com.amazon.ask.interaction.types.slot.list` namespace:
+
+| Slot Type | Class|
+|-|-|
+| `AMAZON.Actor` | `Actor` |
+| `AMAZON.AdministrativeArea` | `AdministrativeArea` |
+| `AMAZON.AggregateRating` | `AggregateRating` |
+| `AMAZON.Airline` | `Airline` |
+| `AMAZON.Airport` | `Airport` |
+| `AMAZON.Animal` | `Animal` |
+| `AMAZON.Artist` | `Artist` |
+| `AMAZON.AT_CITY` | `ATCity` |
+| `AMAZON.Athlete` | `Athlete` |
+| `AMAZON.AT_REGION` | `ATRegion` |
+| `AMAZON.Author` | `Author` |
+| `AMAZON.Book` | `Book` |
+| `AMAZON.BookSeries` | `BookSeries` |
+| `AMAZON.BroadcastChannel` | `BroadcastChannel` |
+| `AMAZON.CivicStructure` | `CivicStructure` |
+| `AMAZON.Color` | `Color` |
+| `AMAZON.Comic` | `Comic` |
+| `AMAZON.Corporation` | `Corporation` |
+| `AMAZON.Country` | `Country` |
+| `AMAZON.CreativeWorkType` | `CreativeWorkType` |
+| `AMAZON.DayOfWeek` | `DayOfWeek` |
+| `AMAZON.DE_CITY` | `DECity` |
+| `AMAZON.DE_FIRST_NAME` | `DEFirstName` |
+| `AMAZON.DE_REGION` | `DERegion` |
+| `AMAZON.Dessert` | `Dessert` |
+| `AMAZON.DeviceType` | `DeviceType` |
+| `AMAZON.Director` | `Director` |
+| `AMAZON.Drink` | `Drink` |
+| `AMAZON.EducationalOrganization` | `EducationalOrganization` |
+| `AMAZON.EuropeCity` | `EUCity` |
+| `AMAZON.EventType` | `EventType` |
+| `AMAZON.Festival` | `Festival` |
+| `AMAZON.FictionalCharacter` | `FictionalCharacter` |
+| `AMAZON.FinancialService` | `FinancialService` |
+| `AMAZON.Food` | `Food` |
+| `AMAZON.FoodEstablishment` | `FoodEstablishment` |
+| `AMAZON.Game` | `Game` |
+| `AMAZON.GB_CITY` | `GBCity` |
+| `AMAZON.GB_FIRST_NAME` | `GBFirstName` |
+| `AMAZON.GB_REGION` | `GBRegion` |
+| `AMAZON.Genre` | `Genre` |
+| `AMAZON.Landform` | `Landform` |
+| `AMAZON.LandmarksOrHistoricalBuildings` | `LandmarksOrHistoricalBuildings` |
+| `AMAZON.Language` | `Language` |
+| `AMAZON.LocalBusiness` | `LocalBusiness` |
+| `AMAZON.LocalBusinessType` | `LocalBusinessType` |
+| `AMAZON.MedicalOrganization` | `MedicalOrganization` |
+| `AMAZON.Month` | `Month` |
+| `AMAZON.Movie` | `Movie` |
+| `AMAZON.MovieSeries` | `MovieSeries` |
+| `AMAZON.MovieTheater` | `MovieTheater` |
+| `AMAZON.MusicAlbum` | `MusicAlbum` |
+| `AMAZON.MusicCreativeWorkType` | `MusicCreativeWorkType` |
+| `AMAZON.MusicEvent` | `MusicEvent` |
+| `AMAZON.MusicGroup` | `MusicGroup` |
+| `AMAZON.Musician` | `Musician` |
+| `AMAZON.MusicPlaylist` | `MusicPlaylist` |
+| `AMAZON.MusicRecording` | `MusicRecording` |
+| `AMAZON.MusicVenue` | `MusicVenue` |
+| `AMAZON.MusicVideo` | `MusicVideo` |
+| `AMAZON.Organization` | `Organization` |
+| `AMAZON.Person` | `Person` |
+| `AMAZON.PostalAddress` | `PostalAddress` |
+| `AMAZON.Professional` | `Professional` |
+| `AMAZON.ProfessionalType` | `ProfessionalType` |
+| `AMAZON.RadioChannel` | `RadioChannel` |
+| `AMAZON.Residence` | `Residence` |
+| `AMAZON.Room` | `Room` |
+| `AMAZON.ScreeningEvent` | `ScreeningEvent` |
+| `AMAZON.Service` | `Service` |
+| `AMAZON.SocialMediaPlatform` | `SocialMediaPlatform` |
+| `AMAZON.SoftwareApplication` | `SoftwareApplication` |
+| `AMAZON.SoftwareGame` | `SoftwareGame` |
+| `AMAZON.SoftwareGenre` | `SoftwareGenre` |
+| `AMAZON.Sport` | `Sport` |
+| `AMAZON.SportsEvent` | `SportsEvent` |
+| `AMAZON.SportsTeam` | `SportsTeam` |
+| `AMAZON.StreetAddress` | `StreetAddress` |
+| `AMAZON.TelevisionChannel` | `TelevisionChannel` |
+| `AMAZON.TVEpisode` | `TVEpisode` |
+| `AMAZON.TVSeason` | `TVSeason` |
+| `AMAZON.TVSeries` | `TVSeries` |
+| `AMAZON.US_CITY` | `USCity` |
+| `AMAZON.US_FIRST_NAME` | `USFirstName` |
+| `AMAZON.US_STATE` | `USState` |
+| `AMAZON.VideoGame` | `VideoGame` |
+| `AMAZON.WeatherCondition` | `WeatherCondition` |
+| `AMAZON.WrittenCreativeWorkType` | `WrittenCreativeWorkType` |
+
+
+### [Literal](https://developer.amazon.com/docs/custom-skills/literal-slot-type-reference.html)
+
+*Note: this slot type is only available in en-US.*
+
+| Slot Type | Class|
+|-|-|
+|`AMAZON.LITERAL`|`com.amazon.ask.interaction.types.AmazonLiteral`|
