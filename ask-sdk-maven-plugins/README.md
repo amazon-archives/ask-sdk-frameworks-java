@@ -8,7 +8,7 @@ This Mojo generates the final interaction model JSON files required by Alexa as 
 
 # Usage
 
-Install the plugin into your `pom.xml` as part of the `compile` phase, and configure your skill class which extends `MvcSkillApplication` as the `className`:
+Install the plugin into your `pom.xml` as part of the `compile` phase, and configure your skill class which extends `MvcSkillApplication` or `SkillModelSupplier` as the `className`:
 
 ```xml
 <plugin>

@@ -7,7 +7,7 @@ This repository contains framework and plugin libraries for building Alexa [Cust
 * [Interaction Model Mapper](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-interaction-model-mapper) - generate an interaction model from code and automatically interpret raw `IntentRequests` into corresponding 'plain old java object' instances.
 * [Interaction Model Code Generator](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-interaction-model-codegen) - generates Java code from standard [interaction model](https://developer.amazon.com/docs/smapi/interaction-model-schema.html) files.
 * [Interaction Model](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-interaction-model) - Java classes for parsing the [interaction model](https://developer.amazon.com/docs/smapi/interaction-model-schema.html) JSON schema.
-* [Maven Plugins](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-maven-plugins) - generate the interaction model JSON files from a project built with [MVC](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-mvc) or the [Interaction Model Mapper](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-interaction-model-mapper).
+* [Maven Plugins](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-maven-plugins) - generate the interaction model JSON files from a project built with [MVC](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-mvc) or the [Interaction Model Mapper](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-interaction-model-mapper). Also contains a maven archetype for generating a MVC project.
 
 ## Samples of MVC Skill
 

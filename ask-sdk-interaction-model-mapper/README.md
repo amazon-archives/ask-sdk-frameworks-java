@@ -196,7 +196,7 @@ For example, given a JSON resource file: `src/main/resources/com/example/intents
 }
 ```
 
-We can create an `IntentDataSource` which will scan for resources with name `my_intent` relative to the `MyIntent` class, and associate it with the intent at registration time.
+You can create an `IntentDataSource` which will scan for resources with name `my_intent` relative to the `MyIntent` class, and associate it with the intent at registration time.
 
 ```java
 Model model = Model.builder()
@@ -207,7 +207,7 @@ Model model = Model.builder()
     .build();
 ```
 
-Alternatively, we can statically associate data with the intent's type by annotating it with an `@IntentResource` annotation. It creates the same resource manually instantiated above, and also supports custom resource classes, suffixes, and file formats:
+Alternatively, you can statically associate data with the intent's type by annotating it with an `@IntentResource` annotation. It creates the same resource manually instantiated above, and also supports custom resource classes, suffixes, and file formats:
 
 ```java
 package com.example.intents;
@@ -328,7 +328,7 @@ For example, given a JSON resource file: `src/main/resources/com/example/slots/m
 }
 ```
 
-We can associate a `SlotTypeDataSource` which will scan for resources relative to the `MySlotType.class`:
+You can associate a `SlotTypeDataSource` which will scan for resources relative to the `MySlotType.class`:
 
 ```java
 Model model = Model.builder()
@@ -339,7 +339,7 @@ Model model = Model.builder()
     .build();
 ```
 
-Or, we can statically associate data with the slot's type by annotating it with a `@SlotTypeResource` annotation. It creates the same resource manually instantiated above:
+Or, you can statically associate data with the slot's type by annotating it with a `@SlotTypeResource` annotation. It creates the same resource manually instantiated above:
 
 ```java
 package com.example.slots;
@@ -427,7 +427,7 @@ model.intent(MyIntent.class, IntentData.resource()
 
 ### Custom File Format
 
-Say we want to use the slot type format from the popular [alexa-utterance-generator](https://github.com/KayLerch/alexa-utterance-generator):
+Say you want to use the slot type format from the popular [alexa-utterance-generator](https://github.com/KayLerch/alexa-utterance-generator):
 
 ```
 {car|ride|taxi|cab}
@@ -570,6 +570,13 @@ public class MySlotType {
 
 The `IntentMapper` automatically reads a POJO intent instance from a raw `IntentRequest`. Intent and slot type classes contain properties that are inspected at runtime with reflection to interpret a request.
 
+```java
+IntentRequest request = ...;
+IntentMapper mapper = ...;
+
+MyIntent myIntent = mapper.parseIntent(request, MyIntent.class);
+```
+
 ### Intents
 
 The logic for parsing a property from an `IntentRequest` is defined by the implementation of an `IntentPropertyReader`:
@@ -580,14 +587,14 @@ public interface IntentPropertyReader<T> {
 }
 ```
 
-Associate a reader with a type when constructing the `IntentMapper`:
+Readers for slot types are derived automatically, and readers for common types such as [DialogState](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/) are provided by default, but you can provide a custom reader when constructing the `IntentMapper`:
 
 ```java
 IntentMapper.builder()
     .addIntentPropertyReader(MyType.class, new MyTypeReader())
 ```
 
-Properties with the type, `MyType`, will now be read with the `MyTypeReader` implementation:
+Then properties of the associated type will be read with your implementation:
 
 ```java
 @Intent // IntentPropertyReader only applies to intent types
@@ -604,15 +611,6 @@ class MyIntent {
     @IntentPropertyReader(MyOtherPropertyReader.class)
     private Object property;
 }
-```
-
-You can then parse a raw `IntentRequest` into the `MyIntent` object:
-
-```java
-IntentRequest request = ...;
-IntentMapper mapper = ...;
-
-MyIntent myIntent = mapper.parseIntent(request, MyIntent.class);
 ```
 
 Remember, properties that represent the intent's slots must also be annotated with `@SlotProperty` annotation:
@@ -642,14 +640,14 @@ public interface SlotPropertyReader<T> {
 }
 ```
 
-Slot property readers are then associated with a type when constructing the `IntentMapper`:
+Readers for common types such as the raw [Slot](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/model/Slot.html) are provided by default, but you can provide a custom reader when constructing the `IntentMapper`:
 
 ```java
 IntentMapper.builder()
     .addSlotPropertyReader(MyType.class, new MyTypeReader())
 ```
 
-Properties on slot type classes with the type, `MyType`, will now be parsed with the `MyTypeReader` implementation:
+So, properties on slot type classes with that type will be read with your implementation:
 
 ```java
 @SlotType // SlotPropertyReader only applies to slot types

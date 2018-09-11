@@ -66,7 +66,7 @@ public class HelloWorldSkill extends MvcSkillApplication {
 
 ## Configuration
 
-Using maven, configure a project to generate an interaction model JSON file and single JAR for AWS Lambda from the CLI.
+Using maven, configure a project to generate your interaction model JSON file and single JAR file for AWS Lambda from the CLI.
 
 For more information on maven dependencies, see [Introduction to the Dependency Mechanism](https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html). For more information on the maven build lifecycle, see [Introduction to the Build Lifecycle](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html).
 
@@ -197,7 +197,7 @@ A controller is an instance of a class with methods for handling inbound Alexa r
 * @IntentMapping - map an [IntentRequest](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/model/IntentRequest.html) by name or intent type to a method
 * @RequestInterceptor - call a method as a [RequestInterceptor](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/dispatcher/request/interceptor/RequestInterceptor.html) in the request handler chain
 * @ResponseInterceptor - call a method as a [ResponseInterceptor](http://ask-sdk-java-javadocs.s3-website-us-west-2.amazonaws.com/com/amazon/ask/dispatcher/request/interceptor/ResponseInterceptor.html) in the request handler chain
-* @ExceptionHandler - map an exception type to a method which will recover return a response
+* @ExceptionHandler - map an exception type to a method which will recover with a response
 
 The following demonstrates the use of a controller:
 
@@ -397,7 +397,7 @@ NashornViewResolver.builder()
 
 ## Interaction Model
 
-MVC integrates with the [Interaction Model Mapper](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-interaction-model-mapper) which models a skill's [interaction model](https://developer.amazon.com/docs/custom-skills/create-the-interaction-model-for-your-skill.html) in code, enabling its generation and automatic parsing of intent requests.
+MVC integrates with the [Interaction Model Mapper](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-interaction-model-mapper) which generates a skill's [interaction model](https://developer.amazon.com/docs/custom-skills/create-the-interaction-model-for-your-skill.html) from code and automatically parses requests with reflection.
 
 Intents and slot types are defined as classes backed by sources of interaction model data such as classpath resource bundles. The interaction model can then be rendered from the CLI at application build time as part of a continuous/automated deployment lifecycle.
 
@@ -636,7 +636,7 @@ The `MvcSdkModule` includes default resolvers which implements each of its fist-
 
 #### View Resolver
 
-Resolves a View to render the return value of a controller's method as a `Response`. Supports request and exception handler methods, e.g. the return value of a method annotated with `@RequestMapping`, `@IntentMapping` or `@ExceptionHandler`.
+Resolves a view to render the return value of a controller's method as a `Response`. Supports request and exception handler methods, e.g. the return value of a method annotated with `@RequestMapping`, `@IntentMapping` or `@ExceptionHandler`.
 
 **Example**: render a string returned by a controller as the output speech.
 
@@ -806,7 +806,7 @@ public class PrintResponseInterceptorResolver implements ResponseInterceptorReso
 
 ### Auto Resolvers
 
-Annotation such as mappings (`@IntentMapping`), predicates (`@WhenSessionAttribute`) and arguments (`@SessionValues`) can be automatically resolved using a meta-annotation. The annotation type you want to resolve must be annotated with its corresponding `@Auto*` meta-annotation, identifying the class which implements it:
+Annotations such as mappings (`@IntentMapping`), predicates (`@WhenSessionAttribute`) and arguments (`@SessionValues`) can be automatically resolved using a meta-annotation. The annotation type you want to resolve must be annotated with its corresponding `@Auto*` meta-annotation, identifying the class which implements it:
 
 * `com.amazon.ask.mvc.annotation.plugin.AutoArgumentResolver`
 * `com.amazon.ask.mvc.annotation.plugin.AutoPredicateResolver`
