@@ -17,7 +17,7 @@ The Interaction Model Mapper enables you to manage your skill's interaction mode
    * [Slot Types](#slot-types-1)
 * [Intent Request Handler](#intent-request-handler)
 * [Built-in Intents](#built-in-intents)
-   * [Standard](#standard-intents)
+   * [Standard](#standard)
 * [Built-in Slot Types](#built-in-slot-types)
    * [Numbers, Dates and Times](#numbers-dates-and-times)
    * [Phrases](#phrases)
@@ -95,7 +95,7 @@ ask api update-model \
 ```
 
 ## Interaction Model Schema
-Both custom and built-in variations of Alexa intents and slot types are defined as java classes annotated with `@Intent` or `@SlotType`.
+Alexa intents and slot types are defined as java classes annotated with `@Intent` or `@SlotType`.
 
 ### Intents
 
@@ -198,7 +198,7 @@ We can create an `IntentDataSource` which will scan for resources with name `my_
 
 ```java
 Model model = Model.builder()
-	.intent(MyIntent.class, IntentData.resource()
+    .intent(MyIntent.class, IntentData.resource()
         .withResourceClass(MyIntent.class)
         .withName("my_intent")
         .build())
@@ -330,7 +330,7 @@ We can associate a `SlotTypeDataSource` which will scan for resources relative t
 
 ```java
 Model model = Model.builder()
-	.slotType(MySlotType.class, SlotTypeData.resource()
+    .slotType(MySlotType.class, SlotTypeData.resource()
         .withResourceClass(MySlotType.class)
         .withName("my_slot_type")
         .build())
@@ -491,7 +491,7 @@ class MyIntent {
 
 ### Slot Types
 
-Similarly to intent classes, the logic for parsing a property from a slot value is defined by the implementation of a `SlotPropertyReader`:
+Similar to intent classes, the logic for parsing a property from a slot value is defined by the implementation of a `SlotPropertyReader`:
 
 ```java
 public interface SlotPropertyReader<T> {
@@ -562,7 +562,7 @@ public class MyIntentHandler extends IntentRequestHandler<MyIntent> {
 
 ## Built-in Intents
 
-### [Standard]((https://developer.amazon.com/docs/custom-skills/standard-built-in-intents.html))
+### [Standard](https://developer.amazon.com/docs/custom-skills/standard-built-in-intents.html)
 
 The standard built-in intents can be found in the `com.amazon.ask.interaction.types.intent` namespace:
 
