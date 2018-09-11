@@ -56,7 +56,7 @@ public class ReflectiveIntentReader<T> implements IntentReader<T> {
                     throw new IntentParseException(String.format("Property '%s' does not exist on class '%s'", reader.getKey(), reflector.getTypeClass().getName()));
                 }
 
-                Object value = reader.getValue().read(new IntentPropertyContext(intentRequest, reflector, property));
+                Object value = reader.getValue().read(intentRequest);
                 reflector.set(instance, reader.getKey(), value);
             }
             return instance;

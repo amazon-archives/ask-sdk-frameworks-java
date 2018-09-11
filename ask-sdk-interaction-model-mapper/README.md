@@ -12,41 +12,70 @@ The Interaction Model Mapper enables you to manage your skill's interaction mode
 </dependency>
 ```
 
-## Skill Application
+## Skill Model
 
-The SkillApplication interface acts as a hook for generating the interaction model from project management tools. For maven integration, see the [ask-sdk-maven-plugins](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-maven-plugins/) maven mojo.
+The `SkillModel` contains your interaction model's intents and slot type schemas, and data such as invocation name, sample utterances and prompts for each target locale.
 
-It
+Project management systems such as maven generate the interaction model JSON files as part of the project build process. For maven integration, see the [ask-sdk-maven-plugins](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-maven-plugins/) maven mojo.
 
-Your skill application class defines a `SkillModel` containing your interaction model's schema and data, and constructs a `Skill` to handle those requests at runtime.
+## Skill Model Supplier
+
+Implement the `SkillModelSupplier` interface and add all invocation names, intents, slot types and data to your skill's `SkillModel`.
 
 ```java
 package com.example;
 
-public class MySkill implements SkillApplication {
+public class HelloWorldSkill implements SkillModelSupplier {
     @Override
     public SkillModel getSkillModel() {
         return SkillModel.builder()
             .withInvocationName(Locale.US, "hello world")
             .addModel(Model.builder()
-                .intent(MyIntent.class)
+                .intent(HelpIntent.class)
+                .intent(StopIntent.class)
                 .build())
             .build();
     }
-
-    @Override
-    public Skill getSkill() {
-        IntentMapper intentMapper = IntentMapper.builder()
-            .withSkillModel(getSkillModel())
-            .build();
-
-        MyIntentHandler myIntentHandler= = new MyIntentHandler(intentMapper);
-
-        return Skills.standard()
-            .addRequestHandler(myIntentHandler)
-            .build();
-    }
 }
+```
+
+## Interaction Model Generation
+
+In your `pom.xml`, add the `build-model` task from [ask-sdk-maven-plugins](https://github.com/alexa-labs/ask-sdk-frameworks-java/tree/master/ask-sdk-maven-plugins) and configure your `SkillModelSupplier` class as the target:
+
+```xml
+<plugin>
+    <groupId>com.amazon.alexa</groupId>
+    <artifactId>ask-sdk-maven-plugins</artifactId>
+    <version>0.1.0</version>
+    <configuration>
+        <destinationDir>ask</destinationDir>
+        <className>com.example.HelloWorldSkill</className>
+    </configuration>
+    <executions>
+        <execution>
+            <phase>compile</phase>
+            <goals>
+                <goal>build-model</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+Synthesize the JSON models with [mvn](https://maven.apache.org/install.html):
+
+```bash
+mvn compile
+```
+
+Update your Skill's model with the [ask cli](https://developer.amazon.com/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html):
+
+```bash
+ask api update-model \
+    --file ./target/ask/en-US.json \
+    --locale en-US \
+    --skill-id <your-skill-id>
 ```
 
 ## Intent Schema
@@ -110,7 +139,7 @@ The logic for parsing a property from an `IntentRequest` is defined by the imple
 
 ```java
 public interface IntentPropertyReader<T> {
-    T read(IntentPropertyContext context) throws IntentParseException;
+    T read(IntentRequest intentRequest) throws IntentParseException;
 }
 ```
 
@@ -149,7 +178,7 @@ IntentMapper mapper = ...;
 MyIntent myIntent = mapper.parseIntent(request, MyIntent.class);
 ```
 
-The behavior of `IntentPropertyReader` is the same for all properties on intent classes, except those that represent the intent's slots must also be annotated with `@SlotProperty` annotation:
+Properties that represent the intent's slots must also be annotated with `@SlotProperty` annotation:
 
 ```java
 @Intent

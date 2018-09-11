@@ -14,13 +14,14 @@
 package com.amazon.ask.interaction.mapper.intent;
 
 import com.amazon.ask.model.DialogState;
+import com.amazon.ask.model.IntentRequest;
 
 /**
  *
  */
 public class DialogStateReader implements IntentPropertyReader<DialogState> {
     @Override
-    public DialogState read(IntentPropertyContext context) {
-        return context.getIntentRequest().getDialogState();
+    public DialogState read(IntentRequest intentRequest) {
+        return intentRequest.getDialogState();
     }
 }

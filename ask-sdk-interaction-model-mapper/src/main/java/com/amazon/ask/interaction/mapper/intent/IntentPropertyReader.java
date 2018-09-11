@@ -13,11 +13,13 @@
 
 package com.amazon.ask.interaction.mapper.intent;
 
+import com.amazon.ask.interaction.annotation.type.Intent;
 import com.amazon.ask.interaction.mapper.IntentParseException;
+import com.amazon.ask.model.IntentRequest;
 
 /**
- *
+ * Read a property on a class annotated with {@link Intent} from an {@link IntentRequest}.
  */
 public interface IntentPropertyReader<T> {
-    T read(IntentPropertyContext context) throws IntentParseException;
+    T read(IntentRequest intentRequest) throws IntentParseException;
 }

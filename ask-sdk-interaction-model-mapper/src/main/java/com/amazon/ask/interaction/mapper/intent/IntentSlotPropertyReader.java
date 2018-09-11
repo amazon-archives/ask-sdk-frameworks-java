@@ -13,6 +13,7 @@
 
 package com.amazon.ask.interaction.mapper.intent;
 
+import com.amazon.ask.model.IntentRequest;
 import com.amazon.ask.model.Slot;
 import com.amazon.ask.interaction.annotation.data.SlotProperty;
 import com.amazon.ask.interaction.mapper.IntentMapper;
@@ -43,16 +44,16 @@ public class IntentSlotPropertyReader<T> implements IntentPropertyReader<T> {
     }
 
     @Override
-    public T read(IntentPropertyContext context) throws IntentParseException {
-        Map<String, Slot> slots = context.getIntentRequest().getIntent().getSlots();
+    public T read(IntentRequest intentRequest) throws IntentParseException {
+        Map<String, Slot> slots = intentRequest.getIntent().getSlots();
         if (!slots.containsKey(slotName)) {
-            throw new UnrecognizedSlotException(context.getIntentRequest(), slotName);
+            throw new UnrecognizedSlotException(intentRequest, slotName);
         }
         Slot slot = slots.get(slotName);
         if (slot == null || slot.getValue() == null) {
             return null;
         }
 
-        return slotPropertyReader.read(context.getIntentRequest(), slot);
+        return slotPropertyReader.read(intentRequest, slot);
     }
 }

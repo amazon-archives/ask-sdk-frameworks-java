@@ -14,13 +14,14 @@
 package com.amazon.ask.interaction.mapper.intent;
 
 import com.amazon.ask.model.IntentConfirmationStatus;
+import com.amazon.ask.model.IntentRequest;
 
 /**
  *
  */
 public class IntentConfirmationStatusReader implements IntentPropertyReader<IntentConfirmationStatus> {
     @Override
-    public IntentConfirmationStatus read(IntentPropertyContext context) {
-        return context.getIntentRequest().getIntent().getConfirmationStatus();
+    public IntentConfirmationStatus read(IntentRequest IntentRequest) {
+        return IntentRequest.getIntent().getConfirmationStatus();
     }
 }
