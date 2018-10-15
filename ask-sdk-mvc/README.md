@@ -179,7 +179,7 @@ A `SkillModule` groups the business logic of controllers and views with the requ
 public class HelloWorldModule implements SkillModule {
     @Override
     public void buildMvc(MvcSdkModule.Builder mvcBuilder) {
-        mvcBuilder.addController(new HelloWorldContoller());
+        mvcBuilder.addController(new HelloWorldController());
     }
 
     @Override
