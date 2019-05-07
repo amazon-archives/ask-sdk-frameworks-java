@@ -1,6 +1,6 @@
 ## Ask SDK Frameworks Java
 
-This repository contains framework and plugin libraries for building Alexa [Custom Skills](https://developer.amazon.com/docs/custom-skills/understanding-custom-skills.html) in Java.
+This repository contains framework and plugin libraries for building Alexa [Custom Skills](https://developer.amazon.com/docs/custom-skills/understanding-custom-skills.html) in Java. These plugins are not under active development, are experimental in nature, and are not recommended for use with production skills. The core [Alexa Skills Kit SDK for Java](https://github.com/alexa/alexa-skills-kit-sdk-for-java) is actively developed and supported and is recommended for these use cases.
 
 ## Getting Started
 
